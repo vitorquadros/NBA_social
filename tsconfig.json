@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "es2019",
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "allowJs": true,
+    "resolveJsonModule": true,
+    "moduleResolution": "node",
+    // if using typeorm:
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
+  }
+}
