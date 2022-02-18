@@ -1,16 +1,14 @@
-import express, { Application, Request, Response } from 'express';
+import { Router, Request, Response } from 'express';
 
-const app: Application = express();
-
-app.use(express.json());
+export const usersRoutes = Router();
 
 const users = [];
 
-app.get('/', (req: Request, res: Response) => {
+usersRoutes.get('/', (req: Request, res: Response) => {
   res.send('Hello');
 });
 
-app.post('/users', (req: Request, res: Response) => {
+usersRoutes.post('/', (req: Request, res: Response) => {
   const { username, email, password, passwordConfirm } = req.body;
 
   if (!username || !email || !password || !passwordConfirm) {
@@ -31,5 +29,3 @@ app.post('/users', (req: Request, res: Response) => {
 
   return res.status(201).json(user);
 });
-
-app.listen(3333, () => console.log('listening...'));
