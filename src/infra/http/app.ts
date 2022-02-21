@@ -1,5 +1,5 @@
-import express, { Application } from 'express';
 import 'reflect-metadata';
+import express, { Application } from 'express';
 import '../database';
 import { router } from './routes';
 
