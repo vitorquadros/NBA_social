@@ -1,31 +1,8 @@
-import { Router, Request, Response } from 'express';
+import { Router } from 'express';
+import { CreateUserController } from '../../../modules/Users/controllers/CreateUserController';
 
 export const usersRoutes = Router();
 
-const users = [];
+const createUserController = new CreateUserController();
 
-usersRoutes.get('/', (req: Request, res: Response) => {
-  res.send('Hello');
-});
-
-usersRoutes.post('/', (req: Request, res: Response) => {
-  const { username, email, password, passwordConfirm } = req.body;
-
-  if (!username || !email || !password || !passwordConfirm) {
-    return res.status(400).json({ error: 'Missing input data' });
-  }
-
-  if (password != passwordConfirm) {
-    return res.status(400).json({ error: 'Passwords do not match' });
-  }
-
-  const user = {
-    username,
-    email,
-    password,
-  };
-
-  users.push(user);
-
-  return res.status(201).json(user);
-});
+usersRoutes.post('/', createUserController.handle);
