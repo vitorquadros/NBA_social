@@ -1,4 +1,5 @@
 import { inject, injectable } from 'tsyringe';
+import { Address } from '../models/Address';
 import { User } from '../models/User';
 import { IUsersRepository } from '../repositories/IUsersRepository';
 
@@ -11,7 +12,7 @@ type CreateUserRequest = {
   nba_team: string;
   avatar: string;
   cover: string;
-  address_id: number;
+  address_id: Address;
 };
 
 @injectable()

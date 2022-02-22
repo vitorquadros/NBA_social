@@ -1,3 +1,5 @@
+import { Address } from '../../models/Address';
+
 export interface CreateUserDTO {
   id?: string;
   username: string;
@@ -8,5 +10,5 @@ export interface CreateUserDTO {
   nba_team: string;
   avatar: string;
   cover: string;
-  address_id: number;
+  address_id: Address;
 }
