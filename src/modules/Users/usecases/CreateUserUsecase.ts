@@ -20,6 +20,12 @@ export class CreaterUserUsecase {
     email,
     password
   }: CreateUserRequest): Promise<User> {
+    if (await this.usersRepository.findByEmail(email)) {
+      throw new Error('Email already exists');
+    } else if (await this.usersRepository.findByUsername(username)) {
+      throw new Error('Username already exists');
+    }
+
     const user = await this.usersRepository.create({
       username,
       email,
