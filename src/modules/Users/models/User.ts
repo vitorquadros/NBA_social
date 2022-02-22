@@ -2,10 +2,13 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
+  OneToOne,
   PrimaryColumn,
   UpdateDateColumn
 } from 'typeorm';
 import { v4 as uuid } from 'uuid';
+import { Address } from './Address';
 
 enum UserRole {
   USER = 'user',
@@ -40,8 +43,9 @@ export class User {
   @Column()
   password: string;
 
-  @Column()
-  address_id: number;
+  @OneToOne(() => Address, (address_id) => address_id.user)
+  @JoinColumn() // owns the relation
+  address_id: Address;
 
   @Column({ default: 'profile_default.jpg' })
   avatar: string;

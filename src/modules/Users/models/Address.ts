@@ -2,10 +2,12 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToOne,
   PrimaryColumn,
   UpdateDateColumn
 } from 'typeorm';
 import { v4 as uuid } from 'uuid';
+import { User } from './User';
 
 @Entity('adresses')
 export class Address {
@@ -26,6 +28,9 @@ export class Address {
 
   @UpdateDateColumn()
   updated_at: Date;
+
+  @OneToOne(() => User, (user) => user.address_id)
+  user: User;
 
   constructor() {
     if (!this.id) {
