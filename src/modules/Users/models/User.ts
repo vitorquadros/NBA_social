@@ -40,8 +40,14 @@ export class User {
   @Column()
   password: string;
 
+  @Column()
+  address_id: number;
+
   @Column({ default: 'profile_default.jpg' })
   avatar: string;
+
+  @Column({ default: 'cover_default.jpg' })
+  cover: string;
 
   @CreateDateColumn()
   created_at: Date;
