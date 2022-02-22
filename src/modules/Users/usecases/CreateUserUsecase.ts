@@ -1,6 +1,6 @@
-import { getCustomRepository } from 'typeorm';
+import { inject, injectable } from 'tsyringe';
 import { User } from '../models/User';
-import { UsersRepository } from '../repositories/implementations/UsersRepository';
+import { IUsersRepository } from '../repositories/IUsersRepository';
 
 type CreateUserRequest = {
   username: string;
@@ -8,15 +8,19 @@ type CreateUserRequest = {
   password: string;
 };
 
+@injectable()
 export class CreaterUserUsecase {
+  constructor(
+    @inject('UsersRepository')
+    private usersRepository: IUsersRepository
+  ) {}
+
   async execute({
     username,
     email,
     password
   }: CreateUserRequest): Promise<User> {
-    const usersRepository = getCustomRepository(UsersRepository);
-
-    const user = await usersRepository.create({
+    const user = await this.usersRepository.create({
       username,
       email,
       password
