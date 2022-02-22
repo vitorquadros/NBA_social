@@ -4,8 +4,14 @@ import { IUsersRepository } from '../repositories/IUsersRepository';
 
 type CreateUserRequest = {
   username: string;
+  display_name: string;
   email: string;
+  birthday: Date;
   password: string;
+  nba_team: string;
+  avatar: string;
+  cover: string;
+  address_id: number;
 };
 
 @injectable()
@@ -17,8 +23,14 @@ export class CreaterUserUsecase {
 
   async execute({
     username,
+    display_name,
     email,
-    password
+    birthday,
+    password,
+    nba_team,
+    avatar,
+    cover,
+    address_id
   }: CreateUserRequest): Promise<User> {
     if (await this.usersRepository.findByEmail(email)) {
       throw new Error('Email already exists');
@@ -28,8 +40,14 @@ export class CreaterUserUsecase {
 
     const user = await this.usersRepository.create({
       username,
+      display_name,
       email,
-      password
+      birthday,
+      password,
+      nba_team,
+      avatar,
+      cover,
+      address_id
     });
 
     return user;

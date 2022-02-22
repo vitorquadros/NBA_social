@@ -5,15 +5,31 @@ import { CreaterUserUsecase } from '../usecases/CreateUserUsecase';
 
 export class CreateUserController implements Controller {
   async handle(req: Request, res: Response): Promise<Response> {
-    const { username, email, password } = req.body;
+    const {
+      username,
+      display_name,
+      email,
+      birthday,
+      password,
+      nba_team,
+      avatar,
+      cover,
+      address_id
+    } = req.body;
 
     const createUserUsecase = container.resolve(CreaterUserUsecase);
 
     try {
       const user = await createUserUsecase.execute({
         username,
+        display_name,
         email,
-        password
+        birthday,
+        password,
+        nba_team,
+        avatar,
+        cover,
+        address_id
       });
 
       return res.status(201).json({ status: 'ok', data: user });
