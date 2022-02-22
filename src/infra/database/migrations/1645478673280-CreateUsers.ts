@@ -1,3 +1,4 @@
+/* eslint-disable quotes */
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
 export class CreateUsers1645478673280 implements MigrationInterface {
@@ -27,7 +28,7 @@ export class CreateUsers1645478673280 implements MigrationInterface {
           {
             name: 'role',
             type: 'varchar',
-            default: 'user'
+            default: "'user'"
           },
           {
             name: 'email',
@@ -49,12 +50,12 @@ export class CreateUsers1645478673280 implements MigrationInterface {
           {
             name: 'avatar',
             type: 'varchar',
-            default: 'profile_default.jpg'
+            default: "'profile_default.jpg'"
           },
           {
             name: 'cover',
             type: 'varchar',
-            default: 'cover_default.jpg'
+            default: "'cover_default.jpg'"
           },
           {
             name: 'created_at',
