@@ -9,28 +9,64 @@ export class CreateUsers1645478673280 implements MigrationInterface {
           {
             name: 'id',
             type: 'uuid',
-            isPrimary: true,
+            isPrimary: true
           },
           {
             name: 'username',
             type: 'varchar',
-            isUnique: true,
+            isUnique: true
+          },
+          {
+            name: 'display_name',
+            type: 'varchar'
+          },
+          {
+            name: 'birthday',
+            type: 'timestamp'
+          },
+          {
+            name: 'role',
+            type: 'varchar',
+            default: 'user'
           },
           {
             name: 'email',
             type: 'varchar',
-            isUnique: true,
+            isUnique: true
           },
           {
             name: 'password',
+            type: 'varchar'
+          },
+          {
+            name: 'nba_team',
+            type: 'varchar'
+          },
+          {
+            name: 'address_id',
+            type: 'int'
+          },
+          {
+            name: 'avatar',
             type: 'varchar',
+            default: 'profile_default.jpg'
+          },
+          {
+            name: 'cover',
+            type: 'varchar',
+            default: 'cover_default.jpg'
           },
           {
             name: 'created_at',
             type: 'timestamp',
-            default: 'now()',
+            default: 'now()'
           },
-        ],
+          {
+            name: 'updated_at',
+            type: 'timestamp',
+            default: 'now()'
+          }
+        ]
       })
     );
   }
