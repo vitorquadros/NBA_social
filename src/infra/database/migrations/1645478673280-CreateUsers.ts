@@ -45,7 +45,7 @@ export class CreateUsers1645478673280 implements MigrationInterface {
           },
           {
             name: 'address_id',
-            type: 'int'
+            type: 'uuid'
           },
           {
             name: 'avatar',
