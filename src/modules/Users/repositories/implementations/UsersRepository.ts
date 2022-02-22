@@ -1,9 +1,10 @@
 import { EntityRepository, getRepository, Repository } from 'typeorm';
 import { User } from '../../models/User';
 import { CreateUserDTO } from '../DTOs/CreateUserDTO';
+import { IUsersRepository } from '../IUsersRepository';
 
 @EntityRepository()
-export class UsersRepository {
+export class UsersRepository implements IUsersRepository {
   private repository: Repository<User>;
 
   constructor() {
