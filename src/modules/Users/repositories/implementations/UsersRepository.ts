@@ -39,7 +39,7 @@ export class UsersRepository implements IUsersRepository {
   }
 
   async index(): Promise<User[]> {
-    const users = await this.repository.find();
+    const users = await this.repository.find({ relations: ['address'] });
 
     return users;
   }

@@ -1,9 +1,10 @@
 import { EntityRepository, getRepository, Repository } from 'typeorm';
 import { Address } from '../../models/Address';
 import { CreateAddressDTO } from '../DTOs/CreateAddressDTO';
+import { IAdressesRepository } from '../IAdressesRepository';
 
 @EntityRepository()
-export class AdressesRepository {
+export class AdressesRepository implements IAdressesRepository {
   private repository: Repository<Address>;
 
   constructor() {
