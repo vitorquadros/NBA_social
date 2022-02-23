@@ -15,7 +15,7 @@ export default function authMiddleware(
   const { authorization } = req.headers;
 
   if (!authorization) {
-    return res.status(401);
+    return res.status(401).json({ status: 'error', error: 'Missing token' });
   }
 
   const token = authorization.replace('Bearer', '').trim();
@@ -29,6 +29,6 @@ export default function authMiddleware(
 
     return next();
   } catch {
-    return res.status(401);
+    return res.status(401).json({ status: 'error', error: 'Invalid token' });
   }
 }
