@@ -51,7 +51,7 @@ export class CreaterUserUsecase {
       city
     });
 
-    const user = await this.usersRepository.create({
+    const user = await this.usersRepository.store({
       username,
       displayName,
       email,

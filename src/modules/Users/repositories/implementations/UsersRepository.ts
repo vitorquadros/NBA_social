@@ -11,7 +11,7 @@ export class UsersRepository implements IUsersRepository {
     this.repository = getRepository(User);
   }
 
-  async create({
+  async store({
     username,
     displayName,
     email,

@@ -2,7 +2,7 @@ import { User } from '../models/User';
 import { CreateUserDTO } from './DTOs/CreateUserDTO';
 
 export interface IUsersRepository {
-  create({
+  store({
     username,
     displayName,
     email,
