@@ -3,7 +3,7 @@ import { User } from '../models/User';
 import { IUsersRepository } from '../repositories/IUsersRepository';
 
 @injectable()
-export class CreaterUserUsecase {
+export class GetUsersUsecase {
   constructor(
     @inject('UsersRepository')
     private usersRepository: IUsersRepository
