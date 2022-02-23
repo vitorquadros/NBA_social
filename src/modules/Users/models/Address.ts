@@ -23,13 +23,13 @@ export class Address {
   @Column()
   city: string;
 
-  @CreateDateColumn()
-  created_at: Date;
+  @CreateDateColumn({ name: 'created_at' })
+  createdAt: Date;
 
-  @UpdateDateColumn()
-  updated_at: Date;
+  @UpdateDateColumn({ name: 'updated_at' })
+  updatedAt: Date;
 
-  @OneToOne(() => User, (user) => user.address_id)
+  @OneToOne(() => User, (user) => user.address)
   user: User;
 
   constructor() {

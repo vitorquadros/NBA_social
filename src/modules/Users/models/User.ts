@@ -25,8 +25,8 @@ export class User {
   @Column()
   username: string;
 
-  @Column()
-  display_name: string;
+  @Column({ name: 'display_name' })
+  displayName: string;
 
   @Column()
   birthday: Date;
@@ -34,8 +34,8 @@ export class User {
   @Column({ type: 'enum', enum: UserRole, default: UserRole.USER })
   role: UserRole;
 
-  @Column()
-  nba_team: string;
+  @Column({ name: 'nba_team' })
+  nbaTeam: string;
 
   @Column()
   email: string;
@@ -43,9 +43,9 @@ export class User {
   @Column()
   password: string;
 
-  @OneToOne(() => Address, (address_id) => address_id.user)
-  @JoinColumn() // owns the relation
-  address_id: Address;
+  @OneToOne(() => Address, (address) => address.user)
+  @JoinColumn({ name: 'address_id' }) // owns the relation
+  address: Address;
 
   @Column({ default: 'profile_default.jpg' })
   avatar: string;
@@ -53,11 +53,11 @@ export class User {
   @Column({ default: 'cover_default.jpg' })
   cover: string;
 
-  @CreateDateColumn()
-  created_at: Date;
+  @CreateDateColumn({ name: 'created_at' })
+  createdAt: Date;
 
-  @UpdateDateColumn()
-  updated_at: Date;
+  @UpdateDateColumn({ name: 'updated_at' })
+  updatedAt: Date;
 
   constructor() {
     if (!this.id) {
