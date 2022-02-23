@@ -13,25 +13,25 @@ export class UsersRepository implements IUsersRepository {
 
   async create({
     username,
-    display_name,
+    displayName,
     email,
     birthday,
     password,
-    nba_team,
+    nbaTeam,
     avatar,
     cover,
-    address_id
+    address
   }: CreateUserDTO): Promise<User> {
     const user = this.repository.create({
       username,
-      display_name,
+      displayName,
       email,
       birthday,
       password,
-      nba_team,
+      nbaTeam,
       avatar,
       cover,
-      address_id
+      address
     });
 
     await this.repository.save(user);

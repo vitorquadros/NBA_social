@@ -7,14 +7,14 @@ export class CreateUserController implements Controller {
   async handle(req: Request, res: Response): Promise<Response> {
     const {
       username,
-      display_name,
+      displayName,
       email,
       birthday,
       password,
-      nba_team,
+      nbaTeam,
       avatar,
       cover,
-      address_id
+      address
     } = req.body;
 
     const createUserUsecase = container.resolve(CreaterUserUsecase);
@@ -22,14 +22,14 @@ export class CreateUserController implements Controller {
     try {
       const user = await createUserUsecase.execute({
         username,
-        display_name,
+        displayName,
         email,
         birthday,
         password,
-        nba_team,
+        nbaTeam,
         avatar,
         cover,
-        address_id
+        address
       });
 
       return res.status(201).json({ status: 'ok', data: user });
