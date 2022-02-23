@@ -1,6 +1,6 @@
 import { inject, injectable } from 'tsyringe';
-import { Address } from '../models/Address';
 import { User } from '../models/User';
+import { IAdressesRepository } from '../repositories/IAdressesRepository';
 import { IUsersRepository } from '../repositories/IUsersRepository';
 
 type CreateUserRequest = {
@@ -12,14 +12,18 @@ type CreateUserRequest = {
   nbaTeam: string;
   avatar: string;
   cover: string;
-  address: Address;
+  country: string;
+  state: string;
+  city: string;
 };
 
 @injectable()
 export class CreaterUserUsecase {
   constructor(
     @inject('UsersRepository')
-    private usersRepository: IUsersRepository
+    private usersRepository: IUsersRepository,
+    @inject('AdressesRepository')
+    private adressesRepository: IAdressesRepository
   ) {}
 
   async execute({
@@ -31,13 +35,21 @@ export class CreaterUserUsecase {
     nbaTeam,
     avatar,
     cover,
-    address
+    country,
+    state,
+    city
   }: CreateUserRequest): Promise<User> {
     if (await this.usersRepository.findByEmail(email)) {
       throw new Error('Email already exists');
     } else if (await this.usersRepository.findByUsername(username)) {
       throw new Error('Username already exists');
     }
+
+    const address = await this.adressesRepository.create({
+      country,
+      state,
+      city
+    });
 
     const user = await this.usersRepository.create({
       username,

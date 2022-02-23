@@ -14,7 +14,9 @@ export class CreateUserController implements Controller {
       nbaTeam,
       avatar,
       cover,
-      address
+      country,
+      state,
+      city
     } = req.body;
 
     const createUserUsecase = container.resolve(CreaterUserUsecase);
@@ -29,7 +31,9 @@ export class CreateUserController implements Controller {
         nbaTeam,
         avatar,
         cover,
-        address
+        country,
+        state,
+        city
       });
 
       return res.status(201).json({ status: 'ok', data: user });
