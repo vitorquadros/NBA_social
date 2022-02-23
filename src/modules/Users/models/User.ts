@@ -1,4 +1,6 @@
 import {
+  BeforeInsert,
+  BeforeUpdate,
   Column,
   CreateDateColumn,
   Entity,
@@ -8,6 +10,7 @@ import {
   UpdateDateColumn
 } from 'typeorm';
 import { v4 as uuid } from 'uuid';
+import bcrypt from 'bcryptjs';
 import { Address } from './Address';
 
 enum UserRole {
@@ -58,6 +61,12 @@ export class User {
 
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
+
+  @BeforeInsert()
+  @BeforeUpdate()
+  hashPassword() {
+    this.password = bcrypt.hashSync(this.password, 8);
+  }
 
   constructor() {
     if (!this.id) {
