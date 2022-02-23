@@ -7,6 +7,7 @@ export class CreateUserAddressRelation1645570803177
     await queryRunner.createForeignKey(
       'users',
       new TableForeignKey({
+        name: 'user_address_FK',
         columnNames: ['address_id'],
         referencedColumnNames: ['id'],
         referencedTableName: 'adresses',
