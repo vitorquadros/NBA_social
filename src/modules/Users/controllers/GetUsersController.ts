@@ -10,7 +10,9 @@ export class GetUsersController implements Controller {
     try {
       const users = await getUsersUsecase.execute();
 
-      return res.status(201).json({ status: 'ok', data: users });
+      return res
+        .status(201)
+        .json({ status: 'ok', usersCount: users.length, data: users });
     } catch (error) {
       return res.status(400).json({ status: 'error', error: error.message });
     }
