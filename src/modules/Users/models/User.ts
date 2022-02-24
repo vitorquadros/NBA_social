@@ -5,6 +5,7 @@ import {
   CreateDateColumn,
   Entity,
   JoinColumn,
+  OneToMany,
   OneToOne,
   PrimaryColumn,
   UpdateDateColumn
@@ -12,6 +13,7 @@ import {
 import { v4 as uuid } from 'uuid';
 import bcrypt from 'bcryptjs';
 import { Address } from './Address';
+import { Post } from '../../Posts/models/Post';
 
 enum UserRole {
   USER = 'user',
@@ -67,6 +69,9 @@ export class User {
   hashPassword() {
     this.password = bcrypt.hashSync(this.password, 8);
   }
+
+  @OneToMany(() => Post, (post) => post.user)
+  posts: Post[];
 
   constructor() {
     if (!this.id) {
