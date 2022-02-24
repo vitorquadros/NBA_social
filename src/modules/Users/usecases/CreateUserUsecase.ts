@@ -18,7 +18,7 @@ type CreateUserRequest = {
 };
 
 @injectable()
-export class CreaterUserUsecase {
+export class CreateUserUsecase {
   constructor(
     @inject('UsersRepository')
     private usersRepository: IUsersRepository,
