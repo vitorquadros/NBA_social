@@ -45,7 +45,7 @@ export class CreaterUserUsecase {
       throw new Error('Username already exists');
     }
 
-    const address = await this.adressesRepository.create({
+    const address = await this.adressesRepository.store({
       country,
       state,
       city

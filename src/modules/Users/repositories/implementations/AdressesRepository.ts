@@ -11,7 +11,7 @@ export class AdressesRepository implements IAdressesRepository {
     this.repository = getRepository(Address);
   }
 
-  async create({ country, state, city }: CreateAddressDTO): Promise<Address> {
+  async store({ country, state, city }: CreateAddressDTO): Promise<Address> {
     const address = this.repository.create({ country, state, city });
 
     await this.repository.save(address);
