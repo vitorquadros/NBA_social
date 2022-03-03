@@ -4,31 +4,31 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
-  OneToMany,
   PrimaryColumn,
   UpdateDateColumn
 } from 'typeorm';
 import { v4 as uuid } from 'uuid';
 import { User } from '../../Users/models/User';
-import { Like } from './Like';
+import { Post } from './Post';
 
-@Entity('posts')
-export class Post {
+@Entity('likes')
+export class Like {
   @PrimaryColumn()
   id: string;
 
-  @Column()
-  description: string;
+  @Column({ name: 'user_id' })
+  userId: string;
 
-  @Column()
-  image: string;
+  @Column({ name: 'post_id' })
+  postId: string;
 
-  @ManyToOne(() => User, (user) => user.posts)
-  @JoinColumn({ name: 'owner_id' })
+  @ManyToOne(() => Post, (post) => post.like)
+  @JoinColumn({ name: 'post_id' })
+  post: Post;
+
+  @ManyToOne(() => User, (user) => user.like)
+  @JoinColumn({ name: 'user_id' })
   user: User;
-
-  @OneToMany(() => Like, (like) => like.post)
-  like: Like[];
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;

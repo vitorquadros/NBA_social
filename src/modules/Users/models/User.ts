@@ -14,6 +14,7 @@ import { v4 as uuid } from 'uuid';
 import bcrypt from 'bcryptjs';
 import { Address } from './Address';
 import { Post } from '../../Posts/models/Post';
+import { Like } from '../../Posts/models/Like';
 
 enum UserRole {
   USER = 'user',
@@ -72,6 +73,9 @@ export class User {
 
   @OneToMany(() => Post, (post) => post.user)
   posts: Post[];
+
+  @OneToMany(() => Like, (like) => like.user)
+  like: Like[];
 
   constructor() {
     if (!this.id) {
