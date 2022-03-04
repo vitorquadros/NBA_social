@@ -15,15 +15,18 @@ export class CreateUsers1645478673280 implements MigrationInterface {
           {
             name: 'username',
             type: 'varchar',
-            isUnique: true
+            isUnique: true,
+            isNullable: true
           },
           {
             name: 'display_name',
-            type: 'varchar'
+            type: 'varchar',
+            isNullable: true
           },
           {
             name: 'birthday',
-            type: 'timestamp'
+            type: 'timestamp',
+            isNullable: true
           },
           {
             name: 'role',
@@ -37,15 +40,18 @@ export class CreateUsers1645478673280 implements MigrationInterface {
           },
           {
             name: 'password',
-            type: 'varchar'
+            type: 'varchar',
+            isNullable: true
           },
           {
             name: 'nba_team',
-            type: 'varchar'
+            type: 'varchar',
+            isNullable: true
           },
           {
             name: 'address_id',
-            type: 'uuid'
+            type: 'uuid',
+            isNullable: true
           },
           {
             name: 'avatar',
