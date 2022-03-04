@@ -16,12 +16,6 @@ export class Like {
   @PrimaryColumn()
   id: string;
 
-  @Column({ name: 'user_id' })
-  userId: string;
-
-  @Column({ name: 'post_id' })
-  postId: string;
-
   @ManyToOne(() => Post, (post) => post.like)
   @JoinColumn({ name: 'post_id' })
   post: Post;
