@@ -1,4 +1,5 @@
 import {
+  AfterLoad,
   Column,
   CreateDateColumn,
   Entity,
@@ -28,13 +29,20 @@ export class Post {
   user: User;
 
   @OneToMany(() => Like, (like) => like.post)
-  like: Like[];
+  likes: Like[];
+
+  // protected likesCount: number;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
 
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
+
+  // @AfterLoad()
+  // getLikesCount() {
+  //   this.likesCount = this.likes.length;
+  // }
 
   constructor() {
     if (!this.id) {
