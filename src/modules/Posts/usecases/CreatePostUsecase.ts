@@ -12,7 +12,7 @@ type CreatePostRequest = {
 export class CreatePostUsecase {
   constructor(
     @inject('PostsRepository')
-    private postsReopsitory: IPostsRepository
+    private postsRepository: IPostsRepository
   ) {}
 
   async execute({
@@ -20,7 +20,7 @@ export class CreatePostUsecase {
     image,
     ownerId
   }: CreatePostRequest): Promise<Post> {
-    const post = await this.postsReopsitory.store({
+    const post = await this.postsRepository.store({
       description,
       image,
       ownerId
