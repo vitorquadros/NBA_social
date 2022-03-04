@@ -15,6 +15,7 @@ import bcrypt from 'bcryptjs';
 import { Address } from './Address';
 import { Post } from '../../Posts/models/Post';
 import { Like } from '../../Posts/models/Like';
+import { UserKey } from '../../Register/models/UserKey';
 
 enum UserRole {
   USER = 'user',
@@ -76,6 +77,9 @@ export class User {
 
   @OneToMany(() => Like, (like) => like.user)
   likes: Like[];
+
+  @OneToMany(() => UserKey, (keys) => keys.userId)
+  keys: UserKey[];
 
   constructor() {
     if (!this.id) {
