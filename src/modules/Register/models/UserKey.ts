@@ -20,7 +20,7 @@ export class UserKey {
 
   @ManyToOne(() => User, (user) => user.keys)
   @JoinColumn({ name: 'user_id' })
-  userId: string;
+  userId: User;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
