@@ -18,7 +18,8 @@ export class CreateUserKeys1646430909847 implements MigrationInterface {
           },
           {
             name: 'key',
-            type: 'uuid'
+            type: 'uuid',
+            isUnique: true
           },
           {
             name: 'user_id',
