@@ -75,7 +75,7 @@ export class User {
   posts: Post[];
 
   @OneToMany(() => Like, (like) => like.user)
-  like: Like[];
+  likes: Like[];
 
   constructor() {
     if (!this.id) {

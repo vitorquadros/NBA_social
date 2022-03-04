@@ -1,5 +1,4 @@
 import {
-  Column,
   CreateDateColumn,
   Entity,
   JoinColumn,
@@ -16,11 +15,11 @@ export class Like {
   @PrimaryColumn()
   id: string;
 
-  @ManyToOne(() => Post, (post) => post.like)
+  @ManyToOne(() => Post, (post) => post.likes)
   @JoinColumn({ name: 'post_id' })
   post: Post;
 
-  @ManyToOne(() => User, (user) => user.like)
+  @ManyToOne(() => User, (user) => user.likes)
   @JoinColumn({ name: 'user_id' })
   user: User;
 
