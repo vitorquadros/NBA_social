@@ -26,4 +26,12 @@ export class PostsRepository implements IPostsRepository {
     await this.repository.save(post);
     return post;
   }
+
+  async index(): Promise<Post[]> {
+    const posts = await this.repository.find({
+      relations: ['likes']
+    });
+
+    return posts;
+  }
 }
