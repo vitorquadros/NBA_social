@@ -3,9 +3,9 @@ import { getRepository } from 'typeorm';
 import { User } from '../models/User';
 import { v4 as uuid } from 'uuid';
 import nodemailer from 'nodemailer';
-// import { IAdressesRepository } from '../repositories/IAdressesRepository';
 import { IUsersRepository } from '../repositories/IUsersRepository';
 import { UserKey } from '../models/UserKey';
+import { IAdressesRepository } from '../repositories/IAdressesRepository';
 
 interface UpdateRequest {
   key: string;
@@ -14,13 +14,18 @@ interface UpdateRequest {
   birthday: Date;
   nbaTeam: string;
   password: string;
+  country?: string;
+  state?: string;
+  city?: string;
 }
 
 @injectable()
 export class RegisterUsecase {
   constructor(
     @inject('UsersRepository')
-    private usersRepository: IUsersRepository // @inject('AdressesRepository') // private adressesRepository: IAdressesRepository
+    private usersRepository: IUsersRepository,
+    @inject('AdressesRepository')
+    private adressesRepository: IAdressesRepository
   ) {}
 
   async getRegisters(): Promise<User[]> {
@@ -85,10 +90,19 @@ export class RegisterUsecase {
     displayName,
     birthday,
     nbaTeam,
-    password
+    password,
+    country,
+    state,
+    city
   }: UpdateRequest) {
     const keysRepository = getRepository(UserKey);
     const usersRepository = getRepository(User);
+
+    const address = await this.adressesRepository.createAddress({
+      country,
+      state,
+      city
+    });
 
     const user = await this.getUncompletedRegister(key);
 
@@ -100,7 +114,8 @@ export class RegisterUsecase {
       { displayName },
       { birthday },
       { nbaTeam },
-      { password }
+      { password },
+      { address }
     );
 
     await usersRepository.save(user);
