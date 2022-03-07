@@ -7,6 +7,6 @@ export const usersRoutes = Router();
 const registerController = new RegisterController();
 
 usersRoutes.get('/', authMiddleware, registerController.index);
-usersRoutes.post('/', registerController.store);
-usersRoutes.get('/:key', registerController.show);
-usersRoutes.put('/', registerController.update);
+usersRoutes.post('/register', registerController.store);
+usersRoutes.get('/register/:key', registerController.show);
+usersRoutes.put('/register', registerController.update);
