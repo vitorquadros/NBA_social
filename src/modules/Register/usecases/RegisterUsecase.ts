@@ -98,6 +98,12 @@ export class RegisterUsecase {
     const keysRepository = getRepository(UserKey);
     const usersRepository = getRepository(User);
 
+    const userAlreadyExists = await this.usersRepository.findByUsername(
+      username
+    );
+
+    if (userAlreadyExists) throw new Error('Username already exists');
+
     const address = await this.adressesRepository.createAddress({
       country,
       state,
