@@ -74,6 +74,8 @@ export class RegisterUsecase {
       .where('key.key = :key', { key })
       .getOne();
 
+    if (!user) throw new Error('Invalid key');
+
     return user;
   }
 
