@@ -20,6 +20,16 @@ export class LikesUsecase {
     const user = await usersRepository.findOne(userId);
     const post = await postsRepository.findOne(postId);
 
+    // const alreadyLiked = await usersRepository
+    //   .createQueryBuilder('user')
+    //   .leftJoin('user.keys', 'key')
+    //   .where('key.key = :key', { key })
+    //   .getOne();
+
+    const alreadyLiked = await repository.findOne({ user, post });
+
+    if (alreadyLiked) throw new Error('Post already liked');
+
     const like = repository.create({ user, post });
 
     await repository.save(like);
