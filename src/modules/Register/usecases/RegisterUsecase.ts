@@ -7,6 +7,15 @@ import nodemailer from 'nodemailer';
 import { IUsersRepository } from '../repositories/IUsersRepository';
 import { UserKey } from '../models/UserKey';
 
+interface UpdateRequest {
+  key: string;
+  username: string;
+  displayName: string;
+  birthday: Date;
+  nbaTeam: string;
+  password: string;
+}
+
 @injectable()
 export class RegisterUsecase {
   constructor(
@@ -60,5 +69,33 @@ export class RegisterUsecase {
       .getOne();
 
     return user;
+  }
+
+  async completeRegister({
+    key,
+    username,
+    displayName,
+    birthday,
+    nbaTeam,
+    password
+  }: UpdateRequest) {
+    const keysRepository = getRepository(UserKey);
+    const usersRepository = getRepository(User);
+
+    const user = await this.getUncompletedRegister(key);
+
+    if (!user) throw new Error('Invalid key');
+
+    usersRepository.merge(
+      user,
+      { username },
+      { displayName },
+      { birthday },
+      { nbaTeam },
+      { password }
+    );
+
+    await usersRepository.save(user);
+    await keysRepository.delete({ key });
   }
 }
