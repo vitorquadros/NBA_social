@@ -5,6 +5,7 @@ import { UserKey } from '../models/UserKey';
 import { RegisterUsecase } from '../usecases/RegisterUsecase';
 import { v4 as uuid } from 'uuid';
 import nodemailer from 'nodemailer';
+import { User } from '../../Users/models/User';
 
 export class RegisterController {
   async store(req: Request, res: Response): Promise<Response> {
@@ -47,7 +48,19 @@ export class RegisterController {
     }
   }
 
-  // async show(req: Request, res: Response): Promise<Response> {}
+  async show(req: Request, res: Response): Promise<Response> {
+    const { key } = req.params;
+
+    const usersRepository = getRepository(User);
+
+    const user = await usersRepository
+      .createQueryBuilder('user')
+      .leftJoin('user.keys', 'key')
+      .where('key.key = :key', { key })
+      .getOne();
+
+    return res.status(200).json({ status: 'ok', data: user });
+  }
 
   // async update(req: Request, res: Response): Promise<Response> {}
 }
