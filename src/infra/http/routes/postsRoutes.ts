@@ -1,15 +1,14 @@
 import { Router } from 'express';
-import { CreateLikeController } from '../../../modules/Posts/controllers/CreateLikeController';
-import { CreatePostController } from '../../../modules/Posts/controllers/CreatePostController';
-import { GetPostsController } from '../../../modules/Posts/controllers/GetPostsController';
+import { LikesController } from '../../../modules/Posts/controllers/LikesController';
+
 import authMiddleware from '../middlewares/authMiddleware';
+import { PostsController } from '../../../modules/Posts/controllers/PostsController';
 
 export const postsRoutes = Router();
 
-const createPostController = new CreatePostController();
-const getPostsController = new GetPostsController();
-const createLikeController = new CreateLikeController();
+const postsController = new PostsController();
+const likesController = new LikesController();
 
-postsRoutes.post('/', authMiddleware, createPostController.handle);
-postsRoutes.get('/', getPostsController.handle);
-postsRoutes.post('/:postId/like', authMiddleware, createLikeController.handle);
+postsRoutes.post('/', authMiddleware, postsController.store);
+postsRoutes.get('/', postsController.index);
+postsRoutes.post('/:postId/like', authMiddleware, likesController.store);

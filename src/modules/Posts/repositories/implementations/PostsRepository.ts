@@ -12,7 +12,11 @@ export class PostsRepository implements IPostsRepository {
     this.repository = getRepository(Post);
   }
 
-  async store({ description, image, ownerId }: CreatePostDTO): Promise<Post> {
+  async createPost({
+    description,
+    image,
+    ownerId
+  }: CreatePostDTO): Promise<Post> {
     const post = this.repository.create({
       description,
       image
@@ -27,7 +31,7 @@ export class PostsRepository implements IPostsRepository {
     return post;
   }
 
-  async index(): Promise<Post[]> {
+  async getAllPosts(): Promise<Post[]> {
     const posts = await this.repository.find({
       relations: ['likes', 'user']
     });

@@ -10,8 +10,8 @@ type CreateLikeRequest = {
 };
 
 @injectable()
-export class CreateLikeUsecase {
-  async execute({ userId, postId }: CreateLikeRequest): Promise<Like> {
+export class LikesUsecase {
+  async createLike({ userId, postId }: CreateLikeRequest): Promise<Like> {
     const repository = getRepository(Like);
 
     const usersRepository = getRepository(User);

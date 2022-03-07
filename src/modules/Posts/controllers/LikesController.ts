@@ -1,16 +1,16 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
-import { CreateLikeUsecase } from '../usecases/CreateLikeUsecase';
+import { LikesUsecase } from '../usecases/LikesUsecase';
 
-export class CreateLikeController {
-  async handle(req: Request, res: Response): Promise<Response> {
+export class LikesController {
+  async store(req: Request, res: Response): Promise<Response> {
     const { postId } = req.params;
     const { userId } = req;
 
-    const createLikeUsecase = container.resolve(CreateLikeUsecase);
+    const likesUsecase = container.resolve(LikesUsecase);
 
     try {
-      await createLikeUsecase.execute({
+      await likesUsecase.createLike({
         postId,
         userId
       });
