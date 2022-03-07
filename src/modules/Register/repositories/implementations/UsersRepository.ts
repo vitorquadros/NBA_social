@@ -20,7 +20,7 @@ export class UsersRepository implements IUsersRepository {
     return user;
   }
 
-  async index(): Promise<User[]> {
+  async getAllUsers(): Promise<User[]> {
     const users = await this.repository.find({ relations: ['address'] });
 
     return users;
