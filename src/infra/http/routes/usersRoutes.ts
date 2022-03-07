@@ -14,3 +14,4 @@ const registerController = new RegisterController();
 // usersRoutes.get('/', authMiddleware, getUsersController.handle);
 usersRoutes.post('/', registerController.store);
 usersRoutes.get('/:key', registerController.show);
+usersRoutes.put('/', registerController.update);
