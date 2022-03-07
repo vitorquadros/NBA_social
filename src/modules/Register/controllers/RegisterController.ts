@@ -46,8 +46,17 @@ export class RegisterController {
   }
 
   async update(req: Request, res: Response): Promise<Response> {
-    const { key, username, displayName, birthday, nbaTeam, password } =
-      req.body;
+    const {
+      key,
+      username,
+      displayName,
+      birthday,
+      nbaTeam,
+      password,
+      country,
+      state,
+      city
+    } = req.body;
 
     const registerUsecase = container.resolve(RegisterUsecase);
 
@@ -58,7 +67,10 @@ export class RegisterController {
         displayName,
         birthday,
         nbaTeam,
-        password
+        password,
+        country,
+        state,
+        city
       });
 
       return res.status(200).json({ status: 'ok', data: user });
