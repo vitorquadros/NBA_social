@@ -21,7 +21,9 @@ export class UsersRepository implements IUsersRepository {
   }
 
   async getAllUsers(): Promise<User[]> {
-    const users = await this.repository.find({ relations: ['address'] });
+    const users = await this.repository.find({
+      relations: ['address', 'posts']
+    });
 
     return users;
   }

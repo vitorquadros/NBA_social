@@ -1,4 +1,4 @@
-import { inject, injectable } from 'tsyringe';
+import { injectable } from 'tsyringe';
 import { getRepository } from 'typeorm';
 import { User } from '../../Register/models/User';
 import { Like } from '../models/Like';
@@ -11,11 +11,6 @@ type CreateLikeRequest = {
 
 @injectable()
 export class CreateLikeUsecase {
-  // constructor(
-  //   @inject('PostsRepository')
-  //   private postsReopsitory: IPostsRepository
-  // ) {}
-
   async execute({ userId, postId }: CreateLikeRequest): Promise<Like> {
     const repository = getRepository(Like);
 

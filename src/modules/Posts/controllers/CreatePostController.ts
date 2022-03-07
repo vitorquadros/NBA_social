@@ -11,13 +11,13 @@ export class CreatePostController implements Controller {
     const createPostUsecase = container.resolve(CreatePostUsecase);
 
     try {
-      const post = await createPostUsecase.execute({
+      await createPostUsecase.execute({
         description,
         image,
         ownerId: userId
       });
 
-      return res.status(201).json({ status: 'ok', data: post });
+      return res.status(201).send();
     } catch (error) {
       return res.status(400).json({ status: 'error', error: error.message });
     }
