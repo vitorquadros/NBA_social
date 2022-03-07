@@ -51,16 +51,37 @@ export class RegisterController {
   async show(req: Request, res: Response): Promise<Response> {
     const { key } = req.params;
 
-    const usersRepository = getRepository(User);
+    const registerUsecase = container.resolve(RegisterUsecase);
 
-    const user = await usersRepository
-      .createQueryBuilder('user')
-      .leftJoin('user.keys', 'key')
-      .where('key.key = :key', { key })
-      .getOne();
+    const user = await registerUsecase.getUncompletedRegister(key);
 
     return res.status(200).json({ status: 'ok', data: user });
   }
 
-  // async update(req: Request, res: Response): Promise<Response> {}
+  async update(req: Request, res: Response): Promise<Response> {
+    const { key, username, displayName, birthday, nbaTeam, password } =
+      req.body;
+
+    const registerUsecase = container.resolve(RegisterUsecase);
+    const keysRepository = getRepository(UserKey);
+    const usersRepository = getRepository(User);
+
+    const user = await registerUsecase.getUncompletedRegister(key);
+
+    if (!user) return res.status(400).json({ error: 'Inexistent key' });
+
+    usersRepository.merge(
+      user,
+      { username },
+      { displayName },
+      { birthday },
+      { nbaTeam },
+      { password }
+    );
+
+    await usersRepository.save(user);
+    await keysRepository.delete({ key });
+
+    return res.status(200).json(user);
+  }
 }
