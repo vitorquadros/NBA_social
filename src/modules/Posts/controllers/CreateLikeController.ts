@@ -1,9 +1,8 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
-import { Controller } from '../../interfaces/Controller';
 import { CreateLikeUsecase } from '../usecases/CreateLikeUsecase';
 
-export class CreateLikeController implements Controller {
+export class CreateLikeController {
   async handle(req: Request, res: Response): Promise<Response> {
     const { postId } = req.params;
     const { userId } = req;

@@ -1,9 +1,8 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
-import { Controller } from '../../interfaces/Controller';
 import { GetPostsUsecase } from '../usecases/GetPostsUsecase';
 
-export class GetPostsController implements Controller {
+export class GetPostsController {
   async handle(req: Request, res: Response): Promise<Response> {
     const getPostsUsecase = container.resolve(GetPostsUsecase);
 

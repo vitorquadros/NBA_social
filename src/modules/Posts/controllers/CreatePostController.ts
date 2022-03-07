@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
-import { Controller } from '../../interfaces/Controller';
+
 import { CreatePostUsecase } from '../usecases/CreatePostUsecase';
 
-export class CreatePostController implements Controller {
+export class CreatePostController {
   async handle(req: Request, res: Response): Promise<Response> {
     const { description, image } = req.body;
     const { userId } = req;

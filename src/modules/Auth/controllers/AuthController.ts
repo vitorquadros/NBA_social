@@ -1,11 +1,10 @@
 import { Request, Response } from 'express';
 import { getRepository } from 'typeorm';
-import { Controller } from '../../interfaces/Controller';
 import { User } from '../../Register/models/User';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
-export class AuthController implements Controller {
+export class AuthController {
   async handle(req: Request, res: Response): Promise<Response> {
     const repository = getRepository(User);
     const { email, password } = req.body;
