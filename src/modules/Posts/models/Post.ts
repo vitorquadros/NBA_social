@@ -1,5 +1,4 @@
 import {
-  AfterLoad,
   Column,
   CreateDateColumn,
   Entity,
@@ -10,7 +9,7 @@ import {
   UpdateDateColumn
 } from 'typeorm';
 import { v4 as uuid } from 'uuid';
-import { User } from '../../Users/models/User';
+import { User } from '../../Register/models/User';
 import { Like } from './Like';
 
 @Entity('posts')

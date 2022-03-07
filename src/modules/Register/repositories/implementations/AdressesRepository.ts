@@ -1,5 +1,5 @@
 import { EntityRepository, getRepository, Repository } from 'typeorm';
-import { Address } from '../../../Users/models/Address';
+import { Address } from '../../../Register/models/Address';
 
 import { CreateAddressDTO } from '../DTOs/CreateAddressDTO';
 import { IAdressesRepository } from '../IAdressesRepository';

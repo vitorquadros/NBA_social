@@ -1,4 +1,4 @@
-import { User } from '../../Users/models/User';
+import { User } from '../models/User';
 
 export interface IUsersRepository {
   registerUser(email: string): Promise<User>;

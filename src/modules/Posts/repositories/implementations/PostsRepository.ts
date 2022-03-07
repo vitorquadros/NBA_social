@@ -1,5 +1,5 @@
 import { EntityRepository, getRepository, Repository } from 'typeorm';
-import { User } from '../../../Users/models/User';
+import { User } from '../../../Register/models/User';
 import { Post } from '../../models/Post';
 import { CreatePostDTO } from '../DTOs/CreatePostDTO';
 import { IPostsRepository } from '../IPostsRepository';

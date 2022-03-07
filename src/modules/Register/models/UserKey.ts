@@ -8,7 +8,7 @@ import {
   UpdateDateColumn
 } from 'typeorm';
 import { v4 as uuid } from 'uuid';
-import { User } from '../../Users/models/User';
+import { User } from './User';
 
 @Entity('user_keys')
 export class UserKey {

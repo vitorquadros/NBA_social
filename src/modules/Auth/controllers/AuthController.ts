@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { getRepository } from 'typeorm';
 import { Controller } from '../../interfaces/Controller';
-import { User } from '../../Users/models/User';
+import { User } from '../../Register/models/User';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 

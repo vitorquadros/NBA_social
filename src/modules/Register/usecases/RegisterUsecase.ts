@@ -1,6 +1,6 @@
 import { inject, injectable } from 'tsyringe';
 import { getRepository } from 'typeorm';
-import { User } from '../../Users/models/User';
+import { User } from '../models/User';
 import { v4 as uuid } from 'uuid';
 import nodemailer from 'nodemailer';
 // import { IAdressesRepository } from '../repositories/IAdressesRepository';

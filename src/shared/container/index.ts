@@ -3,8 +3,8 @@ import { PostsRepository } from '../../modules/Posts/repositories/implementation
 import { IPostsRepository } from '../../modules/Posts/repositories/IPostsRepository';
 import { UsersRepository } from '../../modules/Register/repositories/implementations/UsersRepository';
 import { IUsersRepository } from '../../modules/Register/repositories/IUsersRepository';
-import { IAdressesRepository } from '../../modules/Users/repositories/IAdressesRepository';
-import { AdressesRepository } from '../../modules/Users/repositories/implementations/AdressesRepository';
+import { IAdressesRepository } from '../../modules/Register/repositories/IAdressesRepository';
+import { AdressesRepository } from '../../modules/Register/repositories/implementations/AdressesRepository';
 
 container.registerSingleton<IUsersRepository>(
   'UsersRepository',

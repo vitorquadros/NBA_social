@@ -1,6 +1,6 @@
 import { inject, injectable } from 'tsyringe';
 import { getRepository } from 'typeorm';
-import { User } from '../../Users/models/User';
+import { User } from '../../Register/models/User';
 import { Like } from '../models/Like';
 import { Post } from '../models/Post';
 

@@ -14,7 +14,7 @@ import bcrypt from 'bcryptjs';
 import { Address } from './Address';
 import { Post } from '../../Posts/models/Post';
 import { Like } from '../../Posts/models/Like';
-import { UserKey } from '../../Register/models/UserKey';
+import { UserKey } from './UserKey';
 
 enum UserRole {
   USER = 'user',
