@@ -1,6 +1,6 @@
 import { EntityRepository, getRepository, Repository } from 'typeorm';
 import { User } from '../../models/User';
-import { CreateUserDTO } from '../DTOs/CreateUserDTO';
+
 import { IUsersRepository } from '../IUsersRepository';
 
 @EntityRepository()
@@ -11,34 +11,16 @@ export class UsersRepository implements IUsersRepository {
     this.repository = getRepository(User);
   }
 
-  async store({
-    username,
-    displayName,
-    email,
-    birthday,
-    password,
-    nbaTeam,
-    avatar,
-    cover,
-    address
-  }: CreateUserDTO): Promise<User> {
+  async registerUser(email: string): Promise<User> {
     const user = this.repository.create({
-      username,
-      displayName,
-      email,
-      birthday,
-      password,
-      nbaTeam,
-      avatar,
-      cover,
-      address
+      email
     });
 
     await this.repository.save(user);
     return user;
   }
 
-  async index(): Promise<User[]> {
+  async getAllUsers(): Promise<User[]> {
     const users = await this.repository.find({ relations: ['address'] });
 
     return users;

@@ -13,15 +13,18 @@ export class CreateAddress1645570367573 implements MigrationInterface {
           },
           {
             name: 'country',
-            type: 'varchar'
+            type: 'varchar',
+            isNullable: true
           },
           {
             name: 'state',
-            type: 'varchar'
+            type: 'varchar',
+            isNullable: true
           },
           {
             name: 'city',
-            type: 'varchar'
+            type: 'varchar',
+            isNullable: true
           },
           {
             name: 'created_at',

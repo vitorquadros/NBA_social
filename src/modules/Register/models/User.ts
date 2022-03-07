@@ -1,5 +1,4 @@
 import {
-  BeforeInsert,
   BeforeUpdate,
   Column,
   CreateDateColumn,
@@ -15,6 +14,7 @@ import bcrypt from 'bcryptjs';
 import { Address } from './Address';
 import { Post } from '../../Posts/models/Post';
 import { Like } from '../../Posts/models/Like';
+import { UserKey } from './UserKey';
 
 enum UserRole {
   USER = 'user',
@@ -65,7 +65,6 @@ export class User {
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
 
-  @BeforeInsert()
   @BeforeUpdate()
   hashPassword() {
     this.password = bcrypt.hashSync(this.password, 8);
@@ -76,6 +75,9 @@ export class User {
 
   @OneToMany(() => Like, (like) => like.user)
   likes: Like[];
+
+  @OneToMany(() => UserKey, (keys) => keys.userId)
+  keys: UserKey[];
 
   constructor() {
     if (!this.id) {

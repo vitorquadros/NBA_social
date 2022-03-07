@@ -1,4 +1,5 @@
 import {
+  Column,
   CreateDateColumn,
   Entity,
   JoinColumn,
@@ -7,21 +8,19 @@ import {
   UpdateDateColumn
 } from 'typeorm';
 import { v4 as uuid } from 'uuid';
-import { User } from '../../Register/models/User';
-import { Post } from './Post';
+import { User } from './User';
 
-@Entity('likes')
-export class Like {
+@Entity('user_keys')
+export class UserKey {
   @PrimaryColumn()
   id: string;
 
-  @ManyToOne(() => Post, (post) => post.likes)
-  @JoinColumn({ name: 'post_id' })
-  post: Post;
+  @Column()
+  key: string;
 
-  @ManyToOne(() => User, (user) => user.likes)
+  @ManyToOne(() => User, (user) => user.keys)
   @JoinColumn({ name: 'user_id' })
-  user: User;
+  userId: User;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;

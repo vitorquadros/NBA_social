@@ -1,5 +1,6 @@
 import { EntityRepository, getRepository, Repository } from 'typeorm';
-import { Address } from '../../models/Address';
+import { Address } from '../../../Register/models/Address';
+
 import { CreateAddressDTO } from '../DTOs/CreateAddressDTO';
 import { IAdressesRepository } from '../IAdressesRepository';
 
@@ -11,7 +12,11 @@ export class AdressesRepository implements IAdressesRepository {
     this.repository = getRepository(Address);
   }
 
-  async store({ country, state, city }: CreateAddressDTO): Promise<Address> {
+  async createAddress({
+    country,
+    state,
+    city
+  }: CreateAddressDTO): Promise<Address> {
     const address = this.repository.create({ country, state, city });
 
     await this.repository.save(address);
