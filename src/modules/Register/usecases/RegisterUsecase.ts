@@ -23,6 +23,12 @@ export class RegisterUsecase {
     private usersRepository: IUsersRepository // @inject('AdressesRepository') // private adressesRepository: IAdressesRepository
   ) {}
 
+  async getRegisters(): Promise<User[]> {
+    const users = await this.usersRepository.getAllUsers();
+
+    return users;
+  }
+
   async register(email: string, redirectUrl: string): Promise<User> {
     if (await this.usersRepository.findByEmail(email)) {
       throw new Error('Email already exists');
