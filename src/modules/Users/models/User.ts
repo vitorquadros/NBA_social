@@ -1,5 +1,4 @@
 import {
-  BeforeInsert,
   BeforeUpdate,
   Column,
   CreateDateColumn,
@@ -66,7 +65,6 @@ export class User {
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
 
-  @BeforeInsert()
   @BeforeUpdate()
   hashPassword() {
     this.password = bcrypt.hashSync(this.password, 8);
