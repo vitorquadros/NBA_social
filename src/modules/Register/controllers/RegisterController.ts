@@ -78,4 +78,18 @@ export class RegisterController {
       return res.status(400).json({ status: 'error', error: error.message });
     }
   }
+
+  async delete(req: Request, res: Response): Promise<Response> {
+    const { userId } = req;
+
+    const registerUsecase = container.resolve(RegisterUsecase);
+
+    try {
+      const result = await registerUsecase.deleteOwnUser(userId);
+
+      return res.status(202).json({ status: 'ok', deleted: result });
+    } catch (error) {
+      return res.status(400).json({ status: 'error', error: error.message });
+    }
+  }
 }
