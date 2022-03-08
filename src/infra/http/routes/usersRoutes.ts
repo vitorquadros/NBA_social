@@ -10,3 +10,4 @@ usersRoutes.get('/', authMiddleware, registerController.index);
 usersRoutes.post('/register', registerController.store);
 usersRoutes.get('/register/:key', registerController.show);
 usersRoutes.put('/register', registerController.update);
+usersRoutes.delete('/', authMiddleware, registerController.delete);
