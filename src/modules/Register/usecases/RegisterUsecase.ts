@@ -127,4 +127,14 @@ export class RegisterUsecase {
     await usersRepository.save(user);
     await keysRepository.delete({ key });
   }
+
+  async deleteOwnUser(userId: string) {
+    try {
+      const result = await this.usersRepository.deleteMe(userId);
+
+      return result;
+    } catch {
+      throw new Error('User not found');
+    }
+  }
 }
