@@ -1,4 +1,6 @@
 import { EntityRepository, getRepository, Repository } from 'typeorm';
+import { Address } from '../../models/Address';
+
 import { User } from '../../models/User';
 
 import { IUsersRepository } from '../IUsersRepository';
@@ -38,5 +40,18 @@ export class UsersRepository implements IUsersRepository {
     const user = await this.repository.findOne({ username });
 
     return user;
+  }
+
+  async deleteMe(userId: string): Promise<User> {
+    const user = await this.repository.findOne(userId, {
+      relations: ['address']
+    });
+    const addressRepository = getRepository(Address);
+    const address = await addressRepository.findOne(user.address.id);
+    await addressRepository.remove(address);
+
+    const result = await this.repository.remove(user);
+
+    return result;
   }
 }
