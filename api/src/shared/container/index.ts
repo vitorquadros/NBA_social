@@ -5,6 +5,8 @@ import { UsersRepository } from '../../modules/Register/repositories/implementat
 import { IUsersRepository } from '../../modules/Register/repositories/IUsersRepository';
 import { IAdressesRepository } from '../../modules/Register/repositories/IAdressesRepository';
 import { AdressesRepository } from '../../modules/Register/repositories/implementations/AdressesRepository';
+import { ICommentsRepository } from '../../modules/Posts/repositories/ICommentsRepository';
+import { CommentsRepository } from '../../modules/Posts/repositories/implementations/CommentsRepository';
 
 container.registerSingleton<IUsersRepository>(
   'UsersRepository',
@@ -19,4 +21,9 @@ container.registerSingleton<IAdressesRepository>(
 container.registerSingleton<IPostsRepository>(
   'PostsRepository',
   PostsRepository
+);
+
+container.registerSingleton<ICommentsRepository>(
+  'CommentsRepository',
+  CommentsRepository
 );
