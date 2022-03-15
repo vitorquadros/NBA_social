@@ -31,4 +31,12 @@ export class CommentsUsecase {
 
     return comment;
   }
+
+  async getAllCommentsFromPost(postId: string): Promise<Comment[]> {
+    const comments = await this.commentsRepository.getAllCommentsFromPost(
+      postId
+    );
+
+    return comments;
+  }
 }
