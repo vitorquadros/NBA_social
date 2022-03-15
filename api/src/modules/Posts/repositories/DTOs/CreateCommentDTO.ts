@@ -3,4 +3,5 @@ export interface CreateCommentDTO {
   text: string;
   userId: string;
   postId: string;
+  parentCommentId?: string;
 }

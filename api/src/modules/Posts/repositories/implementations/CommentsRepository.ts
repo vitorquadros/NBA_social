@@ -16,7 +16,8 @@ export class CommentsRepository implements ICommentsRepository {
   async createComment({
     text,
     postId,
-    userId
+    userId,
+    parentCommentId
   }: CreateCommentDTO): Promise<Comment> {
     const usersRepository = getRepository(User);
     const postsRepository = getRepository(Post);
@@ -29,6 +30,11 @@ export class CommentsRepository implements ICommentsRepository {
       owner: user,
       post
     });
+
+    if (parentCommentId) {
+      const parentComment = await this.repository.findOne(parentCommentId);
+      this.repository.merge(comment, { parentComment });
+    }
 
     await this.repository.save(comment);
     return comment;
