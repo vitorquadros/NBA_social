@@ -16,3 +16,4 @@ postsRoutes.post('/:postId/like', authMiddleware, likesController.store);
 
 // Comments
 postsRoutes.post('/:postId/comments', authMiddleware, commentsController.store);
+postsRoutes.get('/:postId/comments', authMiddleware, commentsController.index);
