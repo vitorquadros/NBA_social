@@ -8,5 +8,5 @@ export interface ICommentsRepository {
     userId,
     parentCommentId
   }: CreateCommentDTO): Promise<Comment>;
-  // getAllPosts(): Promise<Post[]>;
+  getAllCommentsFromPost(postId: string): Promise<Comment[]>;
 }

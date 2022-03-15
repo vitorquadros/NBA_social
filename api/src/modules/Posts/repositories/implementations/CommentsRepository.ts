@@ -40,11 +40,12 @@ export class CommentsRepository implements ICommentsRepository {
     return comment;
   }
 
-  // async getAllPosts(): Promise<Post[]> {
-  //   const posts = await this.repository.find({
-  //     relations: ['likes', 'user']
-  //   });
+  async getAllCommentsFromPost(postId: string): Promise<Comment[]> {
+    const comments = await this.repository.find({
+      where: { post: postId },
+      relations: ['parentComment', 'replys']
+    });
 
-  //   return posts;
-  // }
+    return comments;
+  }
 }
