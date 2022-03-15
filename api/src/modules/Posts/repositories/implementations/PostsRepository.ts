@@ -33,7 +33,7 @@ export class PostsRepository implements IPostsRepository {
 
   async getAllPosts(): Promise<Post[]> {
     const posts = await this.repository.find({
-      relations: ['likes', 'user']
+      relations: ['likes', 'comments', 'user']
     });
 
     return posts;
