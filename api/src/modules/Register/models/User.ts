@@ -15,6 +15,7 @@ import { Address } from './Address';
 import { Post } from '../../Posts/models/Post';
 import { Like } from '../../Posts/models/Like';
 import { UserKey } from './UserKey';
+import { Comment } from '../../Posts/models/Comment';
 
 enum UserRole {
   USER = 'user',
@@ -78,6 +79,9 @@ export class User {
 
   @OneToMany(() => UserKey, (keys) => keys.userId)
   keys: UserKey[];
+
+  @OneToMany(() => Comment, (comments) => comments.owner)
+  comments: Comment[];
 
   constructor() {
     if (!this.id) {

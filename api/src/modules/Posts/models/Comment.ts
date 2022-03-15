@@ -10,42 +10,36 @@ import {
 } from 'typeorm';
 import { v4 as uuid } from 'uuid';
 import { User } from '../../Register/models/User';
-import { Comment } from './Comment';
-import { Like } from './Like';
+import { Post } from './Post';
 
-@Entity('posts')
-export class Post {
+@Entity('comments')
+export class Comment {
   @PrimaryColumn()
   id: string;
 
   @Column()
-  description: string;
+  text: string;
 
-  @Column()
-  image: string;
-
-  @ManyToOne(() => User, (user) => user.posts)
+  @ManyToOne(() => User, (user) => user.comments)
   @JoinColumn({ name: 'owner_id' })
-  user: User;
+  owner: User;
 
-  @OneToMany(() => Like, (like) => like.post)
-  likes: Like[];
+  @ManyToOne(() => Post, (post) => post.comments)
+  @JoinColumn({ name: 'post_id' })
+  post: Post;
 
-  @OneToMany(() => Comment, (comments) => comments.post)
-  comments: Comment[];
+  @ManyToOne(() => Comment, (comment) => comment.replys)
+  @JoinColumn({ name: 'parent_comment_id' })
+  parentComment: Comment;
 
-  // protected likesCount: number;
+  @OneToMany(() => Comment, (replys) => replys.parentComment)
+  replys: Comment[];
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
 
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
-
-  // @AfterLoad()
-  // getLikesCount() {
-  //   this.likesCount = this.likes.length;
-  // }
 
   constructor() {
     if (!this.id) {
