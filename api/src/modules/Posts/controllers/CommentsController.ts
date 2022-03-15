@@ -23,4 +23,20 @@ export class CommentsController {
       return res.status(400).json({ status: 'error', error: error.message });
     }
   }
+
+  async index(req: Request, res: Response): Promise<Response> {
+    const { postId } = req.params;
+
+    const commentsUsecase = container.resolve(CommentsUsecase);
+
+    try {
+      const comments = await commentsUsecase.getAllCommentsFromPost(postId);
+
+      return res
+        .status(200)
+        .json({ status: 'ok', commentsCount: comments.length, data: comments });
+    } catch (error) {
+      return res.status(400).json({ status: 'error', error: error.message });
+    }
+  }
 }
