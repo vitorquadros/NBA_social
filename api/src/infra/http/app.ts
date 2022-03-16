@@ -1,13 +1,7 @@
 import 'reflect-metadata';
 import cors from 'cors';
 import '../../shared/container';
-import express, {
-  Application,
-  NextFunction,
-  Request,
-  request,
-  Response
-} from 'express';
+import express, { Application, NextFunction, Request, Response } from 'express';
 import '../database';
 import { router } from './routes';
 
