@@ -5,10 +5,10 @@ import { multerConfig } from '../../../config/multer';
 export const uploadRoutes = Router();
 
 uploadRoutes.post(
-  '/avatar',
-  multer(multerConfig).single('avatar'),
+  '/',
+  multer(multerConfig).single('image'),
   (req: Request, res: Response) => {
     console.log(req.file);
-    return res.json({ status: 'ok' });
+    return res.json({ status: 'ok', filename: req.file.filename });
   }
 );

@@ -10,4 +10,4 @@ export const router = Router();
 router.use('/users', usersRoutes);
 router.use('/auth', authRoutes);
 router.use('/posts', postsRoutes);
-router.use('/uploads', uploadRoutes);
+router.use('/upload', uploadRoutes);
