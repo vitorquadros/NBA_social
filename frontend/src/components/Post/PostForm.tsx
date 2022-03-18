@@ -1,17 +1,17 @@
-import { useState } from 'react';
+import { useContext } from 'react';
 import styled from 'styled-components';
+import { ModalContext } from '../../contexts/ModalContext';
 
 export default function PostForm() {
-  // Image Preview
-  const [image, setImage] = useState<File | ''>('');
+  const { image, setImage } = useContext(ModalContext);
 
   return (
     <Form>
       {!image ? (
-        <h3>Para começar, você precisa selecionar uma imagem para o post</h3>
+        <h3>Para começar, você precisa selecionar uma imagem</h3>
       ) : (
         <>
-          <h3>Agora, escreva uma descrição para seu post</h3>
+          <h3>Agora, escreva uma descrição para sua publicação</h3>
           <textarea />
           <span className="warning">
             <span className="material-icons">question_mark</span>A descrição é
@@ -23,10 +23,8 @@ export default function PostForm() {
         type="file"
         name="image"
         id="image"
-        accept="image/*"
-        onChange={(e) =>
-          setImage(e.target.files instanceof FileList ? e.target.files[0] : '')
-        }
+        accept="image/*" // @ts-ignore
+        onChange={(e) => setImage(e.target.files[0])}
       />
       {!image && (
         <>
@@ -38,7 +36,7 @@ export default function PostForm() {
       )}
       {image ? (
         <>
-          <img
+          <img // @ts-ignore
             src={URL.createObjectURL(image)}
             width="500px"
             alt="Preview da imagem"
@@ -46,10 +44,10 @@ export default function PostForm() {
           <label className="upload-again" htmlFor="image">
             Escolher outra imagem
           </label>
+          <SendButton>Publicar</SendButton>
         </>
       ) : null}
       {/* // TODO: submit onclick Publicar */}
-      <SendButton>Publicar</SendButton>
     </Form>
   );
 }
@@ -110,7 +108,7 @@ const Form = styled.form`
   label.upload {
     height: 6rem;
     width: 25rem;
-    margin: 1rem 0 3rem 0;
+    margin: 1rem 0 1rem 0;
     background-color: rgb(229, 101, 3);
     display: flex;
     align-items: center;
