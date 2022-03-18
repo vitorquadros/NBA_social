@@ -23,7 +23,6 @@ export default function PostForm({ setShowModal }: PostFormProps) {
           </span>
         </>
       )}
-
       <input
         type="file"
         name="image"
@@ -33,7 +32,6 @@ export default function PostForm({ setShowModal }: PostFormProps) {
           setImage(e.target.files instanceof FileList ? e.target.files[0] : '')
         }
       />
-
       {!image && (
         <>
           <label className="upload" htmlFor="image">
@@ -42,7 +40,6 @@ export default function PostForm({ setShowModal }: PostFormProps) {
           </label>
         </>
       )}
-
       {image ? (
         <>
           <img
@@ -55,10 +52,8 @@ export default function PostForm({ setShowModal }: PostFormProps) {
           </label>
         </>
       ) : null}
-
-      <SendButton onClick={() => setShowModal((prev: boolean) => !prev)}>
-        Publicar
-      </SendButton>
+      {/* // TODO: submit onclick Publicar */}
+      <SendButton>Publicar</SendButton>
     </Form>
   );
 }
