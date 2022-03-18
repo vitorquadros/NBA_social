@@ -12,8 +12,10 @@ export default function Header() {
 
 const Container = styled.header`
   position: fixed;
+  top: 0;
+  z-index: 10;
   width: 100%;
-  min-height: 6rem;
+  height: 6rem;
   /* max-height: ;  TODO */
   display: flex;
   justify-content: center;
