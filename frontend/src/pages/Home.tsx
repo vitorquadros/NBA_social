@@ -20,3 +20,18 @@ export default function Home() {
     </Wrapper>
   );
 }
+
+const Wrapper = styled.div`
+  height: calc(100vh - 10rem); // FIX
+  width: 100%;
+
+  background-color: #fafafa;
+`;
+
+const Content = styled.div`
+  width: 50%;
+  margin: 0 auto;
+  margin-top: 10rem;
+
+  border: 1px solid black; // DEBUG
+`;
