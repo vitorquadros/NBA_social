@@ -1,11 +1,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 
-type PostFormProps = {
-  setShowModal: (state: any) => void;
-};
-
-export default function PostForm({ setShowModal }: PostFormProps) {
+export default function PostForm() {
   // Image Preview
   const [image, setImage] = useState<File | ''>('');
 

@@ -1,21 +1,18 @@
-import { useState } from 'react';
+import { useContext } from 'react';
 import styled from 'styled-components';
 import Header from '../components/Header/Header';
 import PostModal from '../components/Post/PostModal';
+import { ModalContext } from '../contexts/ModalContext';
 
 export default function Home() {
-  const [showModal, setShowModal] = useState<boolean>(false);
-
-  function openModal() {
-    setShowModal((prev) => !prev);
-  }
+  const { openModal } = useContext(ModalContext);
 
   return (
     <Wrapper>
       <Header />
       <Content>
         <button onClick={openModal}>Modal</button>
-        <PostModal showModal={showModal} setShowModal={setShowModal} />
+        <PostModal />
       </Content>
     </Wrapper>
   );

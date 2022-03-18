@@ -1,3 +1,4 @@
+import { ModalContextProvider } from './contexts/ModalContext';
 import { useFetch } from './hooks/useFetch';
 import Home from './pages/Home';
 import { Post } from './types/IPost';
@@ -9,7 +10,9 @@ function App() {
 
   return (
     <>
-      <Home />
+      <ModalContextProvider>
+        <Home />
+      </ModalContextProvider>
       {/* <ul>
         {posts?.map((post) => (
           <li key={post.id}>{post.description}</li>

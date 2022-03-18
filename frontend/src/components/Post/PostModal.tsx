@@ -1,14 +1,12 @@
-import { MutableRefObject, SyntheticEvent, useRef, useState } from 'react';
-import Popup from 'reactjs-popup';
+import { SyntheticEvent, useContext, useRef } from 'react';
 import styled from 'styled-components';
+import { ModalContext } from '../../contexts/ModalContext';
+import CloseModalPopup from './Popup/CloseModalPopup';
 import PostForm from './PostForm';
 
-type ModalProps = {
-  showModal: boolean;
-  setShowModal: (state: boolean) => void;
-};
+export default function PostModal() {
+  const { showModal, setShowModal } = useContext(ModalContext);
 
-export default function PostModal({ showModal, setShowModal }: ModalProps) {
   const modalRef = useRef<HTMLInputElement>(null);
 
   const closeModal = (e: SyntheticEvent) => {
@@ -24,32 +22,9 @@ export default function PostModal({ showModal, setShowModal }: ModalProps) {
           <ModalWrapper>
             <ModalContent>
               <h1>Crie sua publicação</h1>
-              <Popup
-                modal
-                trigger={
-                  <span className="material-icons close-button">close</span>
-                }
-              >
-                {(close: () => void) => (
-                  <CloseModal className="close-modal">
-                    <p>Tem certeza?</p>
-                    <p>Os campos preenchidos serão perdidos</p>
-                    <div className="close-modal-buttons">
-                      <button
-                        onClick={() => {
-                          setShowModal(false);
-                          close();
-                        }}
-                      >
-                        Fechar mesmo assim
-                      </button>
-                      <button onClick={() => close()}>Voltar</button>
-                    </div>
-                  </CloseModal>
-                )}
-              </Popup>
+              <CloseModalPopup />
 
-              <PostForm setShowModal={setShowModal} />
+              <PostForm />
             </ModalContent>
           </ModalWrapper>
         </Background>
@@ -57,48 +32,6 @@ export default function PostModal({ showModal, setShowModal }: ModalProps) {
     </>
   );
 }
-
-const CloseModal = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-width: 30rem;
-  min-height: 15rem;
-  border: 1px solid black;
-  background-color: #fafafa;
-  border-radius: 5px;
-  padding: 1rem 2rem;
-
-  div.close-modal-buttons {
-    margin-top: 2rem;
-  }
-
-  p {
-    margin: 0 1.6rem;
-    color: black;
-    font-weight: 600;
-  }
-
-  button {
-    margin: 0 1rem;
-    padding: 0.5rem 2rem;
-    cursor: pointer;
-    background-color: rgb(251, 111, 4);
-
-    border: 0;
-    border-radius: 4px;
-    font-weight: bold;
-    transition: 0.5s;
-    &:hover {
-      filter: brightness(80%);
-    }
-  }
-
-  button:first-child {
-    background-color: rgb(176, 78, 3);
-  }
-`;
 
 // const Container = styled.div`
 //   width: 50%;
