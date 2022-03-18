@@ -1,16 +1,17 @@
-import { useContext } from 'react';
+import { ReactComponentElement, ReactNode, useContext } from 'react';
 import Popup from 'reactjs-popup';
 import styled from 'styled-components';
 import { ModalContext } from '../../../contexts/ModalContext';
 
-export default function CloseModalPopup() {
-  const { setShowModal } = useContext(ModalContext);
+type CloseModalPopupProps = {
+  trigger: JSX.Element;
+};
+
+export default function CloseModalPopup({ trigger }: CloseModalPopupProps) {
+  const { setShowModal, setImage } = useContext(ModalContext);
 
   return (
-    <Popup
-      modal
-      trigger={<span className="material-icons close-button">close</span>}
-    >
+    <Popup modal trigger={trigger}>
       {(close: () => void) => (
         <CloseModal className="close-modal">
           <p>Tem certeza?</p>
@@ -18,7 +19,8 @@ export default function CloseModalPopup() {
           <div className="close-modal-buttons">
             <button
               onClick={() => {
-                setShowModal(false);
+                setShowModal(false); // @ts-ignore
+                setImage('');
                 close();
               }}
             >
