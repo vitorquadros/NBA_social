@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 import Header from '../components/Header/Header';
 import PostModal from '../components/Post/PostModal';

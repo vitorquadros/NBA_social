@@ -23,6 +23,12 @@ export default function PostModal({ showModal, setShowModal }: ModalProps) {
           <ModalWrapper>
             <ModalContent>
               <h1>Crie sua publicação</h1>
+              <span
+                className="material-icons close-button"
+                onClick={() => setShowModal(false)}
+              >
+                close
+              </span>
 
               <PostForm setShowModal={setShowModal} />
             </ModalContent>
@@ -75,9 +81,17 @@ const ModalContent = styled.div`
   width: 100%;
   margin: 2rem;
   text-align: center;
+  position: relative;
 
   h1 {
     color: rgb(229, 101, 3);
     font-size: 2rem;
+  }
+
+  span.close-button {
+    position: absolute;
+    right: 1rem;
+    top: -1.2rem;
+    cursor: pointer;
   }
 `;
