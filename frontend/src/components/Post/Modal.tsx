@@ -10,35 +10,37 @@ export default function Modal() {
   const modalRef = useRef<HTMLDivElement>(null);
 
   const closeModal = (e: SyntheticEvent) => {
-    if (modalRef.current === e.target) {
+    if (modalRef.current === e.target && !image) {
       setShowModal(false);
     }
   };
 
   return (
-    <Background onClick={closeModal} ref={modalRef}>
-      <ModalWrapper>
-        <ModalContent>
-          <h1>Crie sua publicação</h1>
-          {image ? (
-            <CloseModalPopup
-              trigger={
-                <span className="material-icons close-button">close</span>
-              }
-            />
-          ) : (
-            <span
-              className="material-icons close-button"
-              onClick={() => setShowModal(false)}
-            >
-              close
-            </span>
-          )}
+    <>
+      <Background onClick={closeModal} ref={modalRef}>
+        <ModalWrapper>
+          <ModalContent>
+            <h1>Crie sua publicação</h1>
+            {image ? (
+              <CloseModalPopup
+                trigger={
+                  <span className="material-icons close-button">close</span>
+                }
+              />
+            ) : (
+              <span
+                className="material-icons close-button"
+                onClick={() => setShowModal(false)}
+              >
+                close
+              </span>
+            )}
 
-          <PostForm />
-        </ModalContent>
-      </ModalWrapper>
-    </Background>
+            <PostForm />
+          </ModalContent>
+        </ModalWrapper>
+      </Background>
+    </>
   );
 }
 
@@ -66,6 +68,19 @@ const ModalWrapper = styled.div`
   background-color: #fafafa;
   color: #000;
   border-radius: 10px;
+
+  transition: scale 1s;
+
+  animation: teste 0.3s;
+
+  @keyframes teste {
+    from {
+      scale: 0%;
+    }
+    to {
+      scale: 100%;
+    }
+  }
 `;
 
 const ModalContent = styled.div`
