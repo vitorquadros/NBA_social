@@ -4,8 +4,11 @@ export default function Search() {
   return (
     <Container>
       <div className="search-box">
-        <span className="material-icons">search</span>
-        <input type="text" />
+        <label htmlFor="search">
+          <span className="material-icons">search</span>
+        </label>
+
+        <input type="text" id="search" />
       </div>
     </Container>
   );
