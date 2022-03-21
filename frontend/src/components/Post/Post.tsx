@@ -1,8 +1,21 @@
+import { useContext } from 'react';
 import styled from 'styled-components';
+import { ModalContext } from '../../contexts/ModalContext';
+import PostModal from './PostModal';
 
 export default function Post() {
+  const { showPostModal, openPostModal } = useContext(ModalContext);
+
+  if (showPostModal) {
+    document.body.style.overflowY = 'hidden';
+  } else {
+    document.body.style.overflowY = 'unset';
+  }
+
   return (
     <Container>
+      {showPostModal && <PostModal />}
+
       <PostInfo>
         <UserContainer>
           <img
@@ -24,7 +37,7 @@ export default function Post() {
         </DescriptionContainer>
       </PostInfo>
 
-      <ImageContainer>
+      <ImageContainer onClick={openPostModal}>
         <img src="https://wallpaper.dog/large/635907.jpg" alt="" />
       </ImageContainer>
 
@@ -166,5 +179,6 @@ const ImageContainer = styled.div`
   img {
     width: 100%;
     height: 100%;
+    cursor: pointer;
   }
 `;
