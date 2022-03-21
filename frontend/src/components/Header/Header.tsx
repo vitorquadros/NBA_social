@@ -1,10 +1,16 @@
 import styled from 'styled-components';
+import Search from './Search';
+import UserMenu from './UserMenu';
 
 export default function Header() {
   return (
     <Container>
       <Content>
         <p>Logo</p>
+
+        <Search />
+
+        <UserMenu />
       </Content>
     </Container>
   );
