@@ -113,6 +113,7 @@ const Container = styled.div`
   min-width: 60rem;
   max-width: 60rem;
   max-height: 100rem;
+  margin: 1.6rem 0;
 
   background-color: white;
   border-radius: 5px;

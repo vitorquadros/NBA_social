@@ -15,14 +15,16 @@ export default function Home() {
         {/* <button onClick={openModal}>Modal</button>
         <PostModal /> */}
         <Post />
+        <Post />
+        <Post />
       </Content>
     </Wrapper>
   );
 }
 
 const Wrapper = styled.div`
-  /* height: calc(100vh - 10rem); // FIX */
-  height: 2000px;
+  height: calc(100vh - 10rem); // FIX
+  /* height: 2000px; */
   width: 100%;
 
   background-color: #fafafa;
@@ -32,7 +34,7 @@ const Content = styled.div`
   width: 50%;
   min-width: 50%;
   margin: 0 auto;
-  margin-top: 10rem;
+  margin-top: 8rem;
   display: flex;
   flex-direction: column;
   align-items: center;
