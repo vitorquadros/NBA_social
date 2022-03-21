@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import styled from 'styled-components';
 import Header from '../components/Header/Header';
 import Post from '../components/Post/Post';
-import PostModal from '../components/Post/PostModal';
+import CreatePostModal from '../components/Post/CreatePostModal';
 import { ModalContext } from '../contexts/ModalContext';
 
 export default function Home() {
@@ -13,7 +13,7 @@ export default function Home() {
       <Header />
       <Content>
         {/* <button onClick={openModal}>Modal</button>
-        <PostModal /> */}
+        <CreatePostModal /> */}
         <Post />
         <Post />
         <Post />
