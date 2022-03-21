@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import styled from 'styled-components';
 import Header from '../components/Header/Header';
 import Post from '../components/Post/Post';
-import CreatePostModal from '../components/Post/CreatePostModal';
+import CreatePostModal from '../components/Post/CreatePost/CreatePostModal';
 import { ModalContext } from '../contexts/ModalContext';
 
 export default function Home() {

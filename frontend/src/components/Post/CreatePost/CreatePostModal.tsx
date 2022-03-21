@@ -1,7 +1,7 @@
-import { SyntheticEvent, useContext, useRef } from 'react';
-import { ModalContext } from '../../contexts/ModalContext';
+import { useContext } from 'react';
+import { ModalContext } from '../../../contexts/ModalContext';
+
 import Modal from './Modal';
-import CloseModalPopup from './Popup/CloseModalPopup';
 
 export default function PostModal() {
   const { showModal } = useContext(ModalContext);
