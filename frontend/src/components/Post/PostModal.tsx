@@ -1,10 +1,10 @@
 import { SyntheticEvent, useContext, useRef } from 'react';
 import styled from 'styled-components';
 import { ModalContext } from '../../contexts/ModalContext';
-import Comment from './Comment';
+import Comment from './Comments/Comment';
 import ReplyInput from './Comments/ReplyInput';
 import UserInfo from './Comments/UserInfo';
-import Reply from './Reply';
+import Reply from './Comments/Reply';
 
 export default function PostModal() {
   const { setShowPostModal } = useContext(ModalContext);
