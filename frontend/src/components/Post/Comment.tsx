@@ -29,7 +29,7 @@ export default function Comment() {
 }
 
 const Container = styled.div`
-  margin: 2rem 1rem 2rem 1.2rem;
+  margin: 1rem 1rem 1rem 1.2rem;
   display: flex;
   flex-direction: column;
 
@@ -68,6 +68,7 @@ const Container = styled.div`
   div.comment-replys {
     display: flex;
     margin: 0 auto;
+    // TODO: change margintop when mobile
 
     p {
       font-size: 1.4rem;
