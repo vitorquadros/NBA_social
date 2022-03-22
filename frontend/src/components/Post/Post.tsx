@@ -83,6 +83,7 @@ const DataContainer = styled.div`
 
   p {
     font-size: 1.4rem;
+    color: gray;
   }
 `;
 
@@ -118,6 +119,7 @@ const ActionsContainer = styled.div`
     p {
       font-size: 1.3rem;
       text-align: center;
+      color: gray;
     }
   }
 `;
