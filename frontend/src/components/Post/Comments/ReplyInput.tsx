@@ -20,7 +20,7 @@ const Container = styled.div`
   border-top: 1px solid rgba(var(--b6a, 219, 219, 219), 1);
 
   span {
-    padding: 0 2rem;
+    padding: 1rem 2rem;
     cursor: pointer;
   }
 
