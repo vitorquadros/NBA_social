@@ -2,6 +2,9 @@ import { SyntheticEvent, useContext, useRef } from 'react';
 import styled from 'styled-components';
 import { ModalContext } from '../../contexts/ModalContext';
 import Comment from './Comment';
+import ReplyInput from './Comments/ReplyInput';
+import UserInfo from './Comments/UserInfo';
+import Reply from './Reply';
 
 export default function PostModal() {
   const { setShowPostModal } = useContext(ModalContext);
@@ -18,28 +21,16 @@ export default function PostModal() {
     <Background onClick={closeModal} ref={modalRef}>
       <ModalWrapper>
         <ModalContent>
-          <ImageContainer className="image">
+          <ImageContainer>
             <img src="https://wallpaper.dog/large/635907.jpg" alt="" />
           </ImageContainer>
 
-          <DetailsContainer className="details">
-            <div className="user-info">
-              <img
-                src="https://www.morganstanley.com/content/dam/msdotcom/people/tiles/isaiah-dwuma.jpg.img.380.medium.jpg/1594668408164.jpg"
-                alt=""
-              />
-              <p className="name">Roberto Dias</p>
-              <img
-                className="team"
-                src="https://loodibee.com/wp-content/uploads/nba-atlanta-hawks-logo.png"
-                alt=""
-                title="Jogador do Atlanta Hawks"
-              />
-              {/* <span>&#8226;</span>
-              <p className="is-following">Você segue</p> */}
-            </div>
+          <DetailsContainer>
+            <UserInfo />
 
             <div className="comments">
+              <Reply />
+              {/* <Comment />
               <Comment />
               <Comment />
               <Comment />
@@ -59,14 +50,10 @@ export default function PostModal() {
               <Comment />
               <Comment />
               <Comment />
-              <Comment />
-              <Comment />
+              <Comment /> */}
             </div>
 
-            <div className="reply-to-comment">
-              <input type="text" placeholder="Adicione um comentário" />
-              <span className="material-icons">send</span>
-            </div>
+            <ReplyInput />
           </DetailsContainer>
         </ModalContent>
       </ModalWrapper>
@@ -96,70 +83,14 @@ const DetailsContainer = styled.div`
   max-width: 40%;
   height: auto;
   max-height: 100%;
-
-  div.user-info {
-    padding: 1.6rem;
-    display: flex;
-    align-items: center;
-    border-bottom: 1px solid rgba(var(--b6a, 219, 219, 219), 1);
-
-    p.name {
-      margin-left: 1rem;
-    }
-
-    /* span {
-      margin: 0 1rem;
-    } */
-
-    /* p.is-following {
-      font-size: 1.4rem;
-      color: gray;
-    } */
-
-    img {
-      width: 5rem;
-      border-radius: 50%;
-    }
-
-    img.team {
-      width: 5rem;
-      margin-left: auto;
-    }
-  }
+  display: flex;
+  flex-direction: column;
 
   div.comments {
     overflow-y: scroll;
     max-height: calc(
-      100% - 83px - 5rem
+      100% - 8.3rem - 5rem
     ); // modal header is always 83px and comment input is always 50px
-  }
-
-  div.reply-to-comment {
-    width: 100%;
-    height: 5rem;
-
-    display: flex;
-    align-items: center;
-
-    border-top: 1px solid rgba(var(--b6a, 219, 219, 219), 1);
-
-    span {
-      padding: 0 2rem;
-      cursor: pointer;
-    }
-
-    input {
-      box-sizing: border-box;
-      width: 100%;
-      border: 0;
-
-      font-size: 1.4rem;
-      padding-left: 1rem;
-
-      &:focus {
-        outline: none;
-      }
-    }
   }
 `;
 
