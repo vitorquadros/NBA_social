@@ -11,10 +11,10 @@ function App() {
 
   return (
     <>
-      {/* <ModalContextProvider>
+      <ModalContextProvider>
         <Home />
-      </ModalContextProvider> */}
-      <Profile />
+      </ModalContextProvider>
+      {/* <Profile /> */}
       {/* <ul>
         {posts?.map((post) => (
           <li key={post.id}>{post.description}</li>

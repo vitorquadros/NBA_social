@@ -1,10 +1,15 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import styled from 'styled-components';
 import { ModalContext } from '../../contexts/ModalContext';
 import PostModal from './PostModal';
 
 export default function Post() {
   const { showPostModal, openPostModal } = useContext(ModalContext);
+  const [showMore, setShowMore] = useState(false);
+
+  // DEBUG:
+  const text =
+    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique laboriosam iusto facere numquam aut et. Laudantium totam aperiam, voluptates nihil molestiae dicta cum pariatur ullam porro eum, tempore omnis, molestias ipsam? Aut ratione, vero quaerat saepe ipsam veniam aliquam ullam laudantium quisquam quos suscipit unde, obcaecati ex sed qui repellendus natus, optio quibusdam magnam sapiente ad rem quas accusantium! Quam earum iure enim vero repellat hic a fuga, ab aut aspernatur nam temporibus voluptas iusto praesentium nobis velit, obcaecati ducimus assumenda, quia alias. Placeat ducimus sapiente, magnam aut officia accusantium provident distinctio veniam possimus ea ad repudiandae, fugiat cum libero.';
 
   if (showPostModal) {
     document.body.style.overflowY = 'hidden';
@@ -15,7 +20,6 @@ export default function Post() {
   return (
     <Container>
       {showPostModal && <PostModal />}
-
       <PostInfo>
         <UserContainer>
           <img
@@ -29,18 +33,16 @@ export default function Post() {
         </UserContainer>
 
         <DescriptionContainer>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur
-            maxime eos pariatur. Non adipisci ullam qui accusantium sed
-            dignissimos quidem.
-          </p>
+          {showMore ? <p>{text}</p> : <p>{`${text.substring(0, 200)}`}</p>}
+          <span onClick={() => setShowMore(!showMore)}>
+            {showMore ? 'Mostrar menos' : 'Mostrar mais'}
+          </span>
         </DescriptionContainer>
       </PostInfo>
-
+      {/* // FIX: border */}
       <ImageContainer onClick={openPostModal}>
         <img src="https://wallpaper.dog/large/635907.jpg" alt="" />
       </ImageContainer>
-
       <ActionsContainer>
         <div className="actions">
           <div className="like">
@@ -64,7 +66,6 @@ export default function Post() {
           <p>22 horas atrás</p>
         </div>
       </ActionsContainer>
-
       <DataContainer>
         <div className="likes">
           <p>curtido por 1586 pessoas</p>
@@ -127,7 +128,7 @@ const ActionsContainer = styled.div`
 const Container = styled.div`
   min-width: 60rem;
   max-width: 60rem;
-  max-height: 100rem;
+
   margin: 1.6rem 0;
 
   background-color: white;
@@ -171,7 +172,22 @@ const UserContainer = styled.div`
   }
 `;
 
-const DescriptionContainer = styled.div``;
+const DescriptionContainer = styled.div`
+  p {
+    word-wrap: break-word;
+    font-size: 1.4rem;
+  }
+
+  span {
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: gray;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+`;
 
 const ImageContainer = styled.div`
   min-width: 60rem;
