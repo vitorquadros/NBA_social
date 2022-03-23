@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { ModalContext } from '../../contexts/ModalContext';
 import PostModal from './PostModal';
@@ -11,11 +11,13 @@ export default function Post() {
   const text =
     'Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique laboriosam iusto facere numquam aut et. Laudantium totam aperiam, voluptates nihil molestiae dicta cum pariatur ullam porro eum, tempore omnis, molestias ipsam? Aut ratione, vero quaerat saepe ipsam veniam aliquam ullam laudantium quisquam quos suscipit unde, obcaecati ex sed qui repellendus natus, optio quibusdam magnam sapiente ad rem quas accusantium! Quam earum iure enim vero repellat hic a fuga, ab aut aspernatur nam temporibus voluptas iusto praesentium nobis velit, obcaecati ducimus assumenda, quia alias. Placeat ducimus sapiente, magnam aut officia accusantium provident distinctio veniam possimus ea ad repudiandae, fugiat cum libero.';
 
-  if (showPostModal) {
-    document.body.style.overflowY = 'hidden';
-  } else {
-    document.body.style.overflowY = 'unset';
-  }
+  useEffect(() => {
+    if (showPostModal) {
+      document.body.style.overflowY = 'hidden';
+    } else {
+      document.body.style.overflowY = 'unset';
+    }
+  }, [showPostModal]);
 
   return (
     <Container>
