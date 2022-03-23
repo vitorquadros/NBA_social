@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 export default function UserMenu() {
   const [isActive, setIsActive] = useState(false);
@@ -24,15 +25,15 @@ export default function UserMenu() {
           opacity: isActive ? '1' : '0'
         }}
       >
-        <div className="options-button">
+        <Link to={'/profile'} className="options-button">
           <span className="material-icons">person</span>
           <p>Perfil</p>
-        </div>
+        </Link>
 
-        <div className="options-button">
+        <Link to="/profile" className="options-button">
           <span className="material-icons">logout</span>
           <p>Sair</p>
-        </div>
+        </Link>
       </div>
     </Container>
   );
@@ -71,12 +72,15 @@ const Container = styled.div`
 
     transition: 0.2s;
 
-    div.options-button {
+    .options-button {
       display: flex;
       padding: 0.5rem 0;
       align-items: center;
       cursor: pointer;
       transition: background 0.3s;
+
+      color: black;
+      text-decoration: none;
 
       &:hover {
         background-color: #e6e6e6;
@@ -91,7 +95,7 @@ const Container = styled.div`
       }
     }
 
-    div.options-button:last-child {
+    .options-button:last-child {
       border-top: 1px solid rgba(var(--b6a, 219, 219, 219), 1);
     }
   }

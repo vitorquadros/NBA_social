@@ -2,12 +2,13 @@ import styled from 'styled-components';
 import AuthMenu from './AuthMenu';
 import Search from './Search';
 import UserMenu from './UserMenu';
+import { Link } from 'react-router-dom';
 
 export default function Header() {
   return (
     <Container>
       <Content>
-        <p>Logo</p>
+        <HeaderLink to="/">Home</HeaderLink>
         <Search />
         {/* <AuthMenu /> */}
         <UserMenu />
@@ -37,4 +38,9 @@ const Content = styled.div`
   gap: 3rem;
 
   justify-content: space-between;
+`;
+
+const HeaderLink = styled(Link)`
+  color: black;
+  text-decoration: none;
 `;
