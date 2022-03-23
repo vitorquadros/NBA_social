@@ -3,6 +3,7 @@ import AuthMenu from './AuthMenu';
 import Search from './Search';
 import UserMenu from './UserMenu';
 import { Link } from 'react-router-dom';
+import CreatePostMenu from './CreatePostMenu';
 
 export default function Header() {
   return (
@@ -11,6 +12,7 @@ export default function Header() {
         <HeaderLink to="/">Home</HeaderLink>
         <Search />
         {/* <AuthMenu /> */}
+        <CreatePostMenu />
         <UserMenu />
       </Content>
     </Container>

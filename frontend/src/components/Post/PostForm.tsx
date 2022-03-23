@@ -38,7 +38,6 @@ export default function PostForm() {
         <>
           <img // @ts-ignore
             src={URL.createObjectURL(image)}
-            width="500px"
             alt="Preview da imagem"
           ></img>
           <label className="upload-again" htmlFor="image">
@@ -71,6 +70,11 @@ const Form = styled.form`
   display: flex;
   align-items: center;
   flex-direction: column;
+
+  img {
+    max-height: 40rem;
+  }
+
   textarea {
     resize: none;
     min-height: 10rem;

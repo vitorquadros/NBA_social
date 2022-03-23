@@ -13,9 +13,11 @@ export default function CloseModalPopup({ trigger }: CloseModalPopupProps) {
   return (
     <Popup modal trigger={trigger}>
       {(close: () => void) => (
-        <CloseModal className="close-modal">
-          <p>Tem certeza?</p>
-          <p>Os campos preenchidos serão perdidos</p>
+        <CloseModal>
+          <p className="warning-confirm">Tem certeza?</p>
+          <p className="warning-message">
+            Os campos preenchidos serão perdidos
+          </p>
           <div className="close-modal-buttons">
             <button
               onClick={() => {
@@ -41,7 +43,7 @@ const CloseModal = styled.div`
   justify-content: center;
   min-width: 30rem;
   min-height: 15rem;
-  border: 1px solid black;
+  border: 1px solid rgba(var(--b6a, 219, 219, 219), 1);
   background-color: #fafafa;
   border-radius: 5px;
   padding: 1rem 2rem;
@@ -50,10 +52,14 @@ const CloseModal = styled.div`
     margin-top: 2rem;
   }
 
-  p {
+  p.warning-confirm {
+    font-weight: 600;
+  }
+
+  p.warning-message {
     margin: 0 1.6rem;
     color: black;
-    font-weight: 600;
+    font-weight: 400;
   }
 
   button {
@@ -64,7 +70,7 @@ const CloseModal = styled.div`
 
     border: 0;
     border-radius: 4px;
-    font-weight: bold;
+    font-weight: 500;
     transition: 0.5s;
     &:hover {
       filter: brightness(80%);

@@ -1,13 +1,18 @@
-import React from 'react';
+import { useContext } from 'react';
 import styled from 'styled-components';
 import Header from '../components/Header/Header';
+import CreatePostModal from '../components/Post/CreatePost/CreatePostModal';
 import PostsTable from '../components/Profile/PostsTable';
+import { ModalContext } from '../contexts/ModalContext';
 
 export default function Profile() {
+  const { showModal } = useContext(ModalContext);
+
   return (
     <Wrapper>
       <Header />
       <Content>
+        {showModal && <CreatePostModal />}
         <div className="images">
           <img
             src="https://cdn.quotesgram.com/img/69/67/907176883-Miami-Heat-Big-3-Facebook-Cover.jpg"
@@ -87,7 +92,6 @@ const Content = styled.div`
     width: 100%;
     max-width: 100%;
     position: relative;
-    border: 1px solid black;
     max-height: 250px;
 
     img.cover {
