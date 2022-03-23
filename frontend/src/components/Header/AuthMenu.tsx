@@ -1,10 +1,14 @@
+import { useContext } from 'react';
 import styled from 'styled-components';
+import { ModalContext } from '../../contexts/ModalContext';
 
 export default function AuthMenu() {
+  const { openRegisterModal } = useContext(ModalContext);
+
   return (
-    <Container>
+    <Container onClick={openRegisterModal}>
       <button>
-        <p>Fazer login</p>
+        <p>Login</p>
         <span className="material-icons">login</span>
       </button>
     </Container>
