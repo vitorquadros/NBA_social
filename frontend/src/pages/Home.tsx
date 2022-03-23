@@ -1,12 +1,21 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import Header from '../components/Header/Header';
 import Post from '../components/Post/Post';
 import CreatePostModal from '../components/Post/CreatePost/CreatePostModal';
 import { ModalContext } from '../contexts/ModalContext';
+import AuthModal from '../components/Auth/AuthModal';
 
 export default function Home() {
-  const { openModal } = useContext(ModalContext);
+  const { openModal, showRegisterModal } = useContext(ModalContext);
+
+  useEffect(() => {
+    if (showRegisterModal) {
+      document.body.style.overflowY = 'hidden';
+    } else {
+      document.body.style.overflowY = 'unset';
+    }
+  }, [showRegisterModal]);
 
   return (
     <Wrapper>
@@ -14,6 +23,7 @@ export default function Home() {
       <Content>
         {/* <button onClick={openModal}>Modal</button>
         <CreatePostModal /> */}
+        {showRegisterModal && <AuthModal />}
         <Post />
         <Post />
         <Post />
@@ -23,9 +33,10 @@ export default function Home() {
 }
 
 const Wrapper = styled.div`
-  height: calc(100vh - 10rem); // FIX
-  /* height: 2000px; */
+  height: 100vh; // FIX
   width: 100%;
+
+  // FIX: scroll moving page to the left
 
   background-color: #fafafa;
 `;
