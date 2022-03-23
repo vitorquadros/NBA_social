@@ -9,8 +9,8 @@ export default function Header() {
       <Content>
         <p>Logo</p>
         <Search />
-        <AuthMenu />
-        {/* <UserMenu /> */}
+        {/* <AuthMenu /> */}
+        <UserMenu />
       </Content>
     </Container>
   );

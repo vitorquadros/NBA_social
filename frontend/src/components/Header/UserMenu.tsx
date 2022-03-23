@@ -1,25 +1,98 @@
+import { useState } from 'react';
 import styled from 'styled-components';
 
 export default function UserMenu() {
+  const [isActive, setIsActive] = useState(false);
+
   return (
     <Container>
-      <img
-        src="https://www.morganstanley.com/content/dam/msdotcom/people/tiles/isaiah-dwuma.jpg.img.380.medium.jpg/1594668408164.jpg"
-        alt=""
-      />
+      <div className="menu" onClick={() => setIsActive(!isActive)}>
+        <img
+          src="https://www.morganstanley.com/content/dam/msdotcom/people/tiles/isaiah-dwuma.jpg.img.380.medium.jpg/1594668408164.jpg"
+          alt=""
+        />
+        {isActive ? (
+          <span className="material-icons">expand_less</span>
+        ) : (
+          <span className="material-icons">expand_more</span>
+        )}
+      </div>
+      <div
+        className="menu-options"
+        style={{
+          visibility: isActive ? 'visible' : 'hidden',
+          opacity: isActive ? '1' : '0'
+        }}
+      >
+        <div className="options-button">
+          <span className="material-icons">person</span>
+          <p>Perfil</p>
+        </div>
 
-      <span className="material-icons">expand_more</span>
+        <div className="options-button">
+          <span className="material-icons">logout</span>
+          <p>Sair</p>
+        </div>
+      </div>
     </Container>
   );
 }
 
 const Container = styled.div`
-  display: flex;
-  align-items: center;
-  cursor: pointer;
+  position: relative;
 
-  img {
-    width: 4rem;
-    border-radius: 50%;
+  div.menu {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+    img {
+      width: 4rem;
+      border-radius: 50%;
+    }
+  }
+
+  div.menu-options {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 4rem;
+    right: 0;
+    margin-top: 1rem;
+    background-color: white;
+    min-width: 15rem;
+    max-width: 20rem;
+
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-right: 1px solid rgba(var(--b6a, 219, 219, 219), 1);
+    border-bottom: 1px solid rgba(var(--b6a, 219, 219, 219), 1);
+    border-left: 1px solid rgba(var(--b6a, 219, 219, 219), 1);
+
+    transition: 0.2s;
+
+    div.options-button {
+      display: flex;
+      padding: 0.5rem 0;
+      align-items: center;
+      cursor: pointer;
+      transition: background 0.3s;
+
+      &:hover {
+        background-color: #e6e6e6;
+      }
+
+      p {
+        margin: 0 auto;
+      }
+
+      span {
+        margin-left: 0.5rem;
+      }
+    }
+
+    div.options-button:last-child {
+      border-top: 1px solid rgba(var(--b6a, 219, 219, 219), 1);
+    }
   }
 `;
