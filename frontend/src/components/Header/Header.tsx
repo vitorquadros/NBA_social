@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import AuthMenu from './AuthMenu';
 import Search from './Search';
 import UserMenu from './UserMenu';
 
@@ -7,10 +8,9 @@ export default function Header() {
     <Container>
       <Content>
         <p>Logo</p>
-
         <Search />
-
-        <UserMenu />
+        <AuthMenu />
+        {/* <UserMenu /> */}
       </Content>
     </Container>
   );
@@ -34,4 +34,7 @@ const Content = styled.div`
   width: 50%;
   display: flex;
   align-items: center;
+  gap: 3rem;
+
+  justify-content: space-between;
 `;
