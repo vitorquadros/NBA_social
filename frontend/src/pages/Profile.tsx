@@ -88,12 +88,12 @@ const Content = styled.div`
     max-width: 100%;
     position: relative;
     border: 1px solid black;
-    height: 250px;
+    max-height: 250px;
 
     img.cover {
       width: 100%;
       max-width: 100%;
-      max-height: 100%;
+      max-height: 250px;
     }
 
     img.avatar {
