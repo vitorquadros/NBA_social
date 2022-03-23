@@ -3,10 +3,10 @@ import styled from 'styled-components';
 import { ModalContext } from '../../contexts/ModalContext';
 
 export default function CreatePostMenu() {
-  const { openModal } = useContext(ModalContext);
+  const { openCreatePostModal } = useContext(ModalContext);
 
   return (
-    <Container onClick={openModal}>
+    <Container onClick={openCreatePostModal}>
       <button>
         <span className="material-icons">add</span>
         <p>Novo Post</p>

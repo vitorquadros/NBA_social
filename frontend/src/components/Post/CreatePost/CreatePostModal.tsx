@@ -5,13 +5,13 @@ import CloseModalPopup from '../Popup/CloseModalPopup';
 import PostForm from '../PostForm';
 
 export default function CreatePostModal() {
-  const { setShowModal, image } = useContext(ModalContext);
+  const { setShowCreatePostModal, image } = useContext(ModalContext);
 
   const modalRef = useRef<HTMLDivElement>(null);
 
   const closeModal = (e: SyntheticEvent) => {
     if (modalRef.current === e.target && !image) {
-      setShowModal(false);
+      setShowCreatePostModal(false);
     }
   };
 
@@ -30,7 +30,7 @@ export default function CreatePostModal() {
             ) : (
               <span
                 className="material-icons close-button"
-                onClick={() => setShowModal(false)}
+                onClick={() => setShowCreatePostModal(false)}
               >
                 close
               </span>

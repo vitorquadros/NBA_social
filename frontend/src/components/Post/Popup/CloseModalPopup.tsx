@@ -8,7 +8,7 @@ type CloseModalPopupProps = {
 };
 
 export default function CloseModalPopup({ trigger }: CloseModalPopupProps) {
-  const { setShowModal, setImage } = useContext(ModalContext);
+  const { setShowCreatePostModal, setImage } = useContext(ModalContext);
 
   return (
     <Popup modal trigger={trigger}>
@@ -21,7 +21,7 @@ export default function CloseModalPopup({ trigger }: CloseModalPopupProps) {
           <div className="close-modal-buttons">
             <button
               onClick={() => {
-                setShowModal(false); // @ts-ignore
+                setShowCreatePostModal(false); // @ts-ignore
                 setImage('');
                 close();
               }}

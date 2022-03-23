@@ -6,13 +6,14 @@ import PostsTable from '../components/Profile/PostsTable';
 import { ModalContext } from '../contexts/ModalContext';
 
 export default function Profile() {
-  const { showModal } = useContext(ModalContext);
+  const { showCreatePostModal } = useContext(ModalContext);
 
   return (
     <Wrapper>
       <Header />
       <Content>
-        {showModal && <CreatePostModal />}
+        {showCreatePostModal && <CreatePostModal />}
+        {/* // TODO: refactor into component */}
         <div className="images">
           <img
             src="https://cdn.quotesgram.com/img/69/67/907176883-Miami-Heat-Big-3-Facebook-Cover.jpg"

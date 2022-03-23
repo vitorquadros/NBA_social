@@ -7,7 +7,7 @@ import AuthModal from '../components/Auth/AuthModal';
 import CreatePostModal from '../components/Post/CreatePost/CreatePostModal';
 
 export default function Home() {
-  const { showRegisterModal, showModal } = useContext(ModalContext);
+  const { showRegisterModal, showCreatePostModal } = useContext(ModalContext);
 
   useEffect(() => {
     if (showRegisterModal) {
@@ -21,7 +21,7 @@ export default function Home() {
     <Wrapper>
       <Header />
       <Content>
-        {showModal && <CreatePostModal />}
+        {showCreatePostModal && <CreatePostModal />}
         {showRegisterModal && <AuthModal />}
         <Post />
         <Post />

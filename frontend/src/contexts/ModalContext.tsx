@@ -1,9 +1,9 @@
 import { createContext, ReactNode, useState } from 'react';
 
 const initialValue = {
-  showModal: false,
-  setShowModal: () => {},
-  openModal: () => {},
+  showCreatePostModal: false,
+  setShowCreatePostModal: () => {},
+  openCreatePostModal: () => {},
   image: '',
   setImage: () => {},
 
@@ -21,11 +21,12 @@ type ModalContextProps = {
 };
 
 type ModalContextTypes = {
-  showModal: boolean;
-  setShowModal: (state: boolean) => void;
-  openModal: () => void;
   image: FileList | string;
   setImage: (imageFile: FileList) => void;
+
+  showCreatePostModal: boolean;
+  setShowCreatePostModal: (state: boolean) => void;
+  openCreatePostModal: () => void;
 
   showPostModal: boolean;
   setShowPostModal: (state: boolean) => void;
@@ -39,8 +40,11 @@ type ModalContextTypes = {
 export const ModalContext = createContext<ModalContextTypes>(initialValue);
 
 export const ModalContextProvider = ({ children }: ModalContextProps) => {
-  const [showModal, setShowModal] = useState<boolean>(initialValue.showModal);
   const [image, setImage] = useState<string | FileList>(initialValue.image);
+
+  const [showCreatePostModal, setShowCreatePostModal] = useState<boolean>(
+    initialValue.showCreatePostModal
+  );
 
   const [showPostModal, setShowPostModal] = useState<boolean>(
     initialValue.showPostModal
@@ -50,8 +54,8 @@ export const ModalContextProvider = ({ children }: ModalContextProps) => {
     initialValue.showRegisterModal
   );
 
-  function openModal() {
-    setShowModal((prev) => !prev);
+  function openCreatePostModal() {
+    setShowCreatePostModal((prev) => !prev);
   }
 
   function openPostModal() {
@@ -65,11 +69,12 @@ export const ModalContextProvider = ({ children }: ModalContextProps) => {
   return (
     <ModalContext.Provider
       value={{
-        showModal,
-        setShowModal,
-        openModal,
         image,
         setImage,
+
+        showCreatePostModal,
+        setShowCreatePostModal,
+        openCreatePostModal,
 
         showPostModal,
         setShowPostModal,
