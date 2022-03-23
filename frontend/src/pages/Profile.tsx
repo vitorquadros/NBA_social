@@ -30,7 +30,11 @@ export default function Profile() {
 
         <div className="user-info">
           <div className="main-info">
-            <p className="name">Roberto Dias</p>
+            <div className="name-container">
+              <p className="name">Roberto Dias</p>
+              <span className="material-icons">verified</span>
+            </div>
+
             <p className="bio">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab quo
               nobis ipsam ex eveniet voluptatibus laboriosam. Architecto
@@ -139,10 +143,22 @@ const Content = styled.div`
       width: 65%;
       max-width: 65%;
 
-      p.name {
-        font-size: 2rem;
+      div.name-container {
+        display: flex;
+        align-items: center;
         margin-bottom: 1rem;
-        font-weight: 500;
+
+        span {
+          width: 24px;
+          height: 24px;
+          margin-left: 0.5rem;
+        }
+
+        p.name {
+          font-size: 2rem;
+
+          font-weight: 500;
+        }
       }
 
       p.bio {
