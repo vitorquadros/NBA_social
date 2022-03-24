@@ -141,13 +141,13 @@ const Container = styled.div`
 `;
 
 const PostInfo = styled.div`
-  margin: 1.6rem;
+  margin: 1rem 1.6rem 0 1.6rem;
 `;
 
 const UserContainer = styled.div`
   display: inline-flex;
   cursor: pointer;
-  margin-bottom: 1.2rem;
+  margin-bottom: 1rem;
 
   &:hover {
     p.username {
@@ -175,6 +175,8 @@ const UserContainer = styled.div`
 `;
 
 const DescriptionContainer = styled.div`
+  margin-bottom: 1rem;
+
   p {
     word-wrap: break-word;
     font-size: 1.4rem;
