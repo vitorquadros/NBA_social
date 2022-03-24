@@ -11,9 +11,11 @@ const initialValue = {
   setShowPostModal: () => {},
   openPostModal: () => {},
 
-  showRegisterModal: false,
-  setShowRegisterModal: () => {},
-  openRegisterModal: () => {}
+  showAuthModal: false,
+  setShowAuthModal: () => {},
+  openAuthModal: () => {},
+  isRegister: false,
+  setIsRegister: () => {}
 };
 
 type ModalContextProps = {
@@ -32,9 +34,11 @@ type ModalContextTypes = {
   setShowPostModal: (state: boolean) => void;
   openPostModal: () => void;
 
-  showRegisterModal: boolean;
-  setShowRegisterModal: (state: boolean) => void;
-  openRegisterModal: () => void;
+  showAuthModal: boolean;
+  setShowAuthModal: (state: boolean) => void;
+  openAuthModal: () => void;
+  isRegister: boolean;
+  setIsRegister: (state: boolean) => void;
 };
 
 export const ModalContext = createContext<ModalContextTypes>(initialValue);
@@ -50,8 +54,11 @@ export const ModalContextProvider = ({ children }: ModalContextProps) => {
     initialValue.showPostModal
   );
 
-  const [showRegisterModal, setShowRegisterModal] = useState<boolean>(
-    initialValue.showRegisterModal
+  const [showAuthModal, setShowAuthModal] = useState<boolean>(
+    initialValue.showAuthModal
+  );
+  const [isRegister, setIsRegister] = useState<boolean>(
+    initialValue.isRegister
   );
 
   function openCreatePostModal() {
@@ -62,8 +69,8 @@ export const ModalContextProvider = ({ children }: ModalContextProps) => {
     setShowPostModal((prev) => !prev);
   }
 
-  function openRegisterModal() {
-    setShowRegisterModal((prev) => !prev);
+  function openAuthModal() {
+    setShowAuthModal((prev) => !prev);
   }
 
   return (
@@ -80,9 +87,11 @@ export const ModalContextProvider = ({ children }: ModalContextProps) => {
         setShowPostModal,
         openPostModal,
 
-        showRegisterModal,
-        setShowRegisterModal,
-        openRegisterModal
+        showAuthModal,
+        setShowAuthModal,
+        openAuthModal,
+        isRegister,
+        setIsRegister
       }}
     >
       {children}
