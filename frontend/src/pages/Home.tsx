@@ -11,12 +11,12 @@ export default function Home() {
   const { showAuthModal, showCreatePostModal } = useContext(ModalContext);
 
   useEffect(() => {
-    if (showAuthModal) {
+    if (showAuthModal || showCreatePostModal) {
       document.body.style.overflowY = 'hidden';
     } else {
       document.body.style.overflowY = 'unset';
     }
-  }, [showAuthModal]);
+  }, [showAuthModal, showCreatePostModal]);
 
   return (
     <Wrapper>

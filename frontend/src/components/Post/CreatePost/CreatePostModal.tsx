@@ -2,7 +2,7 @@ import { forwardRef, SyntheticEvent, useContext, useRef } from 'react';
 import styled from 'styled-components';
 import { ModalContext } from '../../../contexts/ModalContext';
 import CloseModalPopup from '../Popup/CloseModalPopup';
-import PostForm from '../PostForm';
+import PostForm from './PostForm';
 
 export default function CreatePostModal() {
   const { setShowCreatePostModal, image } = useContext(ModalContext);
