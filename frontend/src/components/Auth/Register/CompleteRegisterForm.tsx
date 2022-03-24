@@ -23,11 +23,14 @@ export default function CompleteRegisterForm() {
 
       <div className="input-field password-field">
         <label htmlFor="password">Senha</label>
-        <input
-          type={isPasswordVisible ? 'text' : 'password'}
-          name="password"
-          id="password"
-        />
+        <div className="password-wrapper">
+          <input
+            type={isPasswordVisible ? 'text' : 'password'}
+            name="password"
+            id="password"
+          />
+        </div>
+
         <div
           className="hide-password"
           onClick={() => setIsPasswordVisible(!isPasswordVisible)}
@@ -40,7 +43,7 @@ export default function CompleteRegisterForm() {
         </div>
       </div>
 
-      <div className="input-field password-field">
+      <div className="input-field">
         <label htmlFor="confirmPassword">Confirmar senha</label>
         <input
           type={isPasswordVisible ? 'text' : 'password'}
@@ -91,6 +94,15 @@ export default function CompleteRegisterForm() {
         </select>
       </div>
 
+      <div className="input-field input-file">
+        <input type="file" name="avatar" id="avatar" />
+        <label className="upload-avatar" htmlFor="avatar">
+          <span className="material-icons">add_photo_alternate</span>
+          Selecionar
+        </label>
+        <p>Imagem de perfil</p>
+      </div>
+
       <button>Finalizar cadastro</button>
     </Form>
   );
@@ -106,9 +118,18 @@ const Form = styled.form`
   div.password-field {
     position: relative;
 
+    div.password-wrapper {
+      border-radius: 10px;
+      background-color: #e6e6e6;
+
+      input {
+        width: calc(100% - 3rem);
+      }
+    }
+
     span {
       position: absolute;
-      top: 35px;
+      top: 34px;
       right: 10px;
       cursor: pointer;
     }
@@ -121,6 +142,7 @@ const Form = styled.form`
     label {
       margin-left: 0.5rem;
       margin-bottom: 0.3rem;
+      font-size: 1.4rem;
     }
 
     input,
@@ -146,6 +168,40 @@ const Form = styled.form`
 
     select {
       cursor: pointer;
+    }
+
+    input[type='file'] {
+      display: none;
+    }
+
+    label.upload-avatar {
+      border-radius: 10px;
+      height: 4rem;
+      width: 15rem;
+      margin: 1rem 0 1rem 0;
+      padding: 0 1rem;
+      background-color: #e6e6e6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 500;
+      cursor: pointer;
+      gap: 1rem;
+      transition: 0.5s;
+      &:hover {
+        filter: brightness(80%);
+      }
+    }
+  }
+
+  div.input-file {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    p {
+      margin-left: 1rem;
+      font-size: 1.4rem;
     }
   }
 
