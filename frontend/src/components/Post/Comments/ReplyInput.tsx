@@ -28,6 +28,7 @@ const Container = styled.div`
     box-sizing: border-box;
     width: 100%;
     border: 0;
+    background-color: #fafafa;
 
     font-size: 1.4rem;
     padding-left: 1rem;

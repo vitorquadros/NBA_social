@@ -1,6 +1,10 @@
+import { useContext } from 'react';
 import styled from 'styled-components';
+import { CommentsContext } from '../../../contexts/CommentsContext';
 
 export default function Comment() {
+  const { isReply, setIsReply } = useContext(CommentsContext);
+
   return (
     <Container>
       <div className="comment">
@@ -21,7 +25,7 @@ export default function Comment() {
           </div>
         </div>
       </div>
-      <div className="comment-replys">
+      <div className="comment-replys" onClick={() => setIsReply(!isReply)}>
         <p>Ver respostas (6)</p>
       </div>
     </Container>

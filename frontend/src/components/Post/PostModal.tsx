@@ -5,9 +5,11 @@ import Comment from './Comments/Comment';
 import ReplyInput from './Comments/ReplyInput';
 import UserInfo from './Comments/UserInfo';
 import Reply from './Comments/Reply';
+import { CommentsContext } from '../../contexts/CommentsContext';
 
 export default function PostModal() {
   const { setShowPostModal } = useContext(ModalContext);
+  const { isReply } = useContext(CommentsContext);
 
   const modalRef = useRef<HTMLDivElement>(null);
 
@@ -27,30 +29,20 @@ export default function PostModal() {
 
           <DetailsContainer>
             <UserInfo />
-
+            {/* // TODO: scroll top when open comments */}
             <div className="comments">
-              <Reply />
-              {/* <Comment />
-              <Comment />
-              <Comment />
-              <Comment />
-              <Comment />
-              <Comment />
-              <Comment />
-              <Comment />
-              <Comment />
-              <Comment />
-              <Comment />
-              <Comment />
-              <Comment />
-              <Comment />
-              <Comment />
-              <Comment />
-              <Comment />
-              <Comment />
-              <Comment />
-              <Comment />
-              <Comment /> */}
+              {isReply ? (
+                <Reply />
+              ) : (
+                <>
+                  <Comment />
+                  <Comment />
+                  <Comment />
+                  <Comment />
+                  <Comment />
+                  <Comment />
+                </>
+              )}
             </div>
 
             <ReplyInput />

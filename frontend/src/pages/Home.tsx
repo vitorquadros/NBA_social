@@ -5,6 +5,7 @@ import Post from '../components/Post/Post';
 import { ModalContext } from '../contexts/ModalContext';
 import AuthModal from '../components/Auth/AuthModal';
 import CreatePostModal from '../components/Post/CreatePost/CreatePostModal';
+import { CommentsContextProvider } from '../contexts/CommentsContext';
 
 export default function Home() {
   const { showAuthModal, showCreatePostModal } = useContext(ModalContext);
@@ -23,9 +24,11 @@ export default function Home() {
       <Content>
         {showCreatePostModal && <CreatePostModal />}
         {showAuthModal && <AuthModal />}
-        <Post />
-        <Post />
-        <Post />
+        <CommentsContextProvider>
+          <Post />
+          <Post />
+          <Post />
+        </CommentsContextProvider>
       </Content>
     </Wrapper>
   );
