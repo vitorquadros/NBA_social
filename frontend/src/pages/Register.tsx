@@ -13,7 +13,6 @@ export default function Register() {
 const Container = styled.div`
   width: 100%;
   background-color: #fafafa;
-  border: 1px solid red;
   display: flex;
   flex-direction: column;
   align-items: center;

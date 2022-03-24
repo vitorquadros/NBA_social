@@ -3,9 +3,10 @@ import styled from 'styled-components';
 
 export default function CompleteRegisterForm() {
   const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
+  const [fileName, setFileName] = useState<string>('');
 
   return (
-    <Form>
+    <Form method="POST">
       <div className="input-field">
         <label htmlFor="email">Email</label>
         <input type="email" disabled value="testedasilva@dev.com" />
@@ -95,12 +96,17 @@ export default function CompleteRegisterForm() {
       </div>
 
       <div className="input-field input-file">
-        <input type="file" name="avatar" id="avatar" />
+        <input
+          type="file"
+          name="avatar"
+          id="avatar"
+          onChange={(e) => setFileName(e.target.files![0].name)}
+        />
         <label className="upload-avatar" htmlFor="avatar">
           <span className="material-icons">add_photo_alternate</span>
           Selecionar
         </label>
-        <p>Imagem de perfil</p>
+        {fileName ? <p>Selecionado: {fileName}</p> : <p>Imagem de perfil</p>}
       </div>
 
       <button>Finalizar cadastro</button>
