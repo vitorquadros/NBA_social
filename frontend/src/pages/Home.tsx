@@ -7,22 +7,22 @@ import AuthModal from '../components/Auth/AuthModal';
 import CreatePostModal from '../components/Post/CreatePost/CreatePostModal';
 
 export default function Home() {
-  const { showRegisterModal, showCreatePostModal } = useContext(ModalContext);
+  const { showAuthModal, showCreatePostModal } = useContext(ModalContext);
 
   useEffect(() => {
-    if (showRegisterModal) {
+    if (showAuthModal) {
       document.body.style.overflowY = 'hidden';
     } else {
       document.body.style.overflowY = 'unset';
     }
-  }, [showRegisterModal]);
+  }, [showAuthModal]);
 
   return (
     <Wrapper>
       <Header />
       <Content>
         {showCreatePostModal && <CreatePostModal />}
-        {showRegisterModal && <AuthModal />}
+        {showAuthModal && <AuthModal />}
         <Post />
         <Post />
         <Post />

@@ -1,16 +1,19 @@
-import { SyntheticEvent, useContext, useRef } from 'react';
+import { SyntheticEvent, useContext, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { ModalContext } from '../../contexts/ModalContext';
 import LoginForm from './LoginForm';
+import RegisterForm from './RegisterForm';
 
 export default function AuthModal() {
-  const { setShowRegisterModal } = useContext(ModalContext);
+  const { setShowAuthModal, isRegister, setIsRegister } =
+    useContext(ModalContext);
 
   const modalRef = useRef<HTMLDivElement>(null);
 
   const closeModal = (e: SyntheticEvent) => {
     if (modalRef.current === e.target) {
-      setShowRegisterModal(false);
+      setShowAuthModal(false);
+      setIsRegister(false);
     }
   };
 
@@ -20,7 +23,7 @@ export default function AuthModal() {
         <ModalContent>
           {/* // TODO: Register condition */}
           {/* // TODO: modal's background opacity */}
-          <LoginForm />
+          {isRegister ? <RegisterForm /> : <LoginForm />}
         </ModalContent>
       </ModalWrapper>
     </Background>

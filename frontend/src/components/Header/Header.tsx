@@ -11,9 +11,9 @@ export default function Header() {
       <Content>
         <HeaderLink to="/">Home</HeaderLink>
         <Search />
-        {/* <AuthMenu /> */}
-        <CreatePostMenu />
-        <UserMenu />
+        <AuthMenu />
+        {/* <CreatePostMenu /> */}
+        {/* <UserMenu /> */}
       </Content>
     </Container>
   );

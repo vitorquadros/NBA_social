@@ -2,31 +2,24 @@ import { useContext } from 'react';
 import styled from 'styled-components';
 import { ModalContext } from '../../contexts/ModalContext';
 
-export default function LoginForm() {
+export default function RegisterForm() {
   const { isRegister, setIsRegister } = useContext(ModalContext);
 
   return (
     <Container>
-      <h1>Fazer login</h1>
+      <h1>Fazer cadastro</h1>
       <div className="no-account">
-        <p>Não tem uma conta?</p>
-        <button onClick={() => setIsRegister(!isRegister)}>
-          Fazer cadastro
-        </button>
+        <p>Já tem uma conta?</p>
+        <button onClick={() => setIsRegister(!isRegister)}>Fazer login</button>
       </div>
 
       <Form>
+        <p>Para começar, digite seu email</p>
         <div className="input-fields">
           <input type="email" name="email" id="email" placeholder="Seu email" />
-          <input
-            type="password"
-            name="password"
-            id="password"
-            placeholder="Sua senha"
-          />
         </div>
 
-        <button>Fazer login</button>
+        <button>Enviar</button>
       </Form>
     </Container>
   );
@@ -71,6 +64,12 @@ const Form = styled.form`
 
   width: 100%;
   max-width: 40rem;
+
+  p {
+    text-align: center;
+    margin-bottom: 1rem;
+    font-weight: 500;
+  }
 
   div.input-fields {
     margin-bottom: 1.4rem;
