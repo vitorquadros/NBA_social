@@ -5,7 +5,7 @@ const initialValue = {
   setIsReply: () => {}
 };
 
-type ModalContextProps = {
+type CommentsContextProps = {
   children: ReactNode;
 };
 
@@ -17,7 +17,7 @@ type CommentsContextTypes = {
 export const CommentsContext =
   createContext<CommentsContextTypes>(initialValue);
 
-export const CommentsContextProvider = ({ children }: ModalContextProps) => {
+export const CommentsContextProvider = ({ children }: CommentsContextProps) => {
   const [isReply, setIsReply] = useState<boolean>(initialValue.isReply);
 
   return (

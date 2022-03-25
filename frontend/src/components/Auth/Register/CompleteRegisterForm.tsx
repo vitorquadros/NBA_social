@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import styled from 'styled-components';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -7,8 +7,10 @@ import TeamSelect from './Fields/TeamSelect';
 import Input from './Fields/Input';
 import { Fields } from './Fields/PasswordFields';
 import FileInput from './Fields/FileInput';
+import { ModalContext } from '../../../contexts/ModalContext';
+import { PreviewContext } from '../../../contexts/PreviewContext';
 
-type Inputs = {
+export type Inputs = {
   email: string;
   displayname: string;
   username: string;
@@ -29,7 +31,11 @@ export default function CompleteRegisterForm() {
     formState: { errors }
   } = useForm<Inputs>({ resolver: yupResolver(schema) });
 
-  const onSubmit = handleSubmit((data) => console.log(data));
+  const onSubmit = handleSubmit((data) => {
+    console.log(data);
+    // setUserData(data); // TODO: preview modal
+    // openRegisterPreviewModal();
+  });
 
   return (
     <Form method="POST" onSubmit={onSubmit}>
@@ -85,7 +91,7 @@ export default function CompleteRegisterForm() {
 
       <FileInput register={register} />
 
-      <SubmitButton type="submit">Finalizar cadastro</SubmitButton>
+      <SubmitButton type="submit">Revisar e finalizar</SubmitButton>
     </Form>
   );
 }

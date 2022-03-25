@@ -12,10 +12,10 @@ function App() {
 
   return (
     <>
-      {/* <ModalContextProvider>
-        <AppRoutes />
-      </ModalContextProvider> */}
-      <Register />
+      <ModalContextProvider>
+        {/* <AppRoutes /> */}
+        <Register />
+      </ModalContextProvider>
       {/* <ul>
         {posts?.map((post) => (
           <li key={post.id}>{post.description}</li>
