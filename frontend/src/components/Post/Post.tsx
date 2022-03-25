@@ -3,7 +3,13 @@ import styled from 'styled-components';
 import { ModalContext } from '../../contexts/ModalContext';
 import PostModal from './PostModal';
 
-export default function Post() {
+export default function Post({
+  image,
+  userImage,
+  userDisplayName,
+  userName,
+  postDescription
+}: any) {
   const { showPostModal, openPostModal } = useContext(ModalContext);
   const [showMore, setShowMore] = useState(false);
 
@@ -24,18 +30,19 @@ export default function Post() {
       {showPostModal && <PostModal />}
       <PostInfo>
         <UserContainer>
-          <img
-            src="https://www.morganstanley.com/content/dam/msdotcom/people/tiles/isaiah-dwuma.jpg.img.380.medium.jpg/1594668408164.jpg"
-            alt=""
-          />
+          <img src={userImage} alt="" />
           <div className="user-info">
-            <p className="displayname">Roberto Dias</p>
-            <p className="username">@robertodias</p>
+            <p className="displayname">{userDisplayName}</p>
+            <p className="username">@{userName}</p>
           </div>
         </UserContainer>
 
         <DescriptionContainer>
-          {showMore ? <p>{text}</p> : <p>{`${text.substring(0, 200)}`}</p>}
+          {showMore ? (
+            <p>{postDescription}</p>
+          ) : (
+            <p>{`${postDescription.substring(0, 200)}`}</p>
+          )}
           <span onClick={() => setShowMore(!showMore)}>
             {showMore ? 'Mostrar menos' : 'Mostrar mais'}
           </span>
@@ -43,7 +50,7 @@ export default function Post() {
       </PostInfo>
       {/* // FIX: border */}
       <ImageContainer onClick={openPostModal}>
-        <img src="https://wallpaper.dog/large/635907.jpg" alt="" />
+        <img src={image} alt="" />
       </ImageContainer>
       <ActionsContainer>
         <div className="actions">
@@ -196,7 +203,6 @@ const DescriptionContainer = styled.div`
 const ImageContainer = styled.div`
   min-width: 60rem;
   max-width: 60rem;
-  height: 60rem;
 
   img {
     width: 100%;
