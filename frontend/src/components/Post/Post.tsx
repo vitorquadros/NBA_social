@@ -163,8 +163,8 @@ const UserContainer = styled.div`
   }
 
   img {
-    width: 5rem;
-    height: 5rem;
+    min-width: 5rem;
+    max-width: 5rem;
     border-radius: 50%;
   }
 
