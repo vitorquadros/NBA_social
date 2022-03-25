@@ -61,6 +61,13 @@ export default function Home() {
             team="https://loodibee.com/wp-content/uploads/nba-golden-state-warriors-logo-2020.png"
             teamName="Golden State Warriors"
           />
+          <Post
+            image="https://jumperbrasil.lance.com.br/wp-content/uploads/2022/03/Stephen-Curry-e-Marcus-Smart.jpg"
+            userImage="https://static-wp-tor15-prd.torcedores.com/wp-content/uploads/2020/12/t12-4-603x338.jpg"
+            userDisplayName="Stephen Curry"
+            userName="curry"
+            postDescription="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quaerat architecto amet voluptatibus modi repudiandae. Officia perspiciatis ut quisquam, delectus aspernatur incidunt, esse doloremque facere exercitationem magni iste aliquid dicta voluptatum?"
+          />
         </CommentsContextProvider>
       </Content>
     </Wrapper>
