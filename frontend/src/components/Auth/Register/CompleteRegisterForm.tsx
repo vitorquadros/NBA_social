@@ -9,6 +9,7 @@ import { Fields } from './Fields/PasswordFields';
 import FileInput from './Fields/FileInput';
 import { ModalContext } from '../../../contexts/ModalContext';
 import { PreviewContext } from '../../../contexts/PreviewContext';
+import { useNavigate } from 'react-router-dom';
 
 export type Inputs = {
   email: string;
@@ -24,6 +25,8 @@ export type Inputs = {
 export default function CompleteRegisterForm() {
   const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
 
+  const navigate = useNavigate();
+
   const {
     register,
     setValue,
@@ -33,6 +36,7 @@ export default function CompleteRegisterForm() {
 
   const onSubmit = handleSubmit((data) => {
     console.log(data);
+    navigate('/'); // DEBUG
     // setUserData(data); // TODO: preview modal
     // openRegisterPreviewModal();
   });

@@ -13,8 +13,7 @@ function App() {
   return (
     <>
       <ModalContextProvider>
-        {/* <AppRoutes /> */}
-        <Register />
+        <AppRoutes />
       </ModalContextProvider>
       {/* <ul>
         {posts?.map((post) => (
