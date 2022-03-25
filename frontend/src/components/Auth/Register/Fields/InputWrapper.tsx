@@ -37,6 +37,10 @@ export const InputWrapper = styled.div`
     background-color: #cccccc;
   }
 
+  input[type='date'] {
+    cursor: pointer;
+  }
+
   select {
     cursor: pointer;
   }
