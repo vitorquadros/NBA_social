@@ -13,7 +13,7 @@ export default function Post({
   const { showPostModal, openPostModal } = useContext(ModalContext);
   const [showMore, setShowMore] = useState(false);
 
-  // DEBUG:
+  // DEBUG
   const text =
     'Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique laboriosam iusto facere numquam aut et. Laudantium totam aperiam, voluptates nihil molestiae dicta cum pariatur ullam porro eum, tempore omnis, molestias ipsam? Aut ratione, vero quaerat saepe ipsam veniam aliquam ullam laudantium quisquam quos suscipit unde, obcaecati ex sed qui repellendus natus, optio quibusdam magnam sapiente ad rem quas accusantium! Quam earum iure enim vero repellat hic a fuga, ab aut aspernatur nam temporibus voluptas iusto praesentium nobis velit, obcaecati ducimus assumenda, quia alias. Placeat ducimus sapiente, magnam aut officia accusantium provident distinctio veniam possimus ea ad repudiandae, fugiat cum libero.';
 
@@ -99,7 +99,7 @@ const DataContainer = styled.div`
 
 const ActionsContainer = styled.div`
   display: flex;
-  margin: 1.6rem 1.6rem 0.8rem 1.6rem;
+  margin: 0.8rem 1.6rem 0.8rem 1.6rem;
   align-items: center;
   justify-content: space-between;
 
@@ -165,7 +165,10 @@ const UserContainer = styled.div`
   img {
     min-width: 5rem;
     max-width: 5rem;
+    min-height: 5rem;
+    max-height: 5rem;
     border-radius: 50%;
+    object-fit: cover;
   }
 
   div.user-info {
