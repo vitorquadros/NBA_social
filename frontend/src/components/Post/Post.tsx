@@ -3,17 +3,29 @@ import styled from 'styled-components';
 import { ModalContext } from '../../contexts/ModalContext';
 import PostModal from './PostModal';
 
+type PostProps = {
+  image: string;
+  userImage: string;
+  userDisplayName: string;
+  userName: string;
+  postDescription: string;
+  team?: string;
+  teamName?: string;
+};
+
 export default function Post({
   image,
   userImage,
   userDisplayName,
   userName,
-  postDescription
-}: any) {
+  postDescription,
+  team,
+  teamName
+}: PostProps) {
   const { showPostModal, openPostModal } = useContext(ModalContext);
   const [showMore, setShowMore] = useState(false);
 
-  // DEBUG:
+  // DEBUG
   const text =
     'Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique laboriosam iusto facere numquam aut et. Laudantium totam aperiam, voluptates nihil molestiae dicta cum pariatur ullam porro eum, tempore omnis, molestias ipsam? Aut ratione, vero quaerat saepe ipsam veniam aliquam ullam laudantium quisquam quos suscipit unde, obcaecati ex sed qui repellendus natus, optio quibusdam magnam sapiente ad rem quas accusantium! Quam earum iure enim vero repellat hic a fuga, ab aut aspernatur nam temporibus voluptas iusto praesentium nobis velit, obcaecati ducimus assumenda, quia alias. Placeat ducimus sapiente, magnam aut officia accusantium provident distinctio veniam possimus ea ad repudiandae, fugiat cum libero.';
 
@@ -30,11 +42,22 @@ export default function Post({
       {showPostModal && <PostModal />}
       <PostInfo>
         <UserContainer>
-          <img src={userImage} alt="" />
-          <div className="user-info">
-            <p className="displayname">{userDisplayName}</p>
-            <p className="username">@{userName}</p>
+          <div className="user-info-wrapper">
+            <img src={userImage} alt="" />
+            <div className="user-info">
+              <p className="displayname">{userDisplayName}</p>
+              <p className="username">@{userName}</p>
+            </div>
           </div>
+
+          {team && (
+            <img
+              className="team"
+              src={team}
+              alt={`Logo do ${teamName}`}
+              title={`Jogador do ${teamName}`}
+            />
+          )}
         </UserContainer>
 
         <DescriptionContainer>
@@ -77,7 +100,7 @@ export default function Post({
       </ActionsContainer>
       <DataContainer>
         <div className="likes">
-          <p>curtido por 1586 pessoas</p>
+          <p>Curtido por 1586 pessoas</p>
         </div>
 
         <div className="comments">
@@ -99,7 +122,7 @@ const DataContainer = styled.div`
 
 const ActionsContainer = styled.div`
   display: flex;
-  margin: 1.6rem 1.6rem 0.8rem 1.6rem;
+  margin: 0.8rem 1.6rem 0.8rem 1.6rem;
   align-items: center;
   justify-content: space-between;
 
@@ -111,6 +134,10 @@ const ActionsContainer = styled.div`
   div.actions {
     display: flex;
     gap: 2rem;
+
+    p {
+      font-size: 1.4rem;
+    }
 
     div.like {
       display: flex;
@@ -137,6 +164,7 @@ const ActionsContainer = styled.div`
 const Container = styled.div`
   min-width: 60rem;
   max-width: 60rem;
+  box-sizing: border-box;
 
   margin: 1.6rem 0;
 
@@ -152,20 +180,28 @@ const PostInfo = styled.div`
 `;
 
 const UserContainer = styled.div`
-  display: inline-flex;
-  cursor: pointer;
-  margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
 
-  &:hover {
-    p.username {
-      text-decoration: underline;
+  div.user-info-wrapper {
+    display: flex;
+    cursor: pointer;
+    margin-bottom: 1rem;
+
+    &:hover {
+      p.username {
+        text-decoration: underline;
+      }
     }
   }
 
   img {
     min-width: 5rem;
     max-width: 5rem;
+    min-height: 5rem;
+    max-height: 5rem;
     border-radius: 50%;
+    object-fit: cover;
   }
 
   div.user-info {
@@ -203,6 +239,7 @@ const DescriptionContainer = styled.div`
 const ImageContainer = styled.div`
   min-width: 60rem;
   max-width: 60rem;
+  transform: translateX(-1px); // make image overflow div's borders
 
   img {
     width: 100%;

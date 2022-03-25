@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export default function PostsTable() {
   return (
     <Container>
-      <h3>Publicações de Roberto Dias</h3>
+      <h3>Publicações de Bam Adebayo</h3>
       <div className="table-images">
         <div className="table-image">
           <img src="https://wallpaper.dog/large/635907.jpg" alt="" />

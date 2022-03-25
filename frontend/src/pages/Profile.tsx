@@ -16,12 +16,12 @@ export default function Profile() {
         {/* // TODO: refactor into component */}
         <div className="images">
           <img
-            src="https://cdn.quotesgram.com/img/69/67/907176883-Miami-Heat-Big-3-Facebook-Cover.jpg"
+            src="https://www.nba.com/heat/sites/heat/files/2000_heatisback_2020_2.jpg"
             alt=""
             className="cover"
           />
           <img
-            src="https://www.morganstanley.com/content/dam/msdotcom/people/tiles/isaiah-dwuma.jpg.img.380.medium.jpg/1594668408164.jpg"
+            src="https://jumperbrasil.lance.com.br/wp-content/uploads/2021/01/Bam-Adebayo-1.jpg"
             alt=""
             className="avatar"
           />
@@ -37,7 +37,7 @@ export default function Profile() {
         <div className="user-info">
           <div className="main-info">
             <div className="name-container">
-              <p className="name">Roberto Dias</p>
+              <p className="name">Bam Adebayo</p>
               <span className="material-icons">verified</span>
             </div>
 
@@ -51,7 +51,7 @@ export default function Profile() {
 
           <div className="extra-info">
             <div className="align">
-              <p className="location">Brazil, RS</p>
+              <p className="location">United States, NJ</p>
               <img
                 src="https://loodibee.com/wp-content/uploads/miami-heat-logo-symbol.png"
                 alt=""
@@ -87,7 +87,8 @@ const Content = styled.div`
   align-items: center;
 
   border: 1px solid rgba(var(--b6a, 219, 219, 219), 1);
-  border-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
 
   div.images {
     width: 100%;
@@ -98,15 +99,22 @@ const Content = styled.div`
     img.cover {
       width: 100%;
       max-width: 100%;
+      min-height: 250px;
       max-height: 250px;
+      object-fit: cover;
     }
 
     img.avatar {
-      width: 20rem;
+      min-width: 20rem;
+      max-width: 20rem;
+      min-height: 20rem;
+      max-height: 20rem;
+      object-fit: cover;
       border-radius: 50%;
       position: absolute;
       left: 4rem;
       bottom: -9rem;
+      border: 2px solid white;
     }
   }
 
@@ -178,12 +186,13 @@ const Content = styled.div`
       flex-direction: column;
 
       div.align {
+        display: flex;
+        flex-direction: column;
         align-self: flex-end;
         align-items: center;
 
         p.location {
           color: gray;
-          text-align: center;
           font-weight: 500;
         }
 

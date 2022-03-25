@@ -9,7 +9,7 @@ export default function UserMenu() {
     <Container>
       <div className="menu" onClick={() => setIsActive(!isActive)}>
         <img
-          src="https://www.morganstanley.com/content/dam/msdotcom/people/tiles/isaiah-dwuma.jpg.img.380.medium.jpg/1594668408164.jpg"
+          src="https://jumperbrasil.lance.com.br/wp-content/uploads/2021/01/Bam-Adebayo-1.jpg"
           alt=""
         />
         {isActive ? (
@@ -48,7 +48,11 @@ const Container = styled.div`
     cursor: pointer;
 
     img {
-      width: 4rem;
+      min-width: 4rem;
+      max-width: 4rem;
+      min-height: 4rem;
+      max-height: 4rem;
+      object-fit: cover;
       border-radius: 50%;
     }
   }
