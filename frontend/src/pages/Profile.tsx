@@ -16,7 +16,7 @@ export default function Profile() {
         {/* // TODO: refactor into component */}
         <div className="images">
           <img
-            src="https://www.nba.com/heat/sites/heat/files/2000_heatisback_2020_2.jpg"
+            src="https://s3-sa-east-1.amazonaws.com/saipos-estatico/site_delivery/cover8.png"
             alt=""
             className="cover"
           />
@@ -30,7 +30,7 @@ export default function Profile() {
         <div className="options">
           <button>
             <span className="material-icons">edit</span>
-            Editar perfil
+            <p>Editar perfil</p>
           </button>
         </div>
 
@@ -194,11 +194,50 @@ const Content = styled.div`
         p.location {
           color: gray;
           font-weight: 500;
+          text-align: center;
         }
 
         img {
           width: 8rem;
           height: 8rem;
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: 880px) {
+    min-width: 100vw;
+    div.user-info {
+      gap: 2rem;
+    }
+  }
+
+  @media screen and (max-width: 500px) {
+    div.images {
+      img.avatar {
+        min-width: 15rem;
+        max-width: 15rem;
+        min-height: 15rem;
+        max-height: 15rem;
+        bottom: -7rem;
+        left: 2rem;
+      }
+    }
+
+    div.user-info {
+      margin: 3rem 2rem 0 2rem;
+    }
+
+    div.options {
+      button {
+        padding: 1rem 1.3rem;
+
+        span {
+          margin: 0;
+        }
+
+        p {
+          display: none;
         }
       }
     }

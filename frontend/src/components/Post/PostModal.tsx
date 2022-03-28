@@ -24,7 +24,10 @@ export default function PostModal() {
       <ModalWrapper>
         <ModalContent>
           <ImageContainer>
-            <img src="https://wallpaper.dog/large/635907.jpg" alt="" />
+            <img
+              src="https://cdn.vox-cdn.com/thumbor/MEjeG_iclwwPEiY7NlqMaGGa75g=/0x0:1080x1350/1200x0/filters:focal(0x0:1080x1350):no_upscale()/cdn.vox-cdn.com/uploads/chorus_asset/file/22541812/_National_3_52621.jpg"
+              alt=""
+            />
           </ImageContainer>
 
           <DetailsContainer>
@@ -35,6 +38,13 @@ export default function PostModal() {
                 <Reply />
               ) : (
                 <>
+                  <Comment />
+                  <Comment />
+                  <Comment />
+                  <Comment />
+                  <Comment />
+                  <Comment />
+                  <Comment />
                   <Comment />
                   <Comment />
                   <Comment />
@@ -54,35 +64,43 @@ export default function PostModal() {
 }
 
 const ModalContent = styled.div`
-  display: flex;
   max-width: 100%;
-  max-height: 80vh;
+  display: flex;
+  max-height: 100%;
+  background-color: pink;
 `;
 
 const ImageContainer = styled.div`
+  background-color: black;
+  display: flex;
   max-width: 60%;
+  min-height: 100%;
+  max-height: 100%;
+  align-items: center;
+  justify-content: center;
 
   img {
-    min-width: 100%;
     max-width: 100%;
     height: auto;
-    min-height: 100%;
-    max-height: 100%;
+    max-height: 90vh;
   }
 `;
 
 const DetailsContainer = styled.div`
-  max-width: 40%;
   height: auto;
+  max-width: 40%;
   max-height: 100%;
   display: flex;
   flex-direction: column;
 
   div.comments {
-    overflow-y: scroll;
-    max-height: calc(
+    width: 100%;
+    overflow-y: auto;
+    height: auto;
+    max-height: 100%;
+    /* max-height: calc(
       100% - 8.3rem - 5rem
-    ); // modal header is always 83px and comment input is always 50px
+    ); */
   }
 `;
 
@@ -100,15 +118,14 @@ const Background = styled.div`
 `;
 
 const ModalWrapper = styled.div`
-  width: auto;
-  max-width: 70vw;
+  min-width: 50%;
+  max-width: 75%;
+  max-height: 90vh;
+  background-color: #fafafa;
+  background-color: red;
 
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
 
-  background-color: #fafafa;
   color: #000;
   border-radius: 10px;
 

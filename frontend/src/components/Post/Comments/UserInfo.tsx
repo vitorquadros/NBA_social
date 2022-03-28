@@ -38,6 +38,7 @@ export default function UserInfo() {
 
 const Container = styled.div`
   border-bottom: 1px solid rgba(var(--b6a, 219, 219, 219), 1);
+  width: 100%;
 
   div.info {
     padding: 1.6rem 1.6rem 0.5rem 1.6rem;

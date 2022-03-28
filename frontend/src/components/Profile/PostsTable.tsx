@@ -73,4 +73,23 @@ const Container = styled.div`
       }
     }
   }
+
+  @media screen and (max-width: 800px) {
+    div.table-images {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media screen and (max-width: 500px) {
+    div.table-images {
+      grid-template-columns: 1fr;
+
+      div.table-image {
+        img {
+          width: 90vw;
+          max-width: 90vw;
+        }
+      }
+    }
+  }
 `;
