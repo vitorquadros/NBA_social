@@ -66,19 +66,23 @@ const SendButton = styled.button`
 
 const Form = styled.form`
   box-sizing: border-box;
-  margin: 2rem 0;
+  margin: 0;
   display: flex;
   align-items: center;
   flex-direction: column;
 
   img {
     max-height: 40rem;
+    max-width: 90%;
   }
 
   textarea {
     resize: none;
-    min-height: 10rem;
-    width: 500px;
+    height: 10rem;
+    max-height: 10rem;
+    width: 100%;
+    max-width: 80%;
+
     border: 1px solid rgba(229, 101, 3, 1);
     border-radius: 5px;
     padding: 0.5rem 0 0 0.5rem;
@@ -114,6 +118,7 @@ const Form = styled.form`
     width: 25rem;
     margin: 1rem 0 1rem 0;
     background-color: rgb(229, 101, 3);
+    border-radius: 5px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -134,6 +139,9 @@ const Form = styled.form`
   }
 
   h3 {
-    margin: 1rem 0;
+    margin: 1rem 2rem;
+  }
+
+  @media screen and (max-width: 880px) {
   }
 `;

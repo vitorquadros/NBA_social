@@ -58,7 +58,10 @@ const Background = styled.div`
 `;
 
 const ModalWrapper = styled.div`
+  margin: 0 2rem;
   width: 70rem;
+  max-width: 70rem;
+  position: relative;
   max-height: 90vh;
   display: flex;
   flex-direction: column;
@@ -87,7 +90,8 @@ const ModalContent = styled.div`
   width: 100%;
   margin: 2rem;
   text-align: center;
-  position: relative;
+
+  max-height: 100%;
 
   h1 {
     color: rgb(229, 101, 3);
@@ -97,7 +101,7 @@ const ModalContent = styled.div`
   span.close-button {
     position: absolute;
     right: 1rem;
-    top: -1.2rem;
+    top: 1rem;
     cursor: pointer;
   }
 `;

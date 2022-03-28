@@ -37,11 +37,12 @@ export default function CloseModalPopup({ trigger }: CloseModalPopupProps) {
 }
 
 const CloseModal = styled.div`
+  margin: 0 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-width: 30rem;
+  max-width: 30rem;
   min-height: 15rem;
   border: 1px solid rgba(var(--b6a, 219, 219, 219), 1);
   background-color: #fafafa;
@@ -49,8 +50,15 @@ const CloseModal = styled.div`
   padding: 1rem 2rem;
 
   div.close-modal-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
     margin-top: 2rem;
+    gap: 1rem;
   }
+
+  text-align: center;
 
   p.warning-confirm {
     font-weight: 600;
@@ -79,5 +87,13 @@ const CloseModal = styled.div`
 
   button:first-child {
     background-color: rgb(176, 78, 3);
+  }
+
+  @media screen and (max-width: 424px) {
+    padding: 1rem 1rem;
+
+    p.warning-message {
+      margin: 0;
+    }
   }
 `;
