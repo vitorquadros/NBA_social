@@ -33,9 +33,6 @@ const Container = styled.header`
 
   background-color: white;
   border-bottom: 1px solid rgba(var(--b6a, 219, 219, 219), 1);
-
-  @media screen and (max-width: 800px) {
-  }
 `;
 
 const Content = styled.div`

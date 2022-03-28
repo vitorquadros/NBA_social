@@ -101,11 +101,15 @@ export default function CompleteRegisterForm() {
 }
 
 const Form = styled.form`
-  width: 30%;
+  width: 55rem;
   display: flex;
   flex-direction: column;
   margin: 2rem 0;
   gap: 1rem;
+
+  @media screen and (max-width: 600px) {
+    width: 90%;
+  }
 `;
 
 const SubmitButton = styled.button`
