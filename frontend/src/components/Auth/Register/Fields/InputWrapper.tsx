@@ -28,7 +28,7 @@ export const InputWrapper = styled.div`
     background-color: #e6e6e6;
 
     &:focus {
-      outline: none;
+      outline: 1px solid #e56503;
     }
   }
 

@@ -16,6 +16,7 @@ export default function AuthMenu() {
 }
 
 const Container = styled.div`
+  margin-right: 1rem;
   display: flex;
   align-items: center;
 

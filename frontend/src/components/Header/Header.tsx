@@ -12,10 +12,10 @@ export default function Header() {
         <HeaderLink to="/">Home</HeaderLink>
         <Search />
 
-        {/* <AuthMenu /> */}
+        <AuthMenu />
 
-        <CreatePostMenu />
-        <UserMenu />
+        {/* <CreatePostMenu /> */}
+        {/* <UserMenu /> */}
       </Content>
     </Container>
   );

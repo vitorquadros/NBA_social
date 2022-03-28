@@ -35,12 +35,14 @@ const Container = styled.div`
 
   h1 {
     font-size: 2rem;
+    text-align: center;
   }
 
   div.no-account {
     display: flex;
     gap: 0.5rem;
     margin-bottom: 2rem;
+    text-align: center;
 
     p {
       font-size: 1.4rem;
@@ -89,7 +91,7 @@ const Form = styled.form`
       background-color: #e6e6e6;
 
       &:focus {
-        outline: none;
+        outline: 1px solid #e56503;
       }
     }
   }

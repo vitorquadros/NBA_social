@@ -95,7 +95,7 @@ export default function CompleteRegisterForm() {
 
       <FileInput register={register} />
 
-      <SubmitButton type="submit">Revisar e finalizar</SubmitButton>
+      <SubmitButton type="submit">Finalizar</SubmitButton>
     </Form>
   );
 }

@@ -82,7 +82,7 @@ const PasswordWrapper = styled.div`
     background-color: #e6e6e6;
 
     input {
-      width: calc(100% - 3rem);
+      width: calc(100% - 4.2rem);
     }
   }
 
