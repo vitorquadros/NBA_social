@@ -103,4 +103,8 @@ const Container = styled.div`
       border-top: 1px solid rgba(var(--b6a, 219, 219, 219), 1);
     }
   }
+
+  @media screen and (max-width: 800px) {
+    margin-right: 1rem;
+  }
 `;

@@ -111,6 +111,27 @@ export default function Post({
   );
 }
 
+const Container = styled.div`
+  min-width: 60rem;
+  max-width: 60rem;
+  box-sizing: border-box;
+
+  margin: 1.6rem 0;
+
+  background-color: white;
+  border-radius: 5px;
+  border: 1px solid rgba(var(--b6a, 219, 219, 219), 1);
+
+  /* border: 1px solid red; */
+  @media screen and (max-width: 800px) {
+    min-width: 85vw;
+  }
+
+  @media screen and (max-width: 500px) {
+    min-width: 100vw;
+  }
+`;
+
 const DataContainer = styled.div`
   margin: 0 1.6rem 1.6rem 1.6rem;
 
@@ -159,20 +180,6 @@ const ActionsContainer = styled.div`
       color: gray;
     }
   }
-`;
-
-const Container = styled.div`
-  min-width: 60rem;
-  max-width: 60rem;
-  box-sizing: border-box;
-
-  margin: 1.6rem 0;
-
-  background-color: white;
-  border-radius: 5px;
-  border: 1px solid rgba(var(--b6a, 219, 219, 219), 1);
-
-  /* border: 1px solid red; */
 `;
 
 const PostInfo = styled.div`
@@ -245,5 +252,13 @@ const ImageContainer = styled.div`
     width: 100%;
     height: 100%;
     cursor: pointer;
+  }
+
+  @media screen and (max-width: 800px) {
+    min-width: 85vw;
+  }
+
+  @media screen and (max-width: 500px) {
+    min-width: 100vw;
   }
 `;

@@ -28,6 +28,7 @@ const Container = styled.div`
     gap: 0.5rem;
     transition: 0.3s;
     box-shadow: none;
+    white-space: nowrap;
 
     p {
       font-size: 1.4rem;
@@ -40,6 +41,14 @@ const Container = styled.div`
 
     &:hover {
       filter: brightness(80%);
+    }
+
+    @media screen and (max-width: 800px) {
+      padding: 0.8rem 1rem;
+
+      p {
+        display: none;
+      }
     }
   }
 `;

@@ -35,6 +35,7 @@ const Container = styled.form`
     input {
       box-sizing: border-box;
       width: 100%;
+      min-width: 5rem;
       margin-right: 1rem;
       border: none;
       background-color: #efefef;
@@ -44,4 +45,49 @@ const Container = styled.form`
       }
     }
   }
+
+  @media screen and (max-width: 400px) {
+    margin: 0;
+    margin-right: auto;
+
+    div.search-box {
+      width: 4rem;
+      height: 3.6rem;
+
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      background-color: #e56503;
+      transition: 0.3s;
+
+      &:hover {
+        filter: brightness(80%);
+      }
+
+      label {
+        cursor: pointer;
+        width: auto;
+        display: flex;
+        align-items: center;
+        margin: 0;
+        padding: 0;
+      }
+
+      span {
+        color: black;
+        width: 2rem;
+        height: 2rem;
+        margin: 0;
+        padding: 0;
+      }
+
+      input {
+        display: none;
+      }
+    }
+  }
+  }
+
+  @media screen and (max-width: 800px) {
+  
 `;

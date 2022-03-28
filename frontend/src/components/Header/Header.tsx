@@ -11,7 +11,9 @@ export default function Header() {
       <Content>
         <HeaderLink to="/">Home</HeaderLink>
         <Search />
+
         {/* <AuthMenu /> */}
+
         <CreatePostMenu />
         <UserMenu />
       </Content>
@@ -31,6 +33,9 @@ const Container = styled.header`
 
   background-color: white;
   border-bottom: 1px solid rgba(var(--b6a, 219, 219, 219), 1);
+
+  @media screen and (max-width: 800px) {
+  }
 `;
 
 const Content = styled.div`
@@ -38,11 +43,21 @@ const Content = styled.div`
   display: flex;
   align-items: center;
   gap: 3rem;
+  margin: 0 1rem;
 
   justify-content: space-between;
+
+  @media screen and (max-width: 800px) {
+    width: 100%;
+    gap: 1rem;
+  }
 `;
 
 const HeaderLink = styled(Link)`
   color: black;
   text-decoration: none;
+
+  @media screen and (max-width: 800px) {
+    margin-left: 1rem;
+  }
 `;
