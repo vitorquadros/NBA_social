@@ -1,9 +1,40 @@
 import { useContext } from 'react';
+import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import useAuth from '../../contexts/AuthContext/useAuth';
 import { ModalContext } from '../../contexts/ModalContext';
 
 export default function LoginForm() {
-  const { isRegister, setIsRegister } = useContext(ModalContext);
+  const { isRegister, setIsRegister, setShowAuthModal, showAuthModal } =
+    useContext(ModalContext);
+
+  const navigate = useNavigate();
+
+  const { authenticate } = useAuth();
+
+  type LoginInputs = {
+    email: string;
+    password: string;
+  };
+
+  const {
+    register,
+    setValue,
+    handleSubmit,
+    formState: { errors }
+  } = useForm<LoginInputs>();
+
+  const onSubmit = handleSubmit((data) => {
+    try {
+      authenticate(data.email, data.password);
+      setShowAuthModal(!showAuthModal);
+      console.log('ok'); // DEBUG
+    } catch (error) {
+      console.log(error); // DEBUG
+      // TODO: add incorrect email or password message
+    }
+  });
 
   return (
     <Container>
@@ -15,14 +46,19 @@ export default function LoginForm() {
         </button>
       </div>
 
-      <Form>
+      <Form method="POST" onSubmit={onSubmit}>
         <div className="input-fields">
-          <input type="email" name="email" id="email" placeholder="Seu email" />
+          <input
+            type="email"
+            id="email"
+            placeholder="Seu email"
+            {...register('email')}
+          />
           <input
             type="password"
-            name="password"
             id="password"
             placeholder="Sua senha"
+            {...register('password')}
           />
         </div>
 

@@ -4,18 +4,25 @@ import Search from './Search';
 import UserMenu from './UserMenu';
 import { Link } from 'react-router-dom';
 import CreatePostMenu from './CreatePostMenu';
+import useAuth from '../../contexts/AuthContext/useAuth';
 
 export default function Header() {
+  const { email } = useAuth();
+
   return (
     <Container>
       <Content>
         <HeaderLink to="/">Home</HeaderLink>
         <Search />
 
-        <AuthMenu />
-
-        {/* <CreatePostMenu /> */}
-        {/* <UserMenu /> */}
+        {email ? (
+          <>
+            <CreatePostMenu />
+            <UserMenu />
+          </>
+        ) : (
+          <AuthMenu />
+        )}
       </Content>
     </Container>
   );

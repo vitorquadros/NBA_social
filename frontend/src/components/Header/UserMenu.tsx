@@ -1,9 +1,16 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import useAuth from '../../contexts/AuthContext/useAuth';
 
 export default function UserMenu() {
   const [isActive, setIsActive] = useState(false);
+
+  const { logout } = useAuth();
+
+  function handleLogout() {
+    logout();
+  }
 
   return (
     <Container>
@@ -30,10 +37,10 @@ export default function UserMenu() {
           <p>Perfil</p>
         </Link>
 
-        <Link to="/profile" className="options-button">
+        <div className="options-button" onClick={handleLogout}>
           <span className="material-icons">logout</span>
           <p>Sair</p>
-        </Link>
+        </div>
       </div>
     </Container>
   );
