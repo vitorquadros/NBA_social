@@ -1,3 +1,4 @@
+import { AuthProvider } from './contexts/AuthContext';
 import { ModalContextProvider } from './contexts/ModalContext';
 import { useFetch } from './hooks/useFetch';
 import Home from './pages/Home';
@@ -12,9 +13,11 @@ function App() {
 
   return (
     <>
-      <ModalContextProvider>
-        <AppRoutes />
-      </ModalContextProvider>
+      <AuthProvider>
+        <ModalContextProvider>
+          <AppRoutes />
+        </ModalContextProvider>
+      </AuthProvider>
       {/* <ul>
         {posts?.map((post) => (
           <li key={post.id}>{post.description}</li>

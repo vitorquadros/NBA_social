@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import ProtectedLayout from './components/Protected/ProtectedLayout';
 import Error404Page from './pages/Error404Page';
 import Home from './pages/Home';
 import Profile from './pages/Profile';
@@ -9,7 +10,14 @@ export function AppRoutes() {
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedLayout>
+              <Profile />
+            </ProtectedLayout>
+          }
+        />
         <Route path="/register" element={<Register />} />
         <Route path="*" element={<Error404Page />} />
       </Routes>
