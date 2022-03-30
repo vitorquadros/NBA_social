@@ -53,7 +53,7 @@ export default function CompleteRegisterForm({
         password: data.password,
         nbaTeam: data.team ? data.team : '',
         birthday: data.birthday,
-        avatar: data.avatar![0].name ? data.avatar![0].name : ''
+        avatar: data.avatar![0] ? data.avatar![0].name : 'default_profile.jpg'
       }
     );
     console.log(user);
