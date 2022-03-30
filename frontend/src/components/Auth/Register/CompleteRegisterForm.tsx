@@ -22,7 +22,7 @@ export type Inputs = {
   avatar: FileList;
 };
 
-export default function CompleteRegisterForm() {
+export default function CompleteRegisterForm({ email }: { email: string }) {
   const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
 
   const navigate = useNavigate();
@@ -49,7 +49,7 @@ export default function CompleteRegisterForm() {
         name="email"
         register={register}
         disabled
-        value="testedasilva@dev.com"
+        value={email}
       />
 
       <Input

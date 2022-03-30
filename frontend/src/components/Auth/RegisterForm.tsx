@@ -1,9 +1,33 @@
 import { useContext } from 'react';
+import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import { ModalContext } from '../../contexts/ModalContext';
+import { register as registerUser } from '../../services/register';
+
+type RegisterInputs = {
+  email: string;
+};
 
 export default function RegisterForm() {
-  const { isRegister, setIsRegister } = useContext(ModalContext);
+  const { isRegister, setIsRegister, showAuthModal, setShowAuthModal } =
+    useContext(ModalContext);
+
+  const {
+    register,
+    setValue,
+    handleSubmit,
+    formState: { errors }
+  } = useForm<RegisterInputs>();
+
+  const onSubmit = handleSubmit(async (data) => {
+    try {
+      await registerUser(data.email);
+      setShowAuthModal(!showAuthModal);
+      console.log('ok'); // DEBUG
+    } catch (error) {
+      console.log(error); // DEBUG
+    }
+  });
 
   return (
     <Container>
@@ -13,10 +37,15 @@ export default function RegisterForm() {
         <button onClick={() => setIsRegister(!isRegister)}>Fazer login</button>
       </div>
 
-      <Form>
+      <Form method="POST" onSubmit={onSubmit}>
         <p>Para começar, digite seu email</p>
         <div className="input-fields">
-          <input type="email" name="email" id="email" placeholder="Seu email" />
+          <input
+            type="email"
+            id="email"
+            placeholder="Seu email"
+            {...register('email')}
+          />
         </div>
 
         <button>Enviar</button>
