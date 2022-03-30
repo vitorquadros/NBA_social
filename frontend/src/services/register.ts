@@ -1,5 +1,4 @@
 import { Api } from './api';
-import { CreateUserRequest } from './types/User';
 
 const baseURL = 'http://localhost:3000/register/';
 
@@ -21,7 +20,7 @@ export async function getRegister(key: string) {
   }
 }
 
-export async function completeRegister(user: CreateUserRequest) {
+export async function completeRegister(user) {
   try {
     await Api.put('users/register', user);
     console.log('ok'); // DEBUG

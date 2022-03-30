@@ -21,9 +21,9 @@ export default function RegisterForm() {
     formState: { errors }
   } = useForm<RegisterInputs>();
 
-  const onSubmit = handleSubmit((data) => {
+  const onSubmit = handleSubmit(async (data) => {
     try {
-      callForm({
+      await callForm({
         url: '/users/register',
         method: 'post',
         data: {

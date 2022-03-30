@@ -11,6 +11,7 @@ import { ModalContext } from '../../../contexts/ModalContext';
 import { PreviewContext } from '../../../contexts/PreviewContext';
 import { useNavigate } from 'react-router-dom';
 import { completeRegister } from '../../../services/register';
+import useApi from '../../../hooks/useApi';
 
 export type Inputs = {
   displayname: string;
@@ -23,6 +24,16 @@ export type Inputs = {
   avatar?: FileList;
 };
 
+interface CreateUserRequest {
+  key: string | undefined;
+  username: string;
+  displayName: string;
+  password: string;
+  birthday: string;
+  nbaTeam?: string;
+  avatar?: string;
+}
+
 type CompleteRegisterProps = {
   email: string;
   registerKey?: string;
@@ -34,6 +45,8 @@ export default function CompleteRegisterForm({
 }: CompleteRegisterProps) {
   const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
 
+  const { callForm } = useApi();
+
   const navigate = useNavigate();
 
   const {
@@ -43,7 +56,7 @@ export default function CompleteRegisterForm({
     formState: { errors }
   } = useForm<Inputs>({ resolver: yupResolver(schema) });
 
-  const onSubmit = handleSubmit((data) => {
+  const onSubmit = handleSubmit(async (data) => {
     const user = Object.assign(
       {},
       {
@@ -57,9 +70,20 @@ export default function CompleteRegisterForm({
       }
     );
     console.log(user);
+    try {
+      await callForm({
+        url: '/users/register',
+        method: 'put',
+        data: user
+      });
 
-    completeRegister(user);
-    navigate('/'); // DEBUG
+      navigate('/'); // DEBUG
+    } catch (error) {
+      console.log(error);
+    }
+
+    // completeRegister(user);
+
     // setUserData(data); // TODO: preview modal
     // openRegisterPreviewModal();
   });
