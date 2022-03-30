@@ -18,7 +18,7 @@ export function AppRoutes() {
             </ProtectedLayout>
           }
         />
-        <Route path="/register" element={<Register />} />
+        <Route path="/register/:key" element={<Register />} />
         <Route path="*" element={<Error404Page />} />
       </Routes>
     </Router>
