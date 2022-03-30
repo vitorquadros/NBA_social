@@ -63,7 +63,7 @@ export class RegisterUsecase {
       to: 'user@test.com',
       subject: 'Finalize seu cadastro',
       text: `Para finalizar seu cadastro acesse o link: ${link}`,
-      html: `<p>Para finalizar seu cadastro acesse o link:</p> <a>${link}</a>`
+      html: `<p>Para finalizar seu cadastro <a href="${link}">clique aqui</a> ou acesse o link:</p> <a>${link}</a>`
     };
 
     transport.sendMail(message, (e) => console.log(e.message));
