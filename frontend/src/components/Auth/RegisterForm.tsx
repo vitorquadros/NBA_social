@@ -1,8 +1,8 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import { ModalContext } from '../../contexts/ModalContext';
-import { register as registerUser } from '../../services/register';
+import useApi from '../../hooks/useApi';
 
 type RegisterInputs = {
   email: string;
@@ -12,6 +12,8 @@ export default function RegisterForm() {
   const { isRegister, setIsRegister, showAuthModal, setShowAuthModal } =
     useContext(ModalContext);
 
+  const { callForm } = useApi<string>();
+
   const {
     register,
     setValue,
@@ -19,13 +21,21 @@ export default function RegisterForm() {
     formState: { errors }
   } = useForm<RegisterInputs>();
 
-  const onSubmit = handleSubmit(async (data) => {
+  const onSubmit = handleSubmit((data) => {
     try {
-      await registerUser(data.email);
+      callForm({
+        url: '/users/register',
+        method: 'post',
+        data: {
+          email: data.email,
+          redirectUrl: 'http://localhost:3000/register/'
+        }
+      });
+
+      console.log('ok');
       setShowAuthModal(!showAuthModal);
-      console.log('ok'); // DEBUG
     } catch (error) {
-      console.log(error); // DEBUG
+      console.log(error);
     }
   });
 
