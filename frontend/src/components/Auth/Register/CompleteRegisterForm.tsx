@@ -10,19 +10,28 @@ import FileInput from './Fields/FileInput';
 import { ModalContext } from '../../../contexts/ModalContext';
 import { PreviewContext } from '../../../contexts/PreviewContext';
 import { useNavigate } from 'react-router-dom';
+import { completeRegister } from '../../../services/register';
 
 export type Inputs = {
-  email: string;
   displayname: string;
   username: string;
+  email: string;
   password: string;
   confirmPassword: string;
-  birthday: Date;
-  team: string;
-  avatar: FileList;
+  birthday: string;
+  team?: string;
+  avatar?: FileList;
 };
 
-export default function CompleteRegisterForm({ email }: { email: string }) {
+type CompleteRegisterProps = {
+  email: string;
+  registerKey?: string;
+};
+
+export default function CompleteRegisterForm({
+  email,
+  registerKey
+}: CompleteRegisterProps) {
   const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
 
   const navigate = useNavigate();
@@ -35,7 +44,21 @@ export default function CompleteRegisterForm({ email }: { email: string }) {
   } = useForm<Inputs>({ resolver: yupResolver(schema) });
 
   const onSubmit = handleSubmit((data) => {
-    console.log(data);
+    const user = Object.assign(
+      {},
+      {
+        key: registerKey,
+        username: data.username,
+        displayName: data.displayname,
+        password: data.password,
+        nbaTeam: data.team ? data.team : '',
+        birthday: data.birthday,
+        avatar: data.avatar![0].name ? data.avatar![0].name : ''
+      }
+    );
+    console.log(user);
+
+    completeRegister(user);
     navigate('/'); // DEBUG
     // setUserData(data); // TODO: preview modal
     // openRegisterPreviewModal();

@@ -14,6 +14,7 @@ interface UpdateRequest {
   birthday: Date;
   nbaTeam: string;
   password: string;
+  avatar?: string;
   country?: string;
   state?: string;
   city?: string;
@@ -91,6 +92,7 @@ export class RegisterUsecase {
     birthday,
     nbaTeam,
     password,
+    avatar,
     country,
     state,
     city
@@ -119,6 +121,7 @@ export class RegisterUsecase {
       { username },
       { displayName },
       { birthday },
+      { avatar },
       { nbaTeam },
       { password },
       { address }

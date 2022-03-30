@@ -5,7 +5,7 @@ import CompleteRegisterForm from '../components/Auth/Register/CompleteRegisterFo
 import { getRegister } from '../services/register';
 
 export default function Register() {
-  const { key } = useParams();
+  const { key } = useParams<string>();
   const [email, setEmail] = useState<string>('');
   const navigate = useNavigate();
 
@@ -26,7 +26,7 @@ export default function Register() {
   return (
     <Container>
       <h1>Finalize seu cadastro</h1>
-      <CompleteRegisterForm email={email} />
+      <CompleteRegisterForm email={email} registerKey={key} />
     </Container>
   );
 }
