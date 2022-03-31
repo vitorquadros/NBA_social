@@ -2,31 +2,44 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import CompleteRegisterForm from '../components/Auth/Register/CompleteRegisterForm';
+import useApi from '../hooks/useApi';
 import { getRegister } from '../services/register';
+import Error404Page from './Error404Page';
+
+interface CallResponse {
+  id: string;
+  username?: string;
+  displayName?: string;
+  birthday?: string;
+  role: string;
+  nbaTeam?: string;
+  email: string;
+  avatar?: string;
+  cover?: string;
+  createdAt: string;
+  updatedAt: string;
+}
 
 export default function Register() {
   const { key } = useParams<string>();
-  const [email, setEmail] = useState<string>('');
-  const navigate = useNavigate();
+
+  const { call, data, isLoading, error } = useApi<CallResponse>();
 
   useEffect(() => {
-    if (!key) return;
-
-    (async function () {
-      try {
-        const { data: user } = await getRegister(key);
-        setEmail(user.email);
-      } catch (error) {
-        console.log(error);
-        navigate('/');
-      }
-    })();
+    call({
+      url: `users/register/${key}`,
+      method: 'get'
+    });
   }, []);
+
+  if (isLoading) return <h1>Carregando...</h1>;
+
+  if (error) return <Error404Page />;
 
   return (
     <Container>
       <h1>Finalize seu cadastro</h1>
-      <CompleteRegisterForm email={email} registerKey={key} />
+      <CompleteRegisterForm email={data?.email} registerKey={key} />
     </Container>
   );
 }

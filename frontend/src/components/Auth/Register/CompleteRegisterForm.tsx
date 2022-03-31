@@ -35,7 +35,7 @@ interface CreateUserRequest {
 }
 
 type CompleteRegisterProps = {
-  email: string;
+  email?: string;
   registerKey?: string;
 };
 
