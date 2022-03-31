@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -39,6 +39,7 @@ export default function CompleteRegisterForm({
   const {
     register,
     setValue,
+    setError,
     handleSubmit,
     formState: { errors }
   } = useForm<Inputs>({ resolver: yupResolver(schema) });
@@ -65,8 +66,14 @@ export default function CompleteRegisterForm({
       });
 
       navigate('/'); // DEBUG
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      console.log(error.response);
+
+      setError(
+        'username',
+        { type: 'manual', message: error.response.data.error },
+        { shouldFocus: true }
+      );
     }
 
     // completeRegister(user);
