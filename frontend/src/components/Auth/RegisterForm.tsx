@@ -1,8 +1,9 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import { ModalContext } from '../../contexts/ModalContext';
 import useApi from '../../hooks/useApi';
+import EmailSent from './Register/EmailSent';
 
 type RegisterInputs = {
   email: string;
@@ -11,6 +12,8 @@ type RegisterInputs = {
 export default function RegisterForm() {
   const { isRegister, setIsRegister, showAuthModal, setShowAuthModal } =
     useContext(ModalContext);
+
+  const [email, setEmail] = useState<string | null>(null);
 
   const { callForm } = useApi<string>();
 
@@ -32,14 +35,17 @@ export default function RegisterForm() {
         }
       });
 
+      setEmail(data.email);
       console.log('ok');
-      setShowAuthModal(!showAuthModal);
+      // setShowAuthModal(!showAuthModal);
     } catch (error) {
       console.log(error);
     }
   });
 
-  return (
+  return email ? (
+    <EmailSent email={email} />
+  ) : (
     <Container>
       <h1>Fazer cadastro</h1>
       <div className="no-account">
