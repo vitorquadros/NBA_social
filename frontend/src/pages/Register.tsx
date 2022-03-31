@@ -1,9 +1,8 @@
-import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import CompleteRegisterForm from '../components/Auth/Register/CompleteRegisterForm';
 import useApi from '../hooks/useApi';
-import { getRegister } from '../services/register';
 import Error404Page from './Error404Page';
 
 interface CallResponse {

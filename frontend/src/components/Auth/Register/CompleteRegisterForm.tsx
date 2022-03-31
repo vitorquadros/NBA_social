@@ -1,16 +1,13 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { schema } from '../../../utils/form-validation/CompleteRegisterValidation';
 import TeamSelect from './Fields/TeamSelect';
 import Input from './Fields/Input';
 import { Fields } from './Fields/PasswordFields';
 import FileInput from './Fields/FileInput';
-import { ModalContext } from '../../../contexts/ModalContext';
-import { PreviewContext } from '../../../contexts/PreviewContext';
 import { useNavigate } from 'react-router-dom';
-import { completeRegister } from '../../../services/register';
 import useApi from '../../../hooks/useApi';
 
 export type Inputs = {
@@ -23,16 +20,6 @@ export type Inputs = {
   team?: string;
   avatar?: FileList;
 };
-
-interface CreateUserRequest {
-  key: string | undefined;
-  username: string;
-  displayName: string;
-  password: string;
-  birthday: string;
-  nbaTeam?: string;
-  avatar?: string;
-}
 
 type CompleteRegisterProps = {
   email?: string;

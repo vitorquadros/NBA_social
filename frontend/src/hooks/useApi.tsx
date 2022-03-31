@@ -1,5 +1,5 @@
 import axios, { AxiosRequestConfig } from 'axios';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { baseURL } from '../services/api';
 
 export default function useApi<T = unknown>() {
