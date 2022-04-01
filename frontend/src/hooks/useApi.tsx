@@ -16,7 +16,7 @@ export default function useApi<T = unknown>() {
         setData(response.data.data);
       })
       .catch((error) => {
-        console.log(error);
+        setError(error);
       })
       .finally(() => {
         setIsLoading(false);

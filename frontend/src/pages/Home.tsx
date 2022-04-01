@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import Header from '../components/Header/Header';
 import Post from '../components/Post/Post';
@@ -6,20 +6,42 @@ import { ModalContext } from '../contexts/ModalContext';
 import AuthModal from '../components/Auth/AuthModal';
 import CreatePostModal from '../components/Post/CreatePost/CreatePostModal';
 import { CommentsContextProvider } from '../contexts/CommentsContext';
+import Snackbar from '../components/Alerts/Snackbar';
+import { useLocation } from 'react-router-dom';
 
 export default function Home() {
   const { showAuthModal, showCreatePostModal } = useContext(ModalContext);
 
+  const snackbarRef = useRef(null);
+
+  const { state } = useLocation();
+
+  console.log(state);
+
   useEffect(() => {
-    if (showAuthModal || showCreatePostModal) {
+    if (showCreatePostModal) {
       document.body.style.overflowY = 'hidden';
     } else {
       document.body.style.overflowY = 'unset';
     }
   }, [showAuthModal, showCreatePostModal]);
 
+  useEffect(() => {
+    if (state) {
+      if (state.alert) {
+        snackbarRef.current.show();
+        window.history.replaceState({}, document.title);
+      }
+    }
+  }, []);
+
   return (
     <Wrapper>
+      <Snackbar
+        message="Cadastro finalizado com sucesso!"
+        type="success"
+        ref={snackbarRef}
+      />
       <Header />
       <Content>
         {showCreatePostModal && <CreatePostModal />}

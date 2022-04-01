@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -9,6 +9,7 @@ import { Fields } from './Fields/PasswordFields';
 import FileInput from './Fields/FileInput';
 import { useNavigate } from 'react-router-dom';
 import useApi from '../../../hooks/useApi';
+import Snackbar from '../../Alerts/Snackbar';
 
 export type Inputs = {
   displayname: string;
@@ -59,13 +60,18 @@ export default function CompleteRegisterForm({
     );
     console.log(user);
     try {
-      await callForm({
-        url: '/users/register',
-        method: 'put',
-        data: user
-      });
+      // await callForm({
+      //   url: '/users/register',
+      //   method: 'put',
+      //   data: user
+      // });
 
-      navigate('/'); // DEBUG
+      navigate('/', {
+        state: {
+          alert: true,
+          alertName: 'registerSuccess'
+        }
+      }); // DEBUG
     } catch (error: any) {
       console.log(error.response);
 
@@ -83,61 +89,71 @@ export default function CompleteRegisterForm({
   });
 
   return (
-    <Form method="POST" onSubmit={onSubmit}>
-      <Input
-        label="Email"
-        type="email"
-        name="email"
-        register={register}
-        disabled
-        value={email}
-      />
+    <>
+      {/* <button
+        onClick={() => {
+          snackbarRef.current.show();
+        }}
+      >
+        Botao
+      </button> */}
 
-      <Input
-        errors={errors.displayname ? errors.displayname : null}
-        label="Nome"
-        name="displayname"
-        type="text"
-        register={register}
-        maxLength={40}
-      />
+      <Form method="POST" onSubmit={onSubmit}>
+        <Input
+          label="Email"
+          type="email"
+          name="email"
+          register={register}
+          disabled
+          value={email}
+        />
 
-      <Input
-        errors={errors.username ? errors.username : null}
-        label="Nome de usuário"
-        name="username"
-        type="text"
-        register={register}
-        maxLength={18}
-      />
+        <Input
+          errors={errors.displayname ? errors.displayname : null}
+          label="Nome"
+          name="displayname"
+          type="text"
+          register={register}
+          maxLength={40}
+        />
 
-      <Fields.Password
-        register={register}
-        errors={errors.password ? errors.password : null}
-        isPasswordVisible={isPasswordVisible}
-        setIsPasswordVisible={setIsPasswordVisible}
-      />
+        <Input
+          errors={errors.username ? errors.username : null}
+          label="Nome de usuário"
+          name="username"
+          type="text"
+          register={register}
+          maxLength={18}
+        />
 
-      <Fields.ConfirmPassword
-        register={register}
-        errors={errors.confirmPassword ? errors.confirmPassword : null}
-        isPasswordVisible={isPasswordVisible}
-      />
+        <Fields.Password
+          register={register}
+          errors={errors.password ? errors.password : null}
+          isPasswordVisible={isPasswordVisible}
+          setIsPasswordVisible={setIsPasswordVisible}
+        />
 
-      <Input
-        errors={errors.birthday ? errors.birthday : null}
-        label="Data de nascimento"
-        name="birthday"
-        type="date"
-        register={register}
-      />
+        <Fields.ConfirmPassword
+          register={register}
+          errors={errors.confirmPassword ? errors.confirmPassword : null}
+          isPasswordVisible={isPasswordVisible}
+        />
 
-      <TeamSelect register={register} />
+        <Input
+          errors={errors.birthday ? errors.birthday : null}
+          label="Data de nascimento"
+          name="birthday"
+          type="date"
+          register={register}
+        />
 
-      <FileInput register={register} />
+        <TeamSelect register={register} />
 
-      <SubmitButton type="submit">Finalizar</SubmitButton>
-    </Form>
+        <FileInput register={register} />
+
+        <SubmitButton type="submit">Finalizar</SubmitButton>
+      </Form>
+    </>
   );
 }
 
