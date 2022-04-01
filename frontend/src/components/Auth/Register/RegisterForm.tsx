@@ -24,6 +24,7 @@ export default function RegisterForm() {
     register,
     setValue,
     handleSubmit,
+    setError,
     formState: { errors }
   } = useForm<RegisterInputs>({ resolver: yupResolver(schema) });
 
@@ -39,10 +40,14 @@ export default function RegisterForm() {
       });
 
       setEmail(data.email);
-      console.log('ok');
-      // setShowAuthModal(!showAuthModal);
+      console.log('ok'); // DEBUG
     } catch (error) {
-      console.log(error);
+      console.log(error); // DEBUG
+      setError(
+        'email',
+        { type: 'manual', message: 'Email já cadastrado' },
+        { shouldFocus: false }
+      );
     }
   });
 

@@ -6,7 +6,7 @@ import { ModalContext } from '../contexts/ModalContext';
 import AuthModal from '../components/Auth/AuthModal';
 import CreatePostModal from '../components/Post/CreatePost/CreatePostModal';
 import { CommentsContextProvider } from '../contexts/CommentsContext';
-import Snackbar from '../components/Alerts/Snackbar';
+import Snackbar from '../components/Utils/Snackbar';
 import { useLocation } from 'react-router-dom';
 
 export default function Home() {
