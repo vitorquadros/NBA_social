@@ -76,7 +76,7 @@ export default function CompleteRegisterForm({
 
       setError(
         'username',
-        { type: 'manual', message: error.response.data.error },
+        { type: 'manual', message: 'Nome de usuário ja existente' },
         { shouldFocus: true }
       );
     }
@@ -89,14 +89,6 @@ export default function CompleteRegisterForm({
 
   return (
     <>
-      {/* <button
-        onClick={() => {
-          snackbarRef.current.show();
-        }}
-      >
-        Botao
-      </button> */}
-
       <Form method="POST" onSubmit={onSubmit}>
         <Input
           label="Email"

@@ -16,9 +16,11 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
   }, []);
 
   async function authenticate(email: string, password: string) {
-    const response = await LoginRequest(email, password);
+    const { status, data } = await LoginRequest(email, password);
 
-    const payload = { token: response.data.token, email };
+    if (status == 401) throw new Error('Algo deu errado');
+
+    const payload = { token: data.data.token, email };
 
     setUser(payload);
     setUserlocalStorage(payload);
