@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -9,7 +9,6 @@ import { Fields } from './Fields/PasswordFields';
 import FileInput from './Fields/FileInput';
 import { useNavigate } from 'react-router-dom';
 import useApi from '../../../hooks/useApi';
-import Snackbar from '../../Alerts/Snackbar';
 
 export type Inputs = {
   displayname: string;
@@ -60,11 +59,11 @@ export default function CompleteRegisterForm({
     );
     console.log(user);
     try {
-      // await callForm({
-      //   url: '/users/register',
-      //   method: 'put',
-      //   data: user
-      // });
+      await callForm({
+        url: '/users/register',
+        method: 'put',
+        data: user
+      });
 
       navigate('/', {
         state: {

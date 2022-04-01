@@ -12,11 +12,11 @@ import { useLocation } from 'react-router-dom';
 export default function Home() {
   const { showAuthModal, showCreatePostModal } = useContext(ModalContext);
 
-  const snackbarRef = useRef(null);
+  const snackbarRef = useRef<any>(null);
 
-  const { state } = useLocation();
+  const location = useLocation();
 
-  console.log(state);
+  const state = location.state as any;
 
   useEffect(() => {
     if (showCreatePostModal) {
