@@ -3,10 +3,10 @@ import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { schema } from '../../../utils/form-validation/CompleteRegisterValidation';
-import TeamSelect from './Fields/TeamSelect';
-import Input from './Fields/Input';
-import { Fields } from './Fields/PasswordFields';
-import FileInput from './Fields/FileInput';
+import TeamSelect from '../Fields/TeamSelect';
+import Input from '../Fields/Input';
+import { Fields } from '../Fields/PasswordFields';
+import FileInput from '../Fields/FileInput';
 import { useNavigate } from 'react-router-dom';
 import useApi from '../../../hooks/useApi';
 

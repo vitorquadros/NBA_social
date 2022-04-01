@@ -1,8 +1,8 @@
 import { SyntheticEvent, useContext, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { ModalContext } from '../../contexts/ModalContext';
-import LoginForm from './LoginForm';
-import RegisterForm from './RegisterForm';
+import LoginForm from './Login/LoginForm';
+import RegisterForm from './Register/RegisterForm';
 
 export default function AuthModal() {
   const { setShowAuthModal, isRegister, setIsRegister } =

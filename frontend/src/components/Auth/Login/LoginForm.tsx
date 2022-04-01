@@ -3,11 +3,11 @@ import { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import useAuth from '../../contexts/AuthContext/useAuth';
-import { ModalContext } from '../../contexts/ModalContext';
-import { schema } from '../../utils/form-validation/LoginValidation';
-import Input from './Register/Fields/Input';
-import { Fields } from './Register/Fields/PasswordFields';
+import useAuth from '../../../contexts/AuthContext/useAuth';
+import { ModalContext } from '../../../contexts/ModalContext';
+import { schema } from '../../../utils/form-validation/LoginValidation';
+import Input from '../Fields/Input';
+import { Fields } from '../Fields/PasswordFields';
 
 export default function LoginForm() {
   const { isRegister, setIsRegister, setShowAuthModal, showAuthModal } =
