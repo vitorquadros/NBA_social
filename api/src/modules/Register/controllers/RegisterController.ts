@@ -53,6 +53,7 @@ export class RegisterController {
       birthday,
       nbaTeam,
       password,
+      avatar,
       country,
       state,
       city
@@ -68,6 +69,7 @@ export class RegisterController {
         birthday,
         nbaTeam,
         password,
+        avatar,
         country,
         state,
         city

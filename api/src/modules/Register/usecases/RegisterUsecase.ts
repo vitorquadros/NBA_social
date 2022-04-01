@@ -14,6 +14,7 @@ interface UpdateRequest {
   birthday: Date;
   nbaTeam: string;
   password: string;
+  avatar?: string;
   country?: string;
   state?: string;
   city?: string;
@@ -62,7 +63,7 @@ export class RegisterUsecase {
       to: 'user@test.com',
       subject: 'Finalize seu cadastro',
       text: `Para finalizar seu cadastro acesse o link: ${link}`,
-      html: `<p>Para finalizar seu cadastro acesse o link:</p> <a>${link}</a>`
+      html: `<p>Para finalizar seu cadastro <a href="${link}">clique aqui</a> ou acesse o link:</p> <a>${link}</a>`
     };
 
     transport.sendMail(message, (e) => console.log(e.message));
@@ -91,6 +92,7 @@ export class RegisterUsecase {
     birthday,
     nbaTeam,
     password,
+    avatar,
     country,
     state,
     city
@@ -119,6 +121,7 @@ export class RegisterUsecase {
       { username },
       { displayName },
       { birthday },
+      { avatar },
       { nbaTeam },
       { password },
       { address }
