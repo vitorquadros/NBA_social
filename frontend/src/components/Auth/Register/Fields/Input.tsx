@@ -5,10 +5,11 @@ type InputProps = {
   register: any;
   type: string;
   name: string;
-  label: string;
+  label?: string;
   maxLength?: number;
   disabled?: boolean;
   value?: string;
+  placeholder?: string;
 };
 
 export default function Input({
@@ -22,7 +23,7 @@ export default function Input({
 }: InputProps) {
   return (
     <InputWrapper>
-      <label htmlFor="displayname">{label}</label>
+      {label && <label htmlFor="displayname">{label}</label>}
       <input
         type={type}
         id={name}

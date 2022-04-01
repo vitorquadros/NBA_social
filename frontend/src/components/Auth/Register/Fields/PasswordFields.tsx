@@ -6,6 +6,8 @@ type PasswordProps = {
   register: any;
   errors: any;
   isPasswordVisible: boolean;
+  label?: string;
+  placeholder?: string;
   setIsPasswordVisible: (state: boolean) => void;
 };
 
@@ -13,24 +15,29 @@ type ConfirmPasswordProps = {
   register: any;
   errors: any;
   isPasswordVisible: boolean;
+  label?: string;
+  placeholder?: string;
 };
 
 function Password({
   register,
   errors,
   isPasswordVisible,
-  setIsPasswordVisible
+  setIsPasswordVisible,
+  label,
+  ...rest
 }: PasswordProps) {
   return (
     <InputWrapper>
       <PasswordWrapper>
-        <label htmlFor="password">Senha</label>
+        {label && <label htmlFor="password">{label}</label>}
         <div className="password-wrapper">
           <input
             type={isPasswordVisible ? 'text' : 'password'}
             id="password"
             {...register('password')}
             maxLength={100}
+            {...rest}
           />
         </div>
 
@@ -53,16 +60,19 @@ function Password({
 function ConfirmPassword({
   register,
   errors,
-  isPasswordVisible
+  isPasswordVisible,
+  label,
+  ...rest
 }: ConfirmPasswordProps) {
   return (
     <InputWrapper>
-      <label htmlFor="confirmPassword">Confirmar senha</label>
+      {label && <label htmlFor="confirmPassword">{label}</label>}
       <input
         type={isPasswordVisible ? 'text' : 'password'}
         id="confirmPassword"
         {...register('confirmPassword')}
         maxLength={100}
+        {...rest}
       />
       {errors && <span className="field-error">{errors.message}</span>}
     </InputWrapper>

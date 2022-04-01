@@ -1,13 +1,19 @@
-import { useContext } from 'react';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import useAuth from '../../contexts/AuthContext/useAuth';
 import { ModalContext } from '../../contexts/ModalContext';
+import { schema } from '../../utils/form-validation/LoginValidation';
+import Input from './Register/Fields/Input';
+import { Fields } from './Register/Fields/PasswordFields';
 
 export default function LoginForm() {
   const { isRegister, setIsRegister, setShowAuthModal, showAuthModal } =
     useContext(ModalContext);
+
+  const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
 
   const navigate = useNavigate();
 
@@ -23,7 +29,7 @@ export default function LoginForm() {
     setValue,
     handleSubmit,
     formState: { errors }
-  } = useForm<LoginInputs>();
+  } = useForm<LoginInputs>({ resolver: yupResolver(schema) });
 
   const onSubmit = handleSubmit((data) => {
     try {
@@ -48,17 +54,20 @@ export default function LoginForm() {
 
       <Form method="POST" onSubmit={onSubmit}>
         <div className="input-fields">
-          <input
-            type="email"
-            id="email"
+          <Input
+            type="text"
+            name="email"
+            errors={errors.email ? errors.email : null}
+            register={register}
             placeholder="Seu email"
-            {...register('email')}
           />
-          <input
-            type="password"
-            id="password"
+
+          <Fields.Password
+            register={register}
+            errors={errors.password ? errors.password : null}
+            isPasswordVisible={isPasswordVisible}
+            setIsPasswordVisible={setIsPasswordVisible}
             placeholder="Sua senha"
-            {...register('password')}
           />
         </div>
 
@@ -113,7 +122,7 @@ const Form = styled.form`
     margin-bottom: 1.4rem;
     display: flex;
     flex-direction: column;
-    gap: 1.4rem;
+    gap: 1rem;
     width: 100%;
 
     input {
@@ -129,6 +138,20 @@ const Form = styled.form`
       &:focus {
         outline: 1px solid #e56503;
       }
+    }
+
+    span.field-error {
+      color: red;
+      font-size: 1.3rem;
+      margin-left: 0.5rem;
+    }
+
+    .eye {
+      top: 8px;
+    }
+
+    .password-wrapper input {
+      width: calc(100% - 4.2rem);
     }
   }
 

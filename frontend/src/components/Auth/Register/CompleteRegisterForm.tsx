@@ -130,12 +130,14 @@ export default function CompleteRegisterForm({
           errors={errors.password ? errors.password : null}
           isPasswordVisible={isPasswordVisible}
           setIsPasswordVisible={setIsPasswordVisible}
+          label="Senha"
         />
 
         <Fields.ConfirmPassword
           register={register}
           errors={errors.confirmPassword ? errors.confirmPassword : null}
           isPasswordVisible={isPasswordVisible}
+          label="Confirmar senha"
         />
 
         <Input
