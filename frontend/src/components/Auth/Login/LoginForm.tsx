@@ -1,7 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import useAuth from '../../../contexts/AuthContext/useAuth';
 import { ModalContext } from '../../../contexts/ModalContext';
@@ -14,8 +13,6 @@ export default function LoginForm() {
     useContext(ModalContext);
 
   const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
-
-  const navigate = useNavigate();
 
   const { authenticate } = useAuth();
 
