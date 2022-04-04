@@ -12,7 +12,17 @@ export class AuthController {
     try {
       const user = await repository.findOne({
         where: { email },
-        select: ['password', 'id']
+        select: [
+          'password',
+          'id',
+          'username',
+          'birthday',
+          'avatar',
+          'cover',
+          'nbaTeam',
+          'role',
+          'displayName'
+        ]
       });
 
       if (!user) {
