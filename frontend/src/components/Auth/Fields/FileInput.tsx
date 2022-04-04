@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import React, { SetStateAction, useState } from 'react';
+import { UseFormRegister } from 'react-hook-form';
 import styled from 'styled-components';
 import { InputWrapper } from './InputWrapper';
 
@@ -11,8 +12,9 @@ export default function FileInput({ register }: any) {
         <input
           type="file"
           id="avatar"
-          {...register('avatar')}
+          {...register('image')}
           onChange={(e) => setFileName(e.target.files![0].name)}
+          accept=".jpg, .jpeg, .png"
         />
         <label className="upload-avatar" htmlFor="avatar">
           <span className="material-icons">add_photo_alternate</span>

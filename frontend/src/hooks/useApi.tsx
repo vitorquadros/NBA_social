@@ -29,7 +29,7 @@ export default function useApi<T = unknown>() {
       ...config
     });
 
-    return response.data.data;
+    return response.data;
   }
 
   return {

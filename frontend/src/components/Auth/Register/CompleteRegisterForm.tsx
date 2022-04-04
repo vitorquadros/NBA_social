@@ -19,7 +19,7 @@ export type Inputs = {
   confirmPassword: string;
   birthday: string;
   team?: string;
-  avatar?: FileList;
+  image?: FileList;
 };
 
 type CompleteRegisterProps = {
@@ -41,7 +41,6 @@ export default function CompleteRegisterForm({
 
   const {
     register,
-    setValue,
     setError,
     handleSubmit,
     formState: { errors }
@@ -57,18 +56,31 @@ export default function CompleteRegisterForm({
         password: data.password,
         nbaTeam: data.team ? data.team : '',
         birthday: data.birthday,
-        avatar: data.avatar![0] ? data.avatar![0].name : 'default_profile.jpg'
+        avatar: 'profile_default.jpg'
       }
     );
 
-    console.log(user);
-
     try {
+      if (data.image && data.image.length > 0) {
+        const formData = new FormData();
+        formData.append('image', data.image[0]);
+
+        const response = await callForm({
+          url: '/upload',
+          method: 'post',
+          data: formData
+        });
+
+        user['avatar'] = response.filename;
+      }
+
       await callForm({
         url: '/users/register',
         method: 'put',
         data: user
       });
+
+      console.log(user);
 
       await authenticate(data.email, data.password);
 
