@@ -60,13 +60,17 @@ export default function CompleteRegisterForm({
         avatar: data.avatar![0] ? data.avatar![0].name : 'default_profile.jpg'
       }
     );
-    console.log(data);
+
+    console.log(user);
+
     try {
       await callForm({
         url: '/users/register',
         method: 'put',
         data: user
       });
+
+      await authenticate(data.email, data.password);
 
       navigate('/', {
         state: {
