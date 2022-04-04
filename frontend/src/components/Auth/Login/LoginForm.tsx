@@ -29,9 +29,9 @@ export default function LoginForm() {
     formState: { errors }
   } = useForm<LoginInputs>({ resolver: yupResolver(schema) });
 
-  const onSubmit = handleSubmit((data) => {
+  const onSubmit = handleSubmit(async (data) => {
     try {
-      authenticate(data.email, data.password);
+      await authenticate(data.email, data.password);
       setShowAuthModal(!showAuthModal);
       console.log('ok'); // DEBUG
     } catch (error) {

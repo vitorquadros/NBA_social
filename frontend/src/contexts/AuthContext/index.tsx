@@ -8,11 +8,15 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
   const [user, setUser] = useState<IUser | null>();
 
   useEffect(() => {
-    const user = getUserLocalStorage();
+    const userLocal = getUserLocalStorage();
+    console.log('1 ' + user);
 
-    if (user) {
-      setUser(user);
+    if (userLocal) {
+      setUser(userLocal);
+      console.log('2 ' + user);
     }
+
+    console.log(user);
   }, []);
 
   async function authenticate(email: string, password: string) {
@@ -26,7 +30,7 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
     setUserlocalStorage(payload);
   }
 
-  async function logout() {
+  function logout() {
     setUser(null);
     setUserlocalStorage(null);
   }
