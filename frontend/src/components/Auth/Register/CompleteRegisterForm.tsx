@@ -9,6 +9,7 @@ import { Fields } from '../Fields/PasswordFields';
 import FileInput from '../Fields/FileInput';
 import { useNavigate } from 'react-router-dom';
 import useApi from '../../../hooks/useApi';
+import useAuth from '../../../contexts/AuthContext/useAuth';
 
 export type Inputs = {
   displayname: string;
@@ -34,6 +35,8 @@ export default function CompleteRegisterForm({
 
   const { callForm } = useApi();
 
+  const { authenticate } = useAuth();
+
   const navigate = useNavigate();
 
   const {
@@ -57,7 +60,7 @@ export default function CompleteRegisterForm({
         avatar: data.avatar![0] ? data.avatar![0].name : 'default_profile.jpg'
       }
     );
-    console.log(user);
+    console.log(data);
     try {
       await callForm({
         url: '/users/register',
@@ -95,7 +98,7 @@ export default function CompleteRegisterForm({
           type="email"
           name="email"
           register={register}
-          disabled
+          readOnly
           value={email}
         />
 

@@ -10,9 +10,9 @@ export default function ProtectedLayout({
 }: {
   children: JSX.Element;
 }) {
-  const { setShowAuthModal } = useContext(ModalContext);
+  // const { setShowAuthModal } = useContext(ModalContext);
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate(); // TODO: redirect to homepage and open login modal
 
   const { email } = useAuth();
 

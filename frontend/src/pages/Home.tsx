@@ -19,14 +19,6 @@ export default function Home() {
   const state = location.state as any;
 
   useEffect(() => {
-    if (showCreatePostModal) {
-      document.body.style.overflowY = 'hidden';
-    } else {
-      document.body.style.overflowY = 'unset';
-    }
-  }, [showAuthModal, showCreatePostModal]);
-
-  useEffect(() => {
     if (state) {
       if (state.alert) {
         snackbarRef.current.show();

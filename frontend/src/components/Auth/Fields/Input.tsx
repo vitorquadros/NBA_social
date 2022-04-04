@@ -10,6 +10,7 @@ type InputProps = {
   disabled?: boolean;
   value?: string;
   placeholder?: string;
+  readOnly?: boolean;
 };
 
 export default function Input({

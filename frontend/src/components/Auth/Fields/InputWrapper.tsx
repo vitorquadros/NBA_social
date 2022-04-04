@@ -32,9 +32,14 @@ export const InputWrapper = styled.div`
     }
   }
 
-  input:disabled {
+  input:read-only {
     cursor: not-allowed;
     background-color: #cccccc;
+    color: #777777;
+  }
+
+  input:read-only:focus {
+    outline: none;
   }
 
   input[type='date'] {
