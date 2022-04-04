@@ -2,6 +2,7 @@ import { Children, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useAuth from '../../contexts/AuthContext/useAuth';
 import { ModalContext } from '../../contexts/ModalContext';
+import Home from '../../pages/Home';
 import Loading from '../Utils/Loading';
 
 export default function ProtectedLayout({
@@ -13,15 +14,8 @@ export default function ProtectedLayout({
 
   const navigate = useNavigate();
 
-  const auth = useAuth();
+  const { email } = useAuth();
 
-  useEffect(() => {
-    if (!auth.email) {
-      navigate('/');
-      setShowAuthModal(true);
-    }
-  }, []);
-
-  if (!auth.email) return <Loading />;
+  if (!email) return <Home />;
   else return children;
 }
