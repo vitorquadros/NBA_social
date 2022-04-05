@@ -26,7 +26,7 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
             return;
           }
         } catch (error) {
-          console.log('token inválido ou expirado'); // DEBUG
+          console.log('token inválido ou expirado'); // DEBUG //
         }
       })();
     }

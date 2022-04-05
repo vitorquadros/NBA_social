@@ -1,4 +1,4 @@
-import { SyntheticEvent, useContext, useRef, useState } from 'react';
+import { SyntheticEvent, useContext, useRef } from 'react';
 import styled from 'styled-components';
 import { ModalContext } from '../../contexts/ModalContext';
 import LoginForm from './Login/LoginForm';
