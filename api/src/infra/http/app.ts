@@ -5,6 +5,7 @@ import express, { Application, NextFunction, Request, Response } from 'express';
 import '../database';
 import { router } from './routes';
 import path from 'path';
+import 'dotenv/config';
 
 export const app: Application = express();
 
