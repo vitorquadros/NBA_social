@@ -40,7 +40,7 @@ export class AuthController {
       }
 
       const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
-        expiresIn: '30d'
+        expiresIn: process.env.JWT_EXPIRES_IN
       });
 
       delete user.password;

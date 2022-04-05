@@ -1,6 +1,12 @@
 import { createContext, useEffect, useState } from 'react';
+import useApi from '../../hooks/useApi';
 import { IAuthProvider, IContext, IUser } from './types';
-import { getUserLocalStorage, LoginRequest, setUserlocalStorage } from './util';
+import {
+  getUserLocalStorage,
+  LoginRequest,
+  setUserlocalStorage,
+  VerifyToken
+} from './util';
 
 export const AuthContext = createContext<IContext>({} as IContext);
 
@@ -9,14 +15,22 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
 
   useEffect(() => {
     const userLocal = getUserLocalStorage();
-    console.log('1 ' + user);
 
     if (userLocal) {
-      setUser(userLocal);
-      console.log('2 ' + user);
-    }
+      (async function verify() {
+        try {
+          const { data } = await VerifyToken(userLocal.token);
 
-    console.log(user);
+          if (data.valid) {
+            setUser(data.user);
+          } else {
+            return;
+          }
+        } catch (error) {
+          console.log('token inválido ou expirado'); // DEBUG
+        }
+      })();
+    }
   }, []);
 
   async function authenticate(email: string, password: string) {
@@ -24,10 +38,10 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
 
     if (status == 401) throw new Error('Algo deu errado');
 
-    const payload = { token: data.data.token, email };
+    const userPayload = { token: data.data.token, email, ...data.data.user };
 
-    setUser(payload);
-    setUserlocalStorage(payload);
+    setUser(userPayload);
+    setUserlocalStorage({ token: data.data.token, email });
   }
 
   function logout() {
