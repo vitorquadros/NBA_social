@@ -1,7 +1,7 @@
 import { Api } from '../../services/api';
-import { IUser } from './types';
+import { IUserLocal } from './types';
 
-export function setUserlocalStorage(user: IUser | null) {
+export function setUserlocalStorage(user: IUserLocal | null) {
   localStorage.setItem('user', JSON.stringify(user));
 }
 
@@ -18,6 +18,12 @@ export function getUserLocalStorage() {
 
 export async function LoginRequest(email: string, password: string) {
   const response = await Api.post('auth', { email, password });
+
+  return response;
+}
+
+export async function VerifyToken(token: string) {
+  const response = await Api.post('auth/verify', { token });
 
   return response;
 }

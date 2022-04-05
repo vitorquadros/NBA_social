@@ -35,6 +35,7 @@ export default function LoginForm() {
       setShowAuthModal(!showAuthModal);
       console.log('ok'); // DEBUG
     } catch (error) {
+      console.log(error);
       setError(
         'email',
         { type: 'manual', message: 'Email ou senha incorretos' },
