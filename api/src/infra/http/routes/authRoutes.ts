@@ -6,3 +6,4 @@ export const authRoutes = Router();
 const authController = new AuthController();
 
 authRoutes.post('/', authController.handle);
+authRoutes.post('/verify', authController.verify);
