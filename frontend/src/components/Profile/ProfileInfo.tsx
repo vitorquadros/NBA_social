@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import useAuth from '../../contexts/AuthContext/useAuth';
 
 export default function ProfileInfo() {
-  const { displayName, username, role } = useAuth();
+  const { displayName, username, role, nbaTeam } = useAuth();
 
   return (
     <Container className="profile-info">
@@ -29,9 +29,9 @@ export default function ProfileInfo() {
         <div className="align">
           <p className="location">Brasil, RS</p>
           <img
-            src="https://loodibee.com/wp-content/uploads/miami-heat-logo-symbol.png"
-            alt=""
-            title="Torcedor do Miami Heat"
+            src={`http://localhost:3333/files/${nbaTeam}.png`}
+            alt={`Logo do ${nbaTeam}`}
+            title={`Torcedor do ${nbaTeam}`}
           />
         </div>
       </div>
