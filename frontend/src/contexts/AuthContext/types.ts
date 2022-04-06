@@ -4,6 +4,7 @@ export interface IUser {
   displayName?: string;
   birthday?: string;
   nbaTeam?: string;
+  role?: string;
   avatar?: string;
   cover?: string;
   token?: string;
