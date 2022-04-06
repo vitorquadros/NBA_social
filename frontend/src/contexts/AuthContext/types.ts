@@ -17,6 +17,7 @@ export interface IUserLocal {
 export interface IContext extends IUser {
   authenticate: (email: string, password: string) => Promise<void>;
   logout: () => void;
+  loading: boolean;
 }
 
 export interface IAuthProvider {

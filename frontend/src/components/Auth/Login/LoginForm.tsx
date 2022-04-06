@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import useAuth from '../../../contexts/AuthContext/useAuth';
 import { ModalContext } from '../../../contexts/ModalContext';
 import { schema } from '../../../utils/form-validation/LoginValidation';
+import { Loading } from '../../Utils/Loading';
 import Input from '../Fields/Input';
 import { Fields } from '../Fields/PasswordFields';
 
@@ -14,7 +15,7 @@ export default function LoginForm() {
 
   const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
 
-  const { authenticate } = useAuth();
+  const { authenticate, loading } = useAuth();
 
   type LoginInputs = {
     email: string;
@@ -55,27 +56,31 @@ export default function LoginForm() {
         </button>
       </div>
 
-      <Form method="POST" onSubmit={onSubmit}>
-        <div className="input-fields">
-          <Input
-            type="text"
-            name="email"
-            errors={errors.email ? errors.email : null}
-            register={register}
-            placeholder="Seu email"
-          />
+      {loading ? (
+        <Loading />
+      ) : (
+        <Form method="POST" onSubmit={onSubmit}>
+          <div className="input-fields">
+            <Input
+              type="text"
+              name="email"
+              errors={errors.email ? errors.email : null}
+              register={register}
+              placeholder="Seu email"
+            />
 
-          <Fields.Password
-            register={register}
-            errors={errors.password ? errors.password : null}
-            isPasswordVisible={isPasswordVisible}
-            setIsPasswordVisible={setIsPasswordVisible}
-            placeholder="Sua senha"
-          />
-        </div>
+            <Fields.Password
+              register={register}
+              errors={errors.password ? errors.password : null}
+              isPasswordVisible={isPasswordVisible}
+              setIsPasswordVisible={setIsPasswordVisible}
+              placeholder="Sua senha"
+            />
+          </div>
 
-        <button>Fazer login</button>
-      </Form>
+          <button>Fazer login</button>
+        </Form>
+      )}
     </Container>
   );
 }
