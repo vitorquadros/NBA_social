@@ -6,7 +6,7 @@ import useAuth from '../../contexts/AuthContext/useAuth';
 export default function UserMenu() {
   const [isActive, setIsActive] = useState(false);
 
-  const { logout } = useAuth();
+  const { logout, avatar, displayName } = useAuth();
 
   function handleLogout() {
     logout();
@@ -16,8 +16,8 @@ export default function UserMenu() {
     <Container>
       <div className="menu" onClick={() => setIsActive(!isActive)}>
         <img
-          src="https://jumperbrasil.lance.com.br/wp-content/uploads/2021/01/Bam-Adebayo-1.jpg"
-          alt=""
+          src={`http://localhost:3333/files/${avatar}`}
+          alt={`Foto de perfil de ${displayName}`}
         />
         {isActive ? (
           <span className="material-icons">expand_less</span>
