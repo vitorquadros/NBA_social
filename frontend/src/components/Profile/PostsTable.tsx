@@ -1,9 +1,12 @@
 import styled from 'styled-components';
+import useAuth from '../../contexts/AuthContext/useAuth';
 
 export default function PostsTable() {
+  const { displayName } = useAuth();
+
   return (
     <Container>
-      <h3>Publicações de Bam Adebayo</h3>
+      <h3>{`Publicações de ${displayName}`}</h3>
       <div className="table-images">
         <div className="table-image">
           <img src="https://wallpaper.dog/large/635907.jpg" alt="" />

@@ -1,16 +1,19 @@
 import styled from 'styled-components';
+import useAuth from '../../contexts/AuthContext/useAuth';
 
 export default function ProfileImages() {
+  const { cover, avatar, displayName } = useAuth();
+
   return (
     <Container className="profile-images">
       <img
-        src="https://s3-sa-east-1.amazonaws.com/saipos-estatico/site_delivery/cover8.png"
-        alt=""
+        src={`http://localhost:3333/files/${cover}`}
+        alt={`Foto de perfil de ${displayName}`}
         className="cover"
       />
       <img
-        src="https://jumperbrasil.lance.com.br/wp-content/uploads/2021/01/Bam-Adebayo-1.jpg"
-        alt=""
+        src={`http://localhost:3333/files/${avatar}`}
+        alt={`Foto de capa de ${displayName}`}
         className="avatar"
       />
     </Container>

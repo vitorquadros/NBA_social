@@ -1,12 +1,21 @@
 import styled from 'styled-components';
+import useAuth from '../../contexts/AuthContext/useAuth';
 
 export default function ProfileInfo() {
+  const { displayName, username, role } = useAuth();
+
   return (
     <Container className="profile-info">
       <div className="main-info">
         <div className="name-container">
-          <p className="name">Bam Adebayo</p>
-          <span className="material-icons">verified</span>
+          <p className="name" title={`@${username}`}>
+            {displayName}
+          </p>
+          {role === 'verified' && (
+            <span className="material-icons" title="Perfil verificado">
+              verified
+            </span>
+          )}
         </div>
 
         <p className="bio">
@@ -18,7 +27,7 @@ export default function ProfileInfo() {
 
       <div className="extra-info">
         <div className="align">
-          <p className="location">United States, NJ</p>
+          <p className="location">Brasil, RS</p>
           <img
             src="https://loodibee.com/wp-content/uploads/miami-heat-logo-symbol.png"
             alt=""
