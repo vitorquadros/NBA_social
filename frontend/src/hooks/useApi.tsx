@@ -4,10 +4,11 @@ import { baseURL } from '../services/api';
 
 export default function useApi<T = unknown>() {
   const [data, setData] = useState<T | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
 
   function call(config: AxiosRequestConfig) {
+    setIsLoading(true);
     axios({
       baseURL,
       ...config
@@ -24,11 +25,13 @@ export default function useApi<T = unknown>() {
   }
 
   async function callForm(config: AxiosRequestConfig) {
+    setIsLoading(true);
     const response = await axios({
       baseURL,
       ...config
     });
 
+    setIsLoading(false);
     return response.data;
   }
 

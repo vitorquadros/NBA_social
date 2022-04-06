@@ -7,6 +7,7 @@ import useApi from '../../../hooks/useApi';
 import { schema } from '../../../utils/form-validation/RegisterValidation';
 import EmailSent from './EmailSent';
 import Input from '../Fields/Input';
+import { Loading } from '../../Utils/Loading';
 
 type RegisterInputs = {
   email: string;
@@ -18,7 +19,7 @@ export default function RegisterForm() {
 
   const [email, setEmail] = useState<string | null>(null);
 
-  const { callForm } = useApi<string>();
+  const { callForm, isLoading } = useApi<string>();
 
   const {
     register,
@@ -61,20 +62,24 @@ export default function RegisterForm() {
         <button onClick={() => setIsRegister(!isRegister)}>Fazer login</button>
       </div>
 
-      <Form method="POST" onSubmit={onSubmit}>
-        <p>Para começar, digite seu email</p>
-        <div className="input-fields">
-          <Input
-            type="text"
-            name="email"
-            errors={errors.email ? errors.email : null}
-            register={register}
-            placeholder="Seu email"
-          />
-        </div>
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <Form method="POST" onSubmit={onSubmit}>
+          <p>Para começar, digite seu email</p>
+          <div className="input-fields">
+            <Input
+              type="text"
+              name="email"
+              errors={errors.email ? errors.email : null}
+              register={register}
+              placeholder="Seu email"
+            />
+          </div>
 
-        <button>Enviar</button>
-      </Form>
+          <button>Enviar</button>
+        </Form>
+      )}
     </Container>
   );
 }
