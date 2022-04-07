@@ -162,7 +162,7 @@ export default function CompleteRegisterForm({
 
         <TeamSelect register={register} />
 
-        <FileInput register={register} />
+        <FileInput register={register} name="image" label="Imagem de perfil" />
 
         <div className="finish-container">
           {isLoading ? (

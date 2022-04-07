@@ -3,7 +3,17 @@ import { UseFormRegister } from 'react-hook-form';
 import styled from 'styled-components';
 import { InputWrapper } from './InputWrapper';
 
-export default function FileInput({ register }: any) {
+export default function FileInput({
+  register,
+  name,
+  label,
+  setPreview
+}: {
+  register: any;
+  name: string;
+  label: string;
+  setPreview?: React.Dispatch<React.SetStateAction<string | FileList>>;
+}) {
   const [fileName, setFileName] = useState<string>('');
 
   return (
@@ -11,16 +21,22 @@ export default function FileInput({ register }: any) {
       <FileWrapper>
         <input
           type="file"
-          id="avatar"
-          {...register('image')}
-          onChange={(e) => setFileName(e.target.files![0].name)}
+          id={name}
+          {...register(name)}
+          onChange={(e) => {
+            setFileName(e.target.files![0].name);
+            if (setPreview) {
+              // @ts-ignore
+              setPreview(e.target.files![0]);
+            }
+          }}
           accept=".jpg, .jpeg, .png"
         />
-        <label className="upload-avatar" htmlFor="avatar">
+        <label className="upload-avatar" htmlFor={name}>
           <span className="material-icons">add_photo_alternate</span>
           Selecionar
         </label>
-        {fileName ? <p>Selecionado: {fileName}</p> : <p>Imagem de perfil</p>}
+        {fileName ? <p>Selecionado: {fileName}</p> : <p>{label}</p>}
       </FileWrapper>
     </InputWrapper>
   );

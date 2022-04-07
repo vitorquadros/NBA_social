@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import styled from 'styled-components';
 import Header from '../components/Header/Header';
 import CreatePostModal from '../components/Post/CreatePost/CreatePostModal';
@@ -7,19 +7,34 @@ import Options from '../components/Profile/Options';
 import ProfileImages from '../components/Profile/ProfileImages';
 import ProfileInfo from '../components/Profile/ProfileInfo';
 import { ModalContext } from '../contexts/ModalContext';
+import EditProfileForm from '../components/Profile/EditProfile/EditProfileForm';
 
 export default function Profile() {
   const { showCreatePostModal } = useContext(ModalContext);
+  const [editProfile, toggleEditProfile] = useState<boolean>(true);
+  const [avatarImage, setAvatarImage] = useState<string | FileList>('');
+  const [coverImage, setCoverImage] = useState<string | FileList>('');
 
   return (
     <Wrapper>
       <Header />
       <Content>
         {showCreatePostModal && <CreatePostModal />}
-        <ProfileImages />
+        <ProfileImages previewAvatar={avatarImage} previewCover={coverImage} />
         <Options />
-        <ProfileInfo />
-        <PostsTable />
+        {editProfile ? (
+          <EditProfileForm
+            avatarImage={avatarImage}
+            setAvatarImage={setAvatarImage}
+            coverImage={coverImage}
+            setCoverImage={setCoverImage}
+          />
+        ) : (
+          <>
+            <ProfileInfo />
+            <PostsTable />
+          </>
+        )}
       </Content>
     </Wrapper>
   );

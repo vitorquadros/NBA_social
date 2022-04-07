@@ -1,18 +1,32 @@
 import styled from 'styled-components';
 import useAuth from '../../contexts/AuthContext/useAuth';
 
-export default function ProfileImages() {
+export default function ProfileImages({
+  previewAvatar,
+  previewCover
+}: {
+  previewAvatar: FileList | string;
+  previewCover: FileList | string;
+}) {
   const { cover, avatar, displayName } = useAuth();
 
   return (
     <Container className="profile-images">
       <img
-        src={`http://localhost:3333/files/${cover}`}
+        src={
+          previewCover // @ts-ignore
+            ? URL.createObjectURL(previewCover)
+            : `http://localhost:3333/files/${cover}`
+        }
         alt={`Foto de perfil de ${displayName}`}
         className="cover"
       />
       <img
-        src={`http://localhost:3333/files/${avatar}`}
+        src={
+          previewAvatar // @ts-ignore
+            ? URL.createObjectURL(previewAvatar)
+            : `http://localhost:3333/files/${avatar}`
+        }
         alt={`Foto de capa de ${displayName}`}
         className="avatar"
       />
