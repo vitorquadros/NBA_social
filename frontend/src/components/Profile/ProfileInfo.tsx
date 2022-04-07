@@ -28,11 +28,13 @@ export default function ProfileInfo() {
       <div className="extra-info">
         <div className="align">
           <p className="location">Brasil, RS</p>
-          <img
-            src={`http://localhost:3333/files/${nbaTeam}.png`}
-            alt={`Logo do ${nbaTeam}`}
-            title={`Torcedor do ${nbaTeam}`}
-          />
+          {nbaTeam && (
+            <img
+              src={`http://localhost:3333/files/${nbaTeam}.png`}
+              alt={`Logo do ${nbaTeam}`}
+              title={`Torcedor do ${nbaTeam}`}
+            />
+          )}
         </div>
       </div>
     </Container>

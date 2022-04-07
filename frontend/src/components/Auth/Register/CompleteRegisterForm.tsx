@@ -10,6 +10,7 @@ import FileInput from '../Fields/FileInput';
 import { useNavigate } from 'react-router-dom';
 import useApi from '../../../hooks/useApi';
 import useAuth from '../../../contexts/AuthContext/useAuth';
+import { Loading } from '../../Utils/Loading';
 
 export type Inputs = {
   displayname: string;
@@ -33,7 +34,7 @@ export default function CompleteRegisterForm({
 }: CompleteRegisterProps) {
   const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
 
-  const { callForm } = useApi();
+  const { callForm, isLoading } = useApi();
 
   const { authenticate } = useAuth();
 
@@ -163,7 +164,13 @@ export default function CompleteRegisterForm({
 
         <FileInput register={register} />
 
-        <SubmitButton type="submit">Finalizar</SubmitButton>
+        <div className="finish-container">
+          {isLoading ? (
+            <Loading />
+          ) : (
+            <SubmitButton type="submit">Finalizar</SubmitButton>
+          )}
+        </div>
       </Form>
     </>
   );
@@ -178,6 +185,12 @@ const Form = styled.form`
 
   @media screen and (max-width: 600px) {
     width: 90%;
+  }
+
+  div.finish-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 `;
 
