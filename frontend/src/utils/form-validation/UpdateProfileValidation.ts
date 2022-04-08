@@ -18,18 +18,20 @@ export const schema = yup
       .string()
       .required('Confirme sua senha atual para continuar')
       .max(100),
-    password: yup
-      .string()
-      .min(8, 'A senha deve ter pelo menos 8 caracteres')
-      .max(100),
-    confirmPassword: yup
-      .string()
-      .when('password', {
-        is: true,
-        then: yup.string().required('Confirme a nova senha')
-      })
-      .oneOf([yup.ref('password')], 'As senhas não são iguais'),
-    birthday: yup.string().required('Este campo é obrigatório'),
+    password: yup.string().max(100),
+    confirmPassword: yup.string().when('password', ([password], schema) => {
+      return (
+        password &&
+        schema.required('Confirme a nova senha') &&
+        schema.oneOf([yup.ref('password')], 'As senhas não são iguais')
+      );
+      // is: true,
+      // then: yup
+      //   .string()
+      //   .required('Confirme a nova senha')
+      //   .oneOf([yup.ref('password')], 'As senhas não são iguais')
+    }),
+    birthday: yup.string(),
     team: yup.string()
   })
   .required();
