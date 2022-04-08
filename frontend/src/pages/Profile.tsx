@@ -21,7 +21,10 @@ export default function Profile() {
       <Content>
         {showCreatePostModal && <CreatePostModal />}
         <ProfileImages previewAvatar={avatarImage} previewCover={coverImage} />
-        <Options />
+        <Options
+          editProfile={editProfile}
+          toggleEditProfile={toggleEditProfile}
+        />
         {editProfile ? (
           <EditProfileForm
             avatarImage={avatarImage}

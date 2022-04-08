@@ -1,11 +1,22 @@
 import styled from 'styled-components';
 
-export default function Options() {
+export default function Options({
+  editProfile,
+  toggleEditProfile
+}: {
+  editProfile: boolean;
+  toggleEditProfile: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
   return (
     <Container className="options">
-      <button>
-        <span className="material-icons">edit</span>
-        <p>Editar perfil</p>
+      <button onClick={() => toggleEditProfile(!editProfile)}>
+        {editProfile ? (
+          <span className="material-icons">arrow_back</span>
+        ) : (
+          <span className="material-icons">edit</span>
+        )}
+
+        {editProfile ? <p>Voltar</p> : <p>Editar perfil</p>}
       </button>
     </Container>
   );
