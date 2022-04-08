@@ -24,6 +24,8 @@ export default function Profile() {
         <Options
           editProfile={editProfile}
           toggleEditProfile={toggleEditProfile}
+          setAvatarImage={setAvatarImage}
+          setCoverImage={setCoverImage}
         />
         {editProfile ? (
           <EditProfileForm

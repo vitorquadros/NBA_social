@@ -2,14 +2,24 @@ import styled from 'styled-components';
 
 export default function Options({
   editProfile,
-  toggleEditProfile
+  toggleEditProfile,
+  setAvatarImage,
+  setCoverImage
 }: {
   editProfile: boolean;
   toggleEditProfile: React.Dispatch<React.SetStateAction<boolean>>;
+  setAvatarImage: React.Dispatch<React.SetStateAction<string | FileList>>;
+  setCoverImage: React.Dispatch<React.SetStateAction<string | FileList>>;
 }) {
+  function handleBack() {
+    toggleEditProfile(!editProfile);
+    setAvatarImage('');
+    setCoverImage('');
+  }
+
   return (
     <Container className="options">
-      <button onClick={() => toggleEditProfile(!editProfile)}>
+      <button onClick={handleBack}>
         {editProfile ? (
           <span className="material-icons">arrow_back</span>
         ) : (
