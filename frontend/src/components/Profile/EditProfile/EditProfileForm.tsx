@@ -1,5 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import React, { useReducer, useState } from 'react';
+import React, { useReducer, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import useAuth from '../../../contexts/AuthContext/useAuth';
@@ -38,6 +38,9 @@ export default function EditProfileForm({
   const { email, displayName, username, nbaTeam, avatar, cover, birthday } =
     useAuth();
 
+  const avatarRef = useRef();
+  const coverRef = useRef();
+
   const [isCurrentPasswordVisible, setIsCurrentPasswordVisible] =
     useState<boolean>(false);
   const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
@@ -53,6 +56,9 @@ export default function EditProfileForm({
       displayname: displayName,
       username,
       team: nbaTeam,
+      currentPassword: '',
+      password: '',
+      confirmPassword: '',
       birthday: moment(birthday).format('YYYY-MM-DD')
     }
   });
@@ -117,18 +123,49 @@ export default function EditProfileForm({
         name="currentPassword"
       />
 
-      <FileInput
-        register={register}
-        name="avatar"
-        label="Imagem de perfil"
-        setPreview={setAvatarImage}
-      />
-      <FileInput
-        register={register}
-        name="cover"
-        label="Imagem de capa"
-        setPreview={setCoverImage}
-      />
+      <div className="file-field">
+        <FileInput
+          register={register}
+          name="avatar"
+          label="Imagem de perfil"
+          setPreview={setAvatarImage}
+          ref={avatarRef}
+        />
+
+        {avatarImage && (
+          <span
+            className="material-icons remove-file"
+            onClick={() => {
+              // @ts-ignore
+              avatarRef?.current?.handleFileChange();
+            }}
+          >
+            cancel
+          </span>
+        )}
+      </div>
+
+      <div className="file-field">
+        <FileInput
+          register={register}
+          name="cover"
+          label="Imagem de capa"
+          setPreview={setCoverImage}
+          ref={coverRef}
+        />
+
+        {coverImage && (
+          <span
+            className="material-icons remove-file"
+            onClick={() => {
+              // @ts-ignore
+              coverRef?.current?.handleFileChange();
+            }}
+          >
+            cancel
+          </span>
+        )}
+      </div>
 
       <div className="finish-container">
         {/* {isLoading ? (
@@ -164,5 +201,23 @@ const Form = styled.form`
   div.password-inputs {
     display: flex;
     gap: 1rem;
+  }
+
+  div.file-field {
+    display: flex;
+    align-items: center;
+
+    span.remove-file {
+      cursor: pointer;
+      margin-left: 2rem;
+      text-align: center;
+      border-radius: 50%;
+      font-size: 1.9rem;
+      transition: 0.3s;
+
+      &:hover {
+        scale: 150%;
+      }
+    }
   }
 `;
