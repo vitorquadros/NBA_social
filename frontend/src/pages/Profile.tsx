@@ -29,6 +29,7 @@ export default function Profile() {
         />
         {editProfile ? (
           <EditProfileForm
+            toggleEditProfile={toggleEditProfile}
             avatarImage={avatarImage}
             setAvatarImage={setAvatarImage}
             coverImage={coverImage}

@@ -1,9 +1,4 @@
-import React, {
-  forwardRef,
-  useImperativeHandle,
-  useRef,
-  useState
-} from 'react';
+import React, { forwardRef, useImperativeHandle, useState } from 'react';
 import styled from 'styled-components';
 import { InputWrapper } from './InputWrapper';
 

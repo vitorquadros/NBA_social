@@ -71,6 +71,7 @@ export default function LoginForm() {
 
             <Fields.Password
               register={register}
+              name="password"
               errors={errors.password ? errors.password : null}
               isPasswordVisible={isPasswordVisible}
               setIsPasswordVisible={setIsPasswordVisible}

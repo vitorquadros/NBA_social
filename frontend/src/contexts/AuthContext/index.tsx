@@ -23,7 +23,7 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
           const { data } = await VerifyToken(userLocal.token);
 
           if (data.valid) {
-            setUser(data.user);
+            setUser({ ...data.user, token: userLocal.token });
           } else {
             return;
           }
