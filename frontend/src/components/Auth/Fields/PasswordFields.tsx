@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import styled from 'styled-components';
 import { InputWrapper } from './InputWrapper';
 
@@ -8,6 +7,7 @@ type PasswordProps = {
   isPasswordVisible: boolean;
   label?: string;
   placeholder?: string;
+  name: string;
   setIsPasswordVisible: (state: boolean) => void;
 };
 
@@ -25,6 +25,7 @@ function Password({
   isPasswordVisible,
   setIsPasswordVisible,
   label,
+  name,
   ...rest
 }: PasswordProps) {
   return (
@@ -34,8 +35,8 @@ function Password({
         <div className="password-wrapper">
           <input
             type={isPasswordVisible ? 'text' : 'password'}
-            id="password"
-            {...register('password')}
+            id={name}
+            {...register(name)}
             maxLength={100}
             {...rest}
           />

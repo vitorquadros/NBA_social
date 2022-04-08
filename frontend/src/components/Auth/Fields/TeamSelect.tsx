@@ -1,10 +1,10 @@
 import { InputWrapper } from './InputWrapper';
 
-export default function TeamSelect({ register }: any) {
+export default function TeamSelect({ register, ...rest }: any) {
   return (
     <InputWrapper>
       <label htmlFor="team">Time preferido</label>
-      <select id="team" placeholder="Time" {...register('team')}>
+      <select id="team" placeholder="Time" {...register('team')} {...rest}>
         <option value="">Nenhum</option>
         <option value="Atlanta Hawks">Atlanta Hawks</option>
         <option value="Boston Celtics">Boston Celtics</option>

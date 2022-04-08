@@ -1,5 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import React, { useState } from 'react';
+import React, { useReducer, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import useAuth from '../../../contexts/AuthContext/useAuth';
@@ -8,7 +8,20 @@ import FileInput from '../../Auth/Fields/FileInput';
 import Input from '../../Auth/Fields/Input';
 import { Fields } from '../../Auth/Fields/PasswordFields';
 import TeamSelect from '../../Auth/Fields/TeamSelect';
-import { Inputs } from '../../Auth/Register/CompleteRegisterForm';
+import moment from 'moment';
+
+type Inputs = {
+  displayname: string;
+  username: string;
+  email: string;
+  currentPassword: string;
+  password?: string;
+  confirmPassword?: string;
+  birthday: string;
+  team?: string;
+  avatar?: FileList;
+  cover?: FileList;
+};
 
 export default function EditProfileForm({
   avatarImage,
@@ -21,17 +34,27 @@ export default function EditProfileForm({
   coverImage: FileList | string;
   setCoverImage: React.Dispatch<React.SetStateAction<string | FileList>>;
 }) {
-  const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
-
   const { email, displayName, username, nbaTeam, avatar, cover, birthday } =
     useAuth();
+
+  const [isCurrentPasswordVisible, setIsCurrentPasswordVisible] =
+    useState<boolean>(false);
+  const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
 
   const {
     register,
     setError,
     handleSubmit,
     formState: { errors }
-  } = useForm<Inputs>({ resolver: yupResolver(schema) });
+  } = useForm<Inputs>({
+    resolver: yupResolver(schema),
+    defaultValues: {
+      displayname: displayName,
+      username,
+      team: nbaTeam,
+      birthday: moment(birthday).format('YYYY-MM-DD')
+    }
+  });
 
   const onSubmit = handleSubmit(async (data) => {});
 
@@ -45,7 +68,6 @@ export default function EditProfileForm({
           type="text"
           register={register}
           maxLength={40}
-          value={displayName}
         />
 
         <Input
@@ -55,7 +77,6 @@ export default function EditProfileForm({
           type="text"
           register={register}
           maxLength={18}
-          value={username}
         />
       </div>
 
@@ -69,12 +90,22 @@ export default function EditProfileForm({
         register={register}
       />
 
+      <Fields.Password
+        register={register}
+        errors={errors.currentPassword ? errors.currentPassword : null}
+        isPasswordVisible={isCurrentPasswordVisible}
+        setIsPasswordVisible={setIsCurrentPasswordVisible}
+        label="Senha atual"
+        name="currentPassword"
+      />
+
       <div className="password-inputs">
         <Fields.Password
           register={register}
           errors={errors.password ? errors.password : null}
-          isPasswordVisible={isPasswordVisible}
           setIsPasswordVisible={setIsPasswordVisible}
+          isPasswordVisible={isPasswordVisible}
+          name="password"
           label="Senha"
         />
         <Fields.ConfirmPassword
@@ -114,6 +145,12 @@ const Form = styled.form`
   display: flex;
   flex-direction: column;
   gap: 1rem;
+
+  div.current-password {
+    input {
+      width: 100%;
+    }
+  }
 
   div.name-inputs {
     display: flex;

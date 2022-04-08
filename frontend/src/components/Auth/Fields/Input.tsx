@@ -11,6 +11,7 @@ type InputProps = {
   value?: string;
   placeholder?: string;
   readOnly?: boolean;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 export default function Input({
