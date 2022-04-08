@@ -4,15 +4,23 @@ export const schema = yup
   .object({
     displayname: yup
       .string()
-      .min(2, 'O nome precisa ter pelo menos 2 caracteres')
+      .when({
+        is: true,
+        then: yup.string().min(2, 'O nome precisa ter pelo menos 2 caracteres')
+      })
       .max(40, 'O nome pode ter até no maximo 40 caracteres'),
     username: yup
       .string()
-      .matches(
-        /^[a-zA-Z]+$/,
-        'O nome de usuario não pode ter caracteres especiais ou números'
-      )
-      .min(5, 'O nome de usuário precisa ter pelo menos 5 caracteres')
+      .when({
+        is: true,
+        then: yup
+          .string()
+          .matches(
+            /^[a-zA-Z]+$/,
+            'O nome de usuario não pode ter caracteres especiais ou números'
+          )
+          .min(5, 'O nome de usuário precisa ter pelo menos 5 caracteres')
+      })
       .max(18, 'O nome de usuário pode ter até no maximo 18 caracteres'),
     currentPassword: yup
       .string()
