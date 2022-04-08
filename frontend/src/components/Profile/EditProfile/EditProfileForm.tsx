@@ -9,6 +9,7 @@ import Input from '../../Auth/Fields/Input';
 import { Fields } from '../../Auth/Fields/PasswordFields';
 import TeamSelect from '../../Auth/Fields/TeamSelect';
 import moment from 'moment';
+import { SubmitButton } from '../../Auth/Fields/SubmitButton';
 
 type Inputs = {
   displayname: string;
@@ -97,7 +98,7 @@ export default function EditProfileForm({
           setIsPasswordVisible={setIsPasswordVisible}
           isPasswordVisible={isPasswordVisible}
           name="password"
-          label="Senha"
+          label="Nova senha"
         />
         <Fields.ConfirmPassword
           register={register}
@@ -129,13 +130,14 @@ export default function EditProfileForm({
         setPreview={setCoverImage}
       />
 
-      {/* <div className="finish-container">
-        {isLoading ? (
+      <div className="finish-container">
+        {/* {isLoading ? (
           <Loading />
         ) : (
           <SubmitButton type="submit">Finalizar</SubmitButton>
-        )}
-      </div> */}
+        )} */}
+        <SubmitButton type="submit">Finalizar</SubmitButton>
+      </div>
     </Form>
   );
 }
@@ -145,6 +147,7 @@ const Form = styled.form`
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  margin-bottom: 2rem;
 
   div.current-password {
     input {
