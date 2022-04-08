@@ -94,4 +94,38 @@ export class RegisterController {
       return res.status(400).json({ status: 'error', error: error.message });
     }
   }
+
+  async updateMe(req: Request, res: Response): Promise<Response> {
+    const {
+      displayName,
+      username,
+      nbaTeam,
+      birthday,
+      password,
+      avatar,
+      cover
+    } = req.body;
+    const { userId } = req;
+
+    const registerUsecase = container.resolve(RegisterUsecase);
+
+    try {
+      const user = await registerUsecase.updateOwnUser({
+        displayName,
+        username,
+        nbaTeam,
+        birthday,
+        password,
+        avatar,
+        cover,
+        id: userId
+      });
+
+      delete user.password;
+
+      return res.status(200).json({ status: 'ok', data: user });
+    } catch (error) {
+      return res.status(400).json({ status: 'error', error: error.message });
+    }
+  }
 }
