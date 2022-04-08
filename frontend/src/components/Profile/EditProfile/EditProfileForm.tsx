@@ -3,7 +3,7 @@ import React, { useReducer, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import useAuth from '../../../contexts/AuthContext/useAuth';
-import { schema } from '../../../utils/form-validation/CompleteRegisterValidation';
+import { schema } from '../../../utils/form-validation/UpdateProfileValidation';
 import FileInput from '../../Auth/Fields/FileInput';
 import Input from '../../Auth/Fields/Input';
 import { Fields } from '../../Auth/Fields/PasswordFields';
@@ -90,15 +90,6 @@ export default function EditProfileForm({
         register={register}
       />
 
-      <Fields.Password
-        register={register}
-        errors={errors.currentPassword ? errors.currentPassword : null}
-        isPasswordVisible={isCurrentPasswordVisible}
-        setIsPasswordVisible={setIsCurrentPasswordVisible}
-        label="Senha atual"
-        name="currentPassword"
-      />
-
       <div className="password-inputs">
         <Fields.Password
           register={register}
@@ -115,6 +106,15 @@ export default function EditProfileForm({
           label="Confirmar senha"
         />
       </div>
+
+      <Fields.Password
+        register={register}
+        errors={errors.currentPassword ? errors.currentPassword : null}
+        isPasswordVisible={isCurrentPasswordVisible}
+        setIsPasswordVisible={setIsCurrentPasswordVisible}
+        label="Senha atual"
+        name="currentPassword"
+      />
 
       <FileInput
         register={register}
