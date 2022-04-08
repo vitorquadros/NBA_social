@@ -14,8 +14,9 @@ export default function LoginForm() {
     useContext(ModalContext);
 
   const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
-  const { authenticate, loading } = useAuth();
+  const { authenticate } = useAuth();
 
   type LoginInputs = {
     email: string;
@@ -31,6 +32,7 @@ export default function LoginForm() {
   } = useForm<LoginInputs>({ resolver: yupResolver(schema) });
 
   const onSubmit = handleSubmit(async (data) => {
+    setLoading(true);
     try {
       await authenticate(data.email, data.password);
       setShowAuthModal(!showAuthModal);
@@ -43,6 +45,8 @@ export default function LoginForm() {
         { shouldFocus: false }
       );
       return;
+    } finally {
+      setLoading(false);
     }
   });
 

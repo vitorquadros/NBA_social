@@ -152,6 +152,7 @@ export default function EditProfileForm({
 
       const password = data.password ? data.password : data.currentPassword;
 
+      // @ts-ignore
       await authenticate(email, password);
 
       toggleEditProfile(false);
