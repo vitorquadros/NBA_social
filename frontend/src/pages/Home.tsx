@@ -8,6 +8,7 @@ import CreatePostModal from '../components/Post/CreatePost/CreatePostModal';
 import { CommentsContextProvider } from '../contexts/CommentsContext';
 import Snackbar from '../components/Utils/Snackbar';
 import { useLocation } from 'react-router-dom';
+import Posts from '../components/Post/Posts';
 
 export default function Home() {
   const { showAuthModal, showCreatePostModal } = useContext(ModalContext);
@@ -38,9 +39,8 @@ export default function Home() {
       <Content>
         {showCreatePostModal && <CreatePostModal />}
         {showAuthModal && <AuthModal />}
-        <CommentsContextProvider>
-          {' '}
-          {/* // DEBUG: remove Post temp props */}
+        <Posts />
+        {/* <CommentsContextProvider>
           <Post
             image="https://i2.wp.com/livebasketballbr.com/wp-content/uploads/2022/03/THUMB-OVERTIME-live-LAKERS-76ERS.png?fit=1920%2C1080&ssl=1"
             userImage="https://www.fiscalti.com.br/wp-content/uploads/2021/02/default-user-image.png"
@@ -75,7 +75,7 @@ export default function Home() {
             team="https://loodibee.com/wp-content/uploads/nba-golden-state-warriors-logo-2020.png"
             teamName="Golden State Warriors"
           />
-        </CommentsContextProvider>
+        </CommentsContextProvider> */}
       </Content>
     </Wrapper>
   );

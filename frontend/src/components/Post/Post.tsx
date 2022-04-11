@@ -3,6 +3,19 @@ import styled from 'styled-components';
 import { ModalContext } from '../../contexts/ModalContext';
 import PostModal from './PostModal';
 
+type Like = {
+  id: number;
+  createdAt: string;
+  updatedAt: string;
+};
+
+type Comment = {
+  id: number;
+  text: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
 type PostProps = {
   image: string;
   userImage: string;
@@ -11,6 +24,8 @@ type PostProps = {
   postDescription: string;
   team?: string;
   teamName?: string;
+  likes: Like[];
+  comments: Comment[];
 };
 
 export default function Post({
@@ -20,14 +35,12 @@ export default function Post({
   userName,
   postDescription,
   team,
-  teamName
+  teamName,
+  likes,
+  comments
 }: PostProps) {
   const { showPostModal, openPostModal } = useContext(ModalContext);
   const [showMore, setShowMore] = useState(false);
-
-  // DEBUG
-  const text =
-    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique laboriosam iusto facere numquam aut et. Laudantium totam aperiam, voluptates nihil molestiae dicta cum pariatur ullam porro eum, tempore omnis, molestias ipsam? Aut ratione, vero quaerat saepe ipsam veniam aliquam ullam laudantium quisquam quos suscipit unde, obcaecati ex sed qui repellendus natus, optio quibusdam magnam sapiente ad rem quas accusantium! Quam earum iure enim vero repellat hic a fuga, ab aut aspernatur nam temporibus voluptas iusto praesentium nobis velit, obcaecati ducimus assumenda, quia alias. Placeat ducimus sapiente, magnam aut officia accusantium provident distinctio veniam possimus ea ad repudiandae, fugiat cum libero.';
 
   useEffect(() => {
     if (showPostModal) {
@@ -50,12 +63,12 @@ export default function Post({
             </div>
           </div>
 
-          {team && (
+          {teamName && (
             <img
               className="team"
               src={team}
               alt={`Logo do ${teamName}`}
-              title={`Jogador do ${teamName}`}
+              title={`Torcedor do ${teamName}`}
             />
           )}
         </UserContainer>
@@ -66,9 +79,11 @@ export default function Post({
           ) : (
             <p>{`${postDescription.substring(0, 200)}`}</p>
           )}
-          <span onClick={() => setShowMore(!showMore)}>
-            {showMore ? 'Mostrar menos' : 'Mostrar mais'}
-          </span>
+          {postDescription.length > 200 && (
+            <span onClick={() => setShowMore(!showMore)}>
+              {showMore ? 'Mostrar menos' : 'Mostrar mais'}
+            </span>
+          )}
         </DescriptionContainer>
       </PostInfo>
       {/* // FIX: border */}
@@ -100,11 +115,19 @@ export default function Post({
       </ActionsContainer>
       <DataContainer>
         <div className="likes">
-          <p>Curtido por 1586 pessoas</p>
+          {likes.length > 1 ? (
+            <p>Curtido por {likes.length} pessoas</p>
+          ) : (
+            <p>Curtido por {likes.length} pessoa</p>
+          )}
         </div>
 
         <div className="comments">
-          <p>16 comentários</p>
+          {comments.length > 1 ? (
+            <p>{comments.length} comentários</p>
+          ) : (
+            <p>{comments.length} comentário</p>
+          )}
         </div>
       </DataContainer>
     </Container>
