@@ -11,7 +11,7 @@ import EditProfileForm from '../components/Profile/EditProfile/EditProfileForm';
 
 export default function Profile() {
   const { showCreatePostModal } = useContext(ModalContext);
-  const [editProfile, toggleEditProfile] = useState<boolean>(true);
+  const [editProfile, toggleEditProfile] = useState<boolean>(false);
   const [avatarImage, setAvatarImage] = useState<string | FileList>('');
   const [coverImage, setCoverImage] = useState<string | FileList>('');
 
