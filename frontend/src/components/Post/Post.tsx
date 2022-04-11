@@ -2,6 +2,8 @@ import { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { ModalContext } from '../../contexts/ModalContext';
 import PostModal from './PostModal';
+import moment from 'moment';
+import 'moment/locale/br';
 
 type Like = {
   id: string;
@@ -36,6 +38,17 @@ export default function Post({
 }: PostProps) {
   const { showPostModal, openPostModal } = useContext(ModalContext);
   const [showMore, setShowMore] = useState(false);
+  moment.locale('br');
+
+  const localDate = moment
+    .utc(createdAt)
+    .subtract(3, 'hours')
+    .local()
+    .format('YYYY-MM-DD HH:mm:ss');
+
+  const fromNow = moment(localDate).fromNow();
+
+  // console.log(moment.locales());
 
   useEffect(() => {
     if (showPostModal) {
@@ -111,12 +124,12 @@ export default function Post({
         </div>
 
         <div className="date">
-          <p>22 horas atrás</p>
+          <p>{fromNow}</p>
         </div>
       </ActionsContainer>
       <DataContainer>
         <div className="likes">
-          {likes.length > 1 ? (
+          {likes.length > 1 || likes.length === 0 ? (
             <p>Curtido por {likes.length} pessoas</p>
           ) : (
             <p>Curtido por {likes.length} pessoa</p>
@@ -124,7 +137,7 @@ export default function Post({
         </div>
 
         <div className="comments">
-          {comments.length > 1 ? (
+          {comments.length > 1 || comments.length === 0 ? (
             <p>{comments.length} comentários</p>
           ) : (
             <p>{comments.length} comentário</p>
