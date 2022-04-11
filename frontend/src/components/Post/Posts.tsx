@@ -19,20 +19,7 @@ export default function Posts() {
       {isLoading ? (
         <Loading />
       ) : (
-        posts?.map((post: any) => (
-          <Post
-            key={post.id}
-            image={`http://localhost:3333/files/${post.image}`}
-            postDescription={post.description}
-            userDisplayName={post.user.displayName}
-            userImage={`http://localhost:3333/files/${post.user.avatar}`}
-            userName={post.user.username}
-            team={`http://localhost:3333/files/${post.user.nbaTeam}.png`}
-            teamName={post.user.nbaTeam}
-            comments={post.comments}
-            likes={post.likes}
-          />
-        ))
+        posts?.map((post: any) => <Post key={post.id} post={post} />)
       )}
     </Container>
   );

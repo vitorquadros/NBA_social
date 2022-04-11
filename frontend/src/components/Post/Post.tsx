@@ -4,40 +4,35 @@ import { ModalContext } from '../../contexts/ModalContext';
 import PostModal from './PostModal';
 
 type Like = {
-  id: number;
+  id: string;
   createdAt: string;
   updatedAt: string;
 };
 
 type Comment = {
-  id: number;
+  id: string;
   text: string;
   createdAt: string;
   updatedAt: string;
 };
 
-type PostProps = {
+type Post = {
+  id: string;
+  description: string;
   image: string;
-  userImage: string;
-  userDisplayName: string;
-  userName: string;
-  postDescription: string;
-  team?: string;
-  teamName?: string;
+  user: any; // TODO
   likes: Like[];
   comments: Comment[];
+  createdAt: string;
+  updatedAt: string;
+};
+
+type PostProps = {
+  post: Post;
 };
 
 export default function Post({
-  image,
-  userImage,
-  userDisplayName,
-  userName,
-  postDescription,
-  team,
-  teamName,
-  likes,
-  comments
+  post: { comments, description, image, user, likes, createdAt }
 }: PostProps) {
   const { showPostModal, openPostModal } = useContext(ModalContext);
   const [showMore, setShowMore] = useState(false);
@@ -56,30 +51,33 @@ export default function Post({
       <PostInfo>
         <UserContainer>
           <div className="user-info-wrapper">
-            <img src={userImage} alt="" />
+            <img
+              src={`http://localhost:3333/files/${user.avatar}`}
+              alt={`Foto de perfil de ${user.displayName}`}
+            />
             <div className="user-info">
-              <p className="displayname">{userDisplayName}</p>
-              <p className="username">@{userName}</p>
+              <p className="displayname">{user.displayName}</p>
+              <p className="username">@{user.username}</p>
             </div>
           </div>
 
-          {teamName && (
+          {user.nbaTeam && (
             <img
               className="team"
-              src={team}
-              alt={`Logo do ${teamName}`}
-              title={`Torcedor do ${teamName}`}
+              src={`http://localhost:3333/files/${user.nbaTeam}.png`}
+              alt={`Logo do ${user.nbaTeam}`}
+              title={`Torcedor do ${user.nbaTeam}`}
             />
           )}
         </UserContainer>
 
         <DescriptionContainer>
           {showMore ? (
-            <p>{postDescription}</p>
+            <p>{description}</p>
           ) : (
-            <p>{`${postDescription.substring(0, 200)}`}</p>
+            <p>{`${description.substring(0, 200)}`}</p>
           )}
-          {postDescription.length > 200 && (
+          {description.length > 200 && (
             <span onClick={() => setShowMore(!showMore)}>
               {showMore ? 'Mostrar menos' : 'Mostrar mais'}
             </span>
@@ -88,7 +86,10 @@ export default function Post({
       </PostInfo>
       {/* // FIX: border */}
       <ImageContainer onClick={openPostModal}>
-        <img src={image} alt="" />
+        <img
+          src={`http://localhost:3333/files/${image}`}
+          alt={`Imagem do post de ${user.displayName}`}
+        />
       </ImageContainer>
       <ActionsContainer>
         <div className="actions">
