@@ -1,10 +1,13 @@
 import { useContext } from 'react';
 import styled from 'styled-components';
-import { ModalContext } from '../../../contexts/ModalContext';
+import { ModalContext } from '../../../contexts/ModalContext-old';
 
-export default function PostForm() {
-  const { image, setImage } = useContext(ModalContext);
+type PostFormProps = {
+  image: string | FileList;
+  setImage: React.Dispatch<React.SetStateAction<string | FileList>>;
+};
 
+export default function PostForm({ image, setImage }: PostFormProps) {
   return (
     <Form>
       {!image ? (
