@@ -1,95 +1,70 @@
-import { forwardRef, SyntheticEvent, useContext, useRef } from 'react';
+import { SyntheticEvent, useContext, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { ModalContext } from '../../../contexts/ModalContext';
-import CloseModalPopup from '../Popup/CloseModalPopup';
+import useModal from '../../../contexts/ModalContext/useModal';
+import Modal from '../../Modal/Modal';
+import ClosePopup from '../Popup/ClosePopup';
 import PostForm from './PostForm';
 
 export default function CreatePostModal() {
-  const { setShowCreatePostModal, image } = useContext(ModalContext);
+  const { setShowCreatePostModal } = useModal();
+  const [image, setImage] = useState<string | FileList>('');
+  const [popup, setPopup] = useState<boolean>(false);
 
-  const modalRef = useRef<HTMLDivElement>(null);
-
-  const closeModal = (e: SyntheticEvent) => {
+  const closeModal = (
+    e: SyntheticEvent,
+    modalRef: React.RefObject<HTMLDivElement>
+  ) => {
     if (modalRef.current === e.target && !image) {
       setShowCreatePostModal(false);
+    } else if (modalRef.current === e.target && image) {
+      setPopup(true);
     }
   };
 
   return (
-    <>
-      <Background onClick={closeModal} ref={modalRef}>
-        <ModalWrapper>
-          <ModalContent>
-            <h1>Crie sua publicação</h1>
-            {image ? (
-              <CloseModalPopup
-                trigger={
-                  <span className="material-icons close-button">close</span>
-                }
-              />
-            ) : (
-              <span
-                className="material-icons close-button"
-                onClick={() => setShowCreatePostModal(false)}
-              >
-                close
-              </span>
-            )}
+    <Modal closeModal={closeModal}>
+      <ModalContent>
+        <h1>Crie sua publicação</h1>
 
-            <PostForm />
-          </ModalContent>
-        </ModalWrapper>
-      </Background>
-    </>
+        {popup && image ? (
+          <ClosePopup
+            setPopup={setPopup}
+            title="Tem certeza?"
+            message="Os campos preenchidos serão perdidos"
+          />
+        ) : image ? (
+          <span
+            className="material-icons close-button"
+            onClick={() => setPopup(true)}
+          >
+            close
+          </span>
+        ) : (
+          <span
+            className="material-icons close-button"
+            onClick={() => setShowCreatePostModal(false)}
+          >
+            close
+          </span>
+        )}
+
+        <PostForm image={image} setImage={setImage} />
+      </ModalContent>
+    </Modal>
   );
 }
-
-const Background = styled.div`
-  width: 100%;
-  z-index: 100;
-  left: 0;
-  top: 0;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.8);
-  position: fixed;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const ModalWrapper = styled.div`
-  margin: 0 2rem;
-  width: 70rem;
-  max-width: 70rem;
-  position: relative;
-  max-height: 90vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  background-color: #fafafa;
-  color: #000;
-  border-radius: 10px;
-
-  transition: scale 1s;
-
-  animation: teste 0.3s;
-
-  @keyframes teste {
-    from {
-      scale: 0%;
-    }
-    to {
-      scale: 100%;
-    }
-  }
-`;
 
 const ModalContent = styled.div`
   width: 100%;
   margin: 2rem;
   text-align: center;
+  background-color: #fff;
+  width: 60rem;
+  max-width: 70rem;
+  max-height: 90vh;
+  padding: 2rem 1rem;
+  border-radius: 10px;
+  position: relative;
 
   max-height: 100%;
 
@@ -103,5 +78,16 @@ const ModalContent = styled.div`
     right: 1rem;
     top: 1rem;
     cursor: pointer;
+  }
+
+  animation: scaleIn 0.3s;
+
+  @keyframes scaleIn {
+    from {
+      scale: 0%;
+    }
+    to {
+      scale: 100%;
+    }
   }
 `;
