@@ -6,11 +6,11 @@ import PostsTable from '../components/Profile/PostsTable';
 import Options from '../components/Profile/Options';
 import ProfileImages from '../components/Profile/ProfileImages';
 import ProfileInfo from '../components/Profile/ProfileInfo';
-import { ModalContext } from '../contexts/ModalContext-old';
 import EditProfileForm from '../components/Profile/EditProfile/EditProfileForm';
+import useModal from '../contexts/ModalContext/useModal';
 
 export default function Profile() {
-  const { showCreatePostModal } = useContext(ModalContext);
+  const { showCreatePostModal } = useModal();
   const [editProfile, toggleEditProfile] = useState<boolean>(false);
   const [avatarImage, setAvatarImage] = useState<string | FileList>('');
   const [coverImage, setCoverImage] = useState<string | FileList>('');
