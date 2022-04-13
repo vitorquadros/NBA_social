@@ -12,12 +12,12 @@ type ModalProps = {
   handleClose?: () => void;
 };
 
-const Modal2 = ({
+export default function Modal({
   children,
   closeModal,
   closeButton = false,
   handleClose
-}: ModalProps) => {
+}: ModalProps) {
   const portalRoot = document.getElementById('portal') as Element;
 
   const modalRef = useRef<HTMLDivElement>(null);
@@ -39,9 +39,7 @@ const Modal2 = ({
     </Background>,
     portalRoot
   );
-};
-
-export default Modal2;
+}
 
 const Background = styled.div`
   position: fixed;
