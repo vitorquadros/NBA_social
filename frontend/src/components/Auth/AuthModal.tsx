@@ -23,6 +23,12 @@ export default function AuthModal() {
   return (
     <Modal closeModal={closeModal}>
       <ModalContent>
+        <span
+          className="material-icons close-button"
+          onClick={() => setShowAuthModal(false)}
+        >
+          close
+        </span>
         {isRegister ? (
           <RegisterForm isRegister={isRegister} setIsRegister={setIsRegister} />
         ) : (
@@ -36,12 +42,17 @@ export default function AuthModal() {
 const ModalContent = styled.div`
   display: flex;
   align-items: center;
-
   justify-content: center;
-
   background-color: white;
-
   border-radius: 10px;
+  position: relative;
+
+  span.close-button {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    cursor: pointer;
+  }
 
   animation: scaleIn 0.3s;
 
