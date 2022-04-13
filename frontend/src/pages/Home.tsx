@@ -1,17 +1,12 @@
 import { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import Header from '../components/Header/Header';
-import AuthModal from '../components/Auth/AuthModal';
-import CreatePostModal from '../components/Post/CreatePost/CreatePostModal';
 import Snackbar from '../components/Utils/Snackbar';
 import { useLocation } from 'react-router-dom';
 import Posts from '../components/Post/Posts';
 import useModal from '../contexts/ModalContext/useModal';
-import Modals from '../components/Modal/Modals';
 
 export default function Home() {
-  const { showAuthModal } = useModal();
-
   const snackbarRef = useRef<any>(null);
 
   const location = useLocation();
@@ -36,8 +31,6 @@ export default function Home() {
       />
       <Header />
       <Content>
-        {/* {showCreatePostModal && <CreatePostModal />} */}
-        {showAuthModal && <AuthModal />}
         <Posts />
         {/* <CommentsContextProvider>
      

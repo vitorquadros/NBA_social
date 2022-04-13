@@ -11,32 +11,17 @@ export const ModalContextProvider = ({ children }: IModalProvider) => {
 
   const [showAuthModal, setShowAuthModal] = useState<boolean>(false);
 
-  // function openCreatePostModal() {
-  //   setShowCreatePostModal((prev) => !prev);
-  // }
-
-  // function openPostModal() {
-  //   setShowPostModal((prev) => !prev);
-  // }
-
-  // function openAuthModal() {
-  //   setShowAuthModal((prev) => !prev);
-  // }
-
   return (
     <ModalContext.Provider
       value={{
         showCreatePostModal,
         setShowCreatePostModal,
-        // openCreatePostModal,
 
         showPostModal,
         setShowPostModal,
-        // openPostModal,
 
         showAuthModal,
         setShowAuthModal
-        // openAuthModal
       }}
     >
       {children}

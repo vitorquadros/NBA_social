@@ -3,15 +3,22 @@ import { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import useAuth from '../../../contexts/AuthContext/useAuth';
-import { ModalContext } from '../../../contexts/ModalContext-old';
+import useModal from '../../../contexts/ModalContext/useModal';
 import { schema } from '../../../utils/form-validation/LoginValidation';
 import { Loading } from '../../Utils/Loading';
 import Input from '../Fields/Input';
 import { Fields } from '../Fields/PasswordFields';
 
-export default function LoginForm() {
-  const { isRegister, setIsRegister, setShowAuthModal, showAuthModal } =
-    useContext(ModalContext);
+type LoginFormProps = {
+  isRegister: boolean;
+  setIsRegister: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+export default function LoginForm({
+  isRegister,
+  setIsRegister
+}: LoginFormProps) {
+  const { setShowAuthModal, showAuthModal } = useModal();
 
   const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
@@ -25,7 +32,6 @@ export default function LoginForm() {
 
   const {
     register,
-    setValue,
     handleSubmit,
     setError,
     formState: { errors }
