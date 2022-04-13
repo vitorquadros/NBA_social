@@ -2,7 +2,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
-import { ModalContext } from '../../../contexts/ModalContext';
+import { ModalContext } from '../../../contexts/ModalContext-old';
 import useApi from '../../../hooks/useApi';
 import { schema } from '../../../utils/form-validation/RegisterValidation';
 import EmailSent from './EmailSent';

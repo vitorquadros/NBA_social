@@ -1,17 +1,15 @@
-import { useContext, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import Header from '../components/Header/Header';
-import Post from '../components/Post/Post';
-import { ModalContext } from '../contexts/ModalContext';
 import AuthModal from '../components/Auth/AuthModal';
 import CreatePostModal from '../components/Post/CreatePost/CreatePostModal';
-import { CommentsContextProvider } from '../contexts/CommentsContext';
 import Snackbar from '../components/Utils/Snackbar';
 import { useLocation } from 'react-router-dom';
 import Posts from '../components/Post/Posts';
+import useModal from '../contexts/ModalContext/useModal';
 
 export default function Home() {
-  const { showAuthModal, showCreatePostModal } = useContext(ModalContext);
+  const { showAuthModal, showCreatePostModal } = useModal();
 
   const snackbarRef = useRef<any>(null);
 
@@ -30,6 +28,7 @@ export default function Home() {
 
   return (
     <Wrapper>
+      {showCreatePostModal && <CreatePostModal />}
       <Snackbar
         message="Cadastro finalizado com sucesso!"
         type="success"
@@ -37,7 +36,7 @@ export default function Home() {
       />
       <Header />
       <Content>
-        {showCreatePostModal && <CreatePostModal />}
+        {/* {showCreatePostModal && <CreatePostModal />} */}
         {showAuthModal && <AuthModal />}
         <Posts />
         {/* <CommentsContextProvider>

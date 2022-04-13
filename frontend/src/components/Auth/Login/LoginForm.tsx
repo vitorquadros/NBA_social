@@ -3,7 +3,7 @@ import { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import useAuth from '../../../contexts/AuthContext/useAuth';
-import { ModalContext } from '../../../contexts/ModalContext';
+import { ModalContext } from '../../../contexts/ModalContext-old';
 import { schema } from '../../../utils/form-validation/LoginValidation';
 import { Loading } from '../../Utils/Loading';
 import Input from '../Fields/Input';

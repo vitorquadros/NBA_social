@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import styled from 'styled-components';
-import { ModalContext } from '../../../contexts/ModalContext';
+import { ModalContext } from '../../../contexts/ModalContext-old';
 
 export default function EmailSent({ email }: { email: string }) {
   const { setShowAuthModal, showAuthModal } = useContext(ModalContext);

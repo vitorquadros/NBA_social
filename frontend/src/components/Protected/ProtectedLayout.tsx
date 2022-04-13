@@ -1,7 +1,7 @@
 import { Children, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useAuth from '../../contexts/AuthContext/useAuth';
-import { ModalContext } from '../../contexts/ModalContext';
+import { ModalContext } from '../../contexts/ModalContext-old';
 import Home from '../../pages/Home';
 import Loading from '../Utils/Loading';
 

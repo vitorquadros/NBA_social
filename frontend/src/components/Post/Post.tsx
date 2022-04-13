@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { ModalContext } from '../../contexts/ModalContext';
+import { ModalContext } from '../../contexts/ModalContext-old';
 import PostModal from './PostModal';
 import moment from 'moment';
 import 'moment/locale/br';

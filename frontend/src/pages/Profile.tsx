@@ -6,7 +6,7 @@ import PostsTable from '../components/Profile/PostsTable';
 import Options from '../components/Profile/Options';
 import ProfileImages from '../components/Profile/ProfileImages';
 import ProfileInfo from '../components/Profile/ProfileInfo';
-import { ModalContext } from '../contexts/ModalContext';
+import { ModalContext } from '../contexts/ModalContext-old';
 import EditProfileForm from '../components/Profile/EditProfile/EditProfileForm';
 
 export default function Profile() {
