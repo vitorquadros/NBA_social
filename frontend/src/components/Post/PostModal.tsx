@@ -1,73 +1,131 @@
-import { SyntheticEvent, useContext, useRef } from 'react';
+import { SyntheticEvent, useContext, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { ModalContext } from '../../contexts/ModalContext-old';
 import Comment from './Comments/Comment';
 import ReplyInput from './Comments/ReplyInput';
 import UserInfo from './Comments/UserInfo';
 import Reply from './Comments/Reply';
-import { CommentsContext } from '../../contexts/CommentsContext';
+import useModal from '../../contexts/ModalContext/useModal';
+import Modal from '../Modal/Modal';
 
 export default function PostModal() {
-  const { setShowPostModal } = useContext(ModalContext);
-  const { isReply } = useContext(CommentsContext);
+  const { setShowPostModal } = useModal();
+  const [isReply, setIsReply] = useState<boolean>(false);
 
-  const modalRef = useRef<HTMLDivElement>(null);
-
-  const closeModal = (e: SyntheticEvent) => {
+  const closeModal = (
+    e: SyntheticEvent,
+    modalRef: React.RefObject<HTMLDivElement>
+  ) => {
     if (modalRef.current === e.target) {
-      setShowPostModal(false);
+      setShowPostModal('');
     }
   };
 
   return (
-    <Background onClick={closeModal} ref={modalRef}>
-      <ModalWrapper>
-        <ModalContent>
-          <ImageContainer>
-            <img
-              src="https://cdn.vox-cdn.com/thumbor/MEjeG_iclwwPEiY7NlqMaGGa75g=/0x0:1080x1350/1200x0/filters:focal(0x0:1080x1350):no_upscale()/cdn.vox-cdn.com/uploads/chorus_asset/file/22541812/_National_3_52621.jpg"
-              alt=""
-            />
-          </ImageContainer>
+    <Modal closeModal={closeModal}>
+      <ModalContent>
+        <ImageContainer>
+          <img
+            src="https://cdn.vox-cdn.com/thumbor/MEjeG_iclwwPEiY7NlqMaGGa75g=/0x0:1080x1350/1200x0/filters:focal(0x0:1080x1350):no_upscale()/cdn.vox-cdn.com/uploads/chorus_asset/file/22541812/_National_3_52621.jpg"
+            alt=""
+          />
+        </ImageContainer>
 
-          <DetailsContainer>
-            <UserInfo />
-            {/* // TODO: scroll top when open comments */}
-            <div className="comments">
-              {isReply ? (
-                <Reply />
-              ) : (
-                <>
-                  <Comment />
-                  <Comment />
-                  <Comment />
-                  <Comment />
-                  <Comment />
-                  <Comment />
-                  <Comment />
-                  <Comment />
-                  <Comment />
-                  <Comment />
-                  <Comment />
-                  <Comment />
-                  <Comment />
-                </>
-              )}
-            </div>
+        <DetailsContainer>
+          <UserInfo />
+          {/* // TODO: scroll top when open comments */}
+          <div className="comments">
+            {isReply ? (
+              <Reply setIsReply={setIsReply} />
+            ) : (
+              <>
+                <Comment setIsReply={setIsReply} />
+                <Comment setIsReply={setIsReply} />
+                <Comment setIsReply={setIsReply} />
+                <Comment setIsReply={setIsReply} />
+                <Comment setIsReply={setIsReply} />
+                <Comment setIsReply={setIsReply} />
+                <Comment setIsReply={setIsReply} />
+                <Comment setIsReply={setIsReply} />
+                <Comment setIsReply={setIsReply} />
+                <Comment setIsReply={setIsReply} />
+                <Comment setIsReply={setIsReply} />
+                <Comment setIsReply={setIsReply} />
+                <Comment setIsReply={setIsReply} />
+                <Comment setIsReply={setIsReply} />
+                <Comment setIsReply={setIsReply} />
+                <Comment setIsReply={setIsReply} />
+                <Comment setIsReply={setIsReply} />
+                <Comment setIsReply={setIsReply} />
+                <Comment setIsReply={setIsReply} />
+                <Comment setIsReply={setIsReply} />
+              </>
+            )}
+          </div>
 
-            <ReplyInput />
-          </DetailsContainer>
-        </ModalContent>
-      </ModalWrapper>
-    </Background>
+          <ReplyInput />
+        </DetailsContainer>
+      </ModalContent>
+    </Modal>
+
+    // <Background onClick={closeModal} ref={modalRef}>
+    //   <ModalWrapper>
+    // <ModalContent>
+    //   <ImageContainer>
+    //     <img
+    //       src="https://cdn.vox-cdn.com/thumbor/MEjeG_iclwwPEiY7NlqMaGGa75g=/0x0:1080x1350/1200x0/filters:focal(0x0:1080x1350):no_upscale()/cdn.vox-cdn.com/uploads/chorus_asset/file/22541812/_National_3_52621.jpg"
+    //       alt=""
+    //     />
+    //   </ImageContainer>
+
+    //   <DetailsContainer>
+    //     <UserInfo />
+    //     {/* // TODO: scroll top when open comments */}
+    //     <div className="comments">
+    //       {isReply ? (
+    //         <Reply />
+    //       ) : (
+    //         <>
+    //           <Comment />
+    //           <Comment />
+    //           <Comment />
+    //           <Comment />
+    //           <Comment />
+    //           <Comment />
+    //           <Comment />
+    //           <Comment />
+    //           <Comment />
+    //           <Comment />
+    //           <Comment />
+    //           <Comment />
+    //           <Comment />
+    //         </>
+    //       )}
+    //     </div>
+
+    //     <ReplyInput />
+    //   </DetailsContainer>
+    // </ModalContent>
+    //   </ModalWrapper>
+    // </Background>
   );
 }
 
 const ModalContent = styled.div`
-  max-width: 100%;
+  max-width: 80vw;
+  max-height: 90vh;
   display: flex;
-  max-height: 100%;
   background-color: pink;
+
+  animation: scaleIn 0.3s;
+
+  @keyframes scaleIn {
+    from {
+      scale: 0%;
+    }
+    to {
+      scale: 100%;
+    }
+  }
 `;
 
 const ImageContainer = styled.div`

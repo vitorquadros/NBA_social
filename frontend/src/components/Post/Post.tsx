@@ -1,9 +1,9 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { ModalContext } from '../../contexts/ModalContext-old';
 import PostModal from './PostModal';
 import moment from 'moment';
 import 'moment/locale/br';
+import useModal from '../../contexts/ModalContext/useModal';
 
 type Like = {
   id: string;
@@ -34,9 +34,9 @@ type PostProps = {
 };
 
 export default function Post({
-  post: { comments, description, image, user, likes, createdAt }
+  post: { id, comments, description, image, user, likes, createdAt }
 }: PostProps) {
-  const { showPostModal, openPostModal } = useContext(ModalContext);
+  const { showPostModal, setShowPostModal } = useModal();
   const [showMore, setShowMore] = useState(false);
   moment.locale('br');
 
@@ -60,7 +60,7 @@ export default function Post({
 
   return (
     <Container>
-      {showPostModal && <PostModal />}
+      {showPostModal === id && <PostModal />}
       <PostInfo>
         <UserContainer>
           <div className="user-info-wrapper">
@@ -98,7 +98,7 @@ export default function Post({
         </DescriptionContainer>
       </PostInfo>
       {/* // FIX: border */}
-      <ImageContainer onClick={openPostModal}>
+      <ImageContainer onClick={() => setShowPostModal(id)}>
         <img
           src={`http://localhost:3333/files/${image}`}
           alt={`Imagem do post de ${user.displayName}`}

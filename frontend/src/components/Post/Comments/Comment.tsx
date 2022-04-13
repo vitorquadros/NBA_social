@@ -1,10 +1,10 @@
-import { useContext } from 'react';
 import styled from 'styled-components';
-import { CommentsContext } from '../../../contexts/CommentsContext';
 
-export default function Comment() {
-  const { isReply, setIsReply } = useContext(CommentsContext);
+type CommentProps = {
+  setIsReply: React.Dispatch<React.SetStateAction<boolean>>;
+};
 
+export default function Comment({ setIsReply }: CommentProps) {
   return (
     <Container>
       <div className="comment">
@@ -25,7 +25,7 @@ export default function Comment() {
           </div>
         </div>
       </div>
-      <div className="comment-replys" onClick={() => setIsReply(!isReply)}>
+      <div className="comment-replys" onClick={() => setIsReply(true)}>
         <p>Ver respostas (6)</p>
       </div>
     </Container>

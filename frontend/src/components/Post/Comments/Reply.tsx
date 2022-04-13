@@ -1,13 +1,13 @@
-import { useContext } from 'react';
 import styled from 'styled-components';
-import { CommentsContext } from '../../../contexts/CommentsContext';
 
-export default function Reply() {
-  const { isReply, setIsReply } = useContext(CommentsContext);
+type ReplyProps = {
+  setIsReply: React.Dispatch<React.SetStateAction<boolean>>;
+};
 
+export default function Reply({ setIsReply }: ReplyProps) {
   return (
     <Container>
-      <div className="back" onClick={() => setIsReply(!isReply)}>
+      <div className="back" onClick={() => setIsReply(false)}>
         <span className="material-icons back">arrow_back</span>
         <p>Voltar aos comentários</p>
       </div>

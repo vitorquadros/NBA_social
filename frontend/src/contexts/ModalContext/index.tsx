@@ -7,7 +7,7 @@ export const ModalContextProvider = ({ children }: IModalProvider) => {
   const [showCreatePostModal, setShowCreatePostModal] =
     useState<boolean>(false);
 
-  const [showPostModal, setShowPostModal] = useState<boolean>(false);
+  const [showPostModal, setShowPostModal] = useState<string>('');
 
   const [showAuthModal, setShowAuthModal] = useState<boolean>(false);
 
