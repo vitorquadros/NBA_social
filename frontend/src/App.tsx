@@ -1,4 +1,4 @@
-import CreatePostModal from './components/Post/CreatePost/CreatePostModal';
+import Modals from './components/Modal/Modals';
 import { AuthProvider } from './contexts/AuthContext';
 import { ModalContextProvider } from './contexts/ModalContext';
 import useModal from './contexts/ModalContext/useModal';
@@ -11,11 +11,12 @@ function App() {
   return (
     <>
       <AuthProvider>
-        {/* <ModalContextProvider> */}
         <ModalContextProvider>
-          <AppRoutes />
+          <>
+            <AppRoutes />
+            <Modals />
+          </>
         </ModalContextProvider>
-        {/* </ModalContextProvider> */}
       </AuthProvider>
     </>
   );
