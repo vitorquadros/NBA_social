@@ -60,7 +60,7 @@ export default function Post({
 
   return (
     <Container>
-      {showPostModal === id && <PostModal />}
+      {showPostModal && showPostModal === id && <PostModal />}
       <PostInfo>
         <UserContainer>
           <div className="user-info-wrapper">

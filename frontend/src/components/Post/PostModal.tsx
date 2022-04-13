@@ -21,7 +21,11 @@ export default function PostModal() {
   };
 
   return (
-    <Modal closeModal={closeModal}>
+    <Modal
+      closeModal={closeModal}
+      closeButton={true}
+      handleClose={() => setShowPostModal('')}
+    >
       <ModalContent>
         <ImageContainer>
           <img
