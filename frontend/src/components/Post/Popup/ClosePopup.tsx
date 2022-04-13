@@ -15,7 +15,7 @@ export default function CloseModalPopup({
   const { setShowCreatePostModal } = useModal();
 
   return (
-    <Modal>
+    <Modal onClick={() => setPopup(false)}>
       <Content>
         <h3 className="title">{title}</h3>
         <p className="message">{message}</p>
