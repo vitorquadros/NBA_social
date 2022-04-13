@@ -1,6 +1,6 @@
 import { SyntheticEvent, useContext, useRef } from 'react';
 import styled from 'styled-components';
-import { ModalContext } from '../../contexts/ModalContext';
+import { ModalContext } from '../../contexts/ModalContext-old';
 import Comment from './Comments/Comment';
 import ReplyInput from './Comments/ReplyInput';
 import UserInfo from './Comments/UserInfo';
