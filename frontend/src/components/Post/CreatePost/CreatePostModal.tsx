@@ -26,13 +26,15 @@ export default function CreatePostModal() {
       <ModalContent>
         <h1>Crie sua publicação</h1>
 
-        {popup && image ? (
+        {popup && image && (
           <ClosePopup
             setPopup={setPopup}
             title="Tem certeza?"
             message="Os campos preenchidos serão perdidos"
           />
-        ) : image ? (
+        )}
+
+        {image ? (
           <span
             className="material-icons close-button"
             onClick={() => setPopup(true)}
