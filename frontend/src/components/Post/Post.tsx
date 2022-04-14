@@ -77,7 +77,7 @@ export default function Post({
           {user.nbaTeam && (
             <img
               className="team"
-              src={`http://localhost:3333/files/${user.nbaTeam}.png`}
+              src={`http://localhost:3333/files/teams/${user.nbaTeam}.png`}
               alt={`Logo do ${user.nbaTeam}`}
               title={`Torcedor do ${user.nbaTeam}`}
             />

@@ -30,7 +30,7 @@ export default function ProfileInfo() {
           <p className="location">Brasil, RS</p>
           {nbaTeam && (
             <img
-              src={`http://localhost:3333/files/${nbaTeam}.png`}
+              src={`http://localhost:3333/files/teams/${nbaTeam}.png`}
               alt={`Logo do ${nbaTeam}`}
               title={`Torcedor do ${nbaTeam}`}
             />
