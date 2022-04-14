@@ -13,6 +13,12 @@ app.use(
   '/files',
   express.static(path.resolve(__dirname, '..', '..', '..', 'public', 'uploads'))
 );
+
+app.use(
+  '/files/teams',
+  express.static(path.resolve(__dirname, '..', '..', '..', 'public', 'teams'))
+);
+
 app.use((req: Request, res: Response, next: NextFunction) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', '*');
