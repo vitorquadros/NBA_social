@@ -1,27 +1,28 @@
 import styled from 'styled-components';
+import { Reply as IReply } from '../../../types/Post';
 
 type ReplyProps = {
-  setIsReply: React.Dispatch<React.SetStateAction<boolean>>;
+  setReply: React.Dispatch<React.SetStateAction<IReply[] | null>>;
+  replys: IReply[];
 };
 
-export default function Reply({ setIsReply }: ReplyProps) {
+export default function Reply({ setReply, replys }: ReplyProps) {
   return (
     <Container>
-      <div className="back" onClick={() => setIsReply(false)}>
+      <div className="back" onClick={() => setReply([])}>
         <span className="material-icons back">arrow_back</span>
         <p>Voltar aos comentários</p>
       </div>
       <div className="reply-parent">
         <img
-          src="https://www.morganstanley.com/content/dam/msdotcom/people/tiles/isaiah-dwuma.jpg.img.380.medium.jpg/1594668408164.jpg"
+          src={`http://localhost:3333/files/${replys[0].parentComment.owner.avatar}`}
           alt=""
         />
         <div className="parent-comment-details">
-          <p className="parent-comment-owner">Roberto Dias</p>
-          <p className="parent-comment-text">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis,
-            ipsam.
+          <p className="parent-comment-owner">
+            {replys[0].parentComment.owner.displayName}
           </p>
+          <p className="parent-comment-text">{replys[0].parentComment.text}</p>
 
           <div className="parent-comment-actions">
             <span>19h</span>
@@ -29,32 +30,52 @@ export default function Reply({ setIsReply }: ReplyProps) {
           </div>
         </div>
       </div>
-      <ReplyComment />
-      <ReplyComment />
-      <ReplyComment />
-      <ReplyComment />
-      <ReplyComment />
-      <ReplyComment />
-      <ReplyComment />
-      <ReplyComment />
+      {replys.map((reply) => {
+        return (
+          <ReplyComment
+            replyInfo={{
+              replyOwnerInfo: {
+                ownerAvatar: reply.owner.avatar,
+                ownerName: reply.owner.displayName
+              },
+              replyText: reply.text,
+              replyTimeAgo: reply.createdAt
+            }}
+          />
+        );
+      })}
     </Container>
   );
 }
 
-function ReplyComment() {
+type ReplyOwnerInfo = {
+  ownerAvatar: string;
+  ownerName: string;
+};
+
+type ReplyInfo = {
+  replyOwnerInfo: ReplyOwnerInfo;
+  replyText: string;
+  replyTimeAgo: string;
+};
+
+type ReplyCommentProps = {
+  replyInfo: ReplyInfo;
+};
+
+function ReplyComment({
+  replyInfo: { replyOwnerInfo, replyText, replyTimeAgo }
+}: ReplyCommentProps) {
   return (
     <ContainerReply>
       <div className="reply">
         <img
-          src="https://www.morganstanley.com/content/dam/msdotcom/people/tiles/isaiah-dwuma.jpg.img.380.medium.jpg/1594668408164.jpg"
-          alt=""
+          src={`http://localhost:3333/files/${replyOwnerInfo.ownerAvatar}`}
+          alt={`Foto de perfil de ${replyOwnerInfo.ownerName}`}
         />
         <div className="reply-comment-details">
-          <p className="reply-comment-owner">Roberto Dias</p>
-          <p className="reply-comment-text">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis,
-            ipsam.
-          </p>
+          <p className="reply-comment-owner">{replyOwnerInfo.ownerName}</p>
+          <p className="reply-comment-text">{replyText}</p>
 
           <div className="reply-comment-actions">
             <span>19h</span>
@@ -93,8 +114,12 @@ const ContainerReply = styled.div`
   }
 
   div.reply img {
-    width: 3rem;
-    height: 3rem;
+    min-width: 3.5rem;
+    max-width: 3.5rem;
+    min-height: 3.5rem;
+    max-height: 3.5rem;
+
+    object-fit: cover;
     border-radius: 50%;
     margin-right: 1.2rem;
   }
@@ -173,8 +198,11 @@ const Container = styled.div`
   }
 
   img {
-    width: 4rem;
-    height: 4rem;
+    min-width: 4rem;
+    max-width: 4rem;
+    min-height: 4rem;
+    max-height: 4rem;
+    object-fit: cover;
     border-radius: 50%;
     margin-right: 1.2rem;
   }

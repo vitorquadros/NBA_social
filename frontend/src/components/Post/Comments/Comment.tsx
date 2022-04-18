@@ -1,23 +1,32 @@
 import styled from 'styled-components';
+import { Comment as IComment, Reply as IReply } from '../../../types/Post';
 
-type CommentProps = {
-  setIsReply: React.Dispatch<React.SetStateAction<boolean>>;
+type CommentUser = {
+  displayName: string;
+  avatar: string;
 };
 
-export default function Comment({ setIsReply }: CommentProps) {
+type CommentProps = {
+  setReplys: React.Dispatch<React.SetStateAction<IReply[] | null>>;
+  comment: IComment;
+  user: CommentUser;
+};
+
+export default function Comment({
+  setReplys,
+  comment: { id, text, createdAt, replys },
+  user: { avatar, displayName }
+}: CommentProps) {
   return (
     <Container>
       <div className="comment">
         <img
-          src="https://www.morganstanley.com/content/dam/msdotcom/people/tiles/isaiah-dwuma.jpg.img.380.medium.jpg/1594668408164.jpg"
-          alt=""
+          src={`http://localhost:3333/files/${avatar}`}
+          alt={`Foto de perfil de ${displayName}`}
         />
         <div className="comment-details">
-          <p className="comment-owner">Roberto Dias</p>
-          <p className="comment-text">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis,
-            ipsam.
-          </p>
+          <p className="comment-owner">{displayName}</p>
+          <p className="comment-text">{text}</p>
 
           <div className="comment-actions">
             <span>19h</span>
@@ -25,9 +34,11 @@ export default function Comment({ setIsReply }: CommentProps) {
           </div>
         </div>
       </div>
-      <div className="comment-replys" onClick={() => setIsReply(true)}>
-        <p>Ver respostas (6)</p>
-      </div>
+      {replys.length > 0 && (
+        <div className="comment-replys" onClick={() => setReplys(replys)}>
+          <p>Ver respostas ({replys.length})</p>
+        </div>
+      )}
     </Container>
   );
 }
@@ -42,6 +53,10 @@ const Container = styled.div`
   }
 
   div.comment-details {
+    word-wrap: break-word;
+    max-width: 100%;
+    overflow-x: hidden;
+
     p.comment-owner {
       font-weight: 500;
     }
@@ -75,7 +90,7 @@ const Container = styled.div`
     // TODO: change margintop when mobile
 
     p {
-      font-size: 1.4rem;
+      font-size: 1.3rem;
       margin: auto;
       color: gray;
       cursor: pointer;
@@ -87,8 +102,11 @@ const Container = styled.div`
   }
 
   img {
-    width: 4rem;
-    height: 4rem;
+    min-width: 4rem;
+    max-width: 4rem;
+    min-height: 4rem;
+    max-height: 4rem;
+    object-fit: cover;
     border-radius: 50%;
     margin-right: 1.2rem;
   }

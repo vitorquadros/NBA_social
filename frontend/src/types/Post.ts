@@ -9,6 +9,35 @@ export type Like = {
 export type Comment = {
   id: string;
   text: string;
+  owner: User;
+  replys: Reply[];
+  parentComment: Comment;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type Reply = {
+  id: string;
+  text: string;
+  parentComment: Comment;
+  owner: User;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type PostComment = {
+  id: string;
+  text: string;
+  replys: PostReply[];
+  parentComment: Comment;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type PostReply = {
+  id: string;
+  text: string;
+  parentComment: PostComment;
   createdAt: string;
   updatedAt: string;
 };
@@ -19,7 +48,7 @@ export type Post = {
   image: string;
   user: User;
   likes: Like[];
-  comments: Comment[];
+  comments: PostComment[];
   createdAt: string;
   updatedAt: string;
 };

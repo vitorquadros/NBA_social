@@ -50,7 +50,10 @@ export class CommentsRepository implements ICommentsRepository {
         'replys.parentComment',
         'replys.parentComment.owner',
         'owner'
-      ]
+      ],
+      order: {
+        createdAt: 'ASC'
+      }
     });
 
     return comments;

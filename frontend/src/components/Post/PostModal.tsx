@@ -1,4 +1,4 @@
-import { SyntheticEvent, useContext, useRef, useState } from 'react';
+import { SyntheticEvent, useContext, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import Comment from './Comments/Comment';
 import ReplyInput from './Comments/ReplyInput';
@@ -6,10 +6,24 @@ import UserInfo from './Comments/UserInfo';
 import Reply from './Comments/Reply';
 import useModal from '../../contexts/ModalContext/useModal';
 import Modal from '../Modal/Modal';
+import {
+  Comment as IComment,
+  Post as IPost,
+  Reply as IReply
+} from '../../types/Post';
+import useApi from '../../hooks/useApi';
 
-export default function PostModal() {
+type PostModalProps = {
+  post: IPost;
+};
+
+export default function PostModal({
+  post: { createdAt, description, id, image, likes, updatedAt, user }
+}: PostModalProps) {
+  const { call, data: comments, isLoading } = useApi<IComment[]>();
+
   const { setShowPostModal } = useModal();
-  const [isReply, setIsReply] = useState<boolean>(false);
+  const [replys, setReplys] = useState<IReply[] | null>([]);
 
   const closeModal = (
     e: SyntheticEvent,
@@ -20,6 +34,13 @@ export default function PostModal() {
     }
   };
 
+  useEffect(() => {
+    call({
+      url: `/posts/${id}/comments`,
+      method: 'get'
+    });
+  }, []);
+
   return (
     <Modal
       closeModal={closeModal}
@@ -29,40 +50,45 @@ export default function PostModal() {
       <ModalContent>
         <ImageContainer>
           <img
-            src="https://cdn.vox-cdn.com/thumbor/MEjeG_iclwwPEiY7NlqMaGGa75g=/0x0:1080x1350/1200x0/filters:focal(0x0:1080x1350):no_upscale()/cdn.vox-cdn.com/uploads/chorus_asset/file/22541812/_National_3_52621.jpg"
-            alt=""
+            src={`http://localhost:3333/files/${image}`}
+            alt="Imagem do post"
           />
         </ImageContainer>
 
         <DetailsContainer>
-          <UserInfo />
+          <UserInfo
+            userInfo={{
+              description,
+              userAvatar: user.avatar,
+              userDisplayName: user.displayName,
+              userUsername: user.displayName,
+              userNbaTeam: user.nbaTeam
+            }}
+          />
           {/* // TODO: scroll top when open comments */}
           <div className="comments">
-            {isReply ? (
-              <Reply setIsReply={setIsReply} />
+            {replys && replys?.length > 0 ? (
+              <Reply setReply={setReplys} replys={replys} />
+            ) : comments && comments.length > 0 ? (
+              comments.map((comment) => {
+                if (comment.parentComment) return null;
+                else
+                  return (
+                    <Comment
+                      key={comment.id}
+                      setReplys={setReplys}
+                      comment={comment}
+                      user={{
+                        displayName: comment.owner.displayName,
+                        avatar: comment.owner.avatar
+                      }}
+                    />
+                  );
+              })
             ) : (
-              <>
-                <Comment setIsReply={setIsReply} />
-                <Comment setIsReply={setIsReply} />
-                <Comment setIsReply={setIsReply} />
-                <Comment setIsReply={setIsReply} />
-                <Comment setIsReply={setIsReply} />
-                <Comment setIsReply={setIsReply} />
-                <Comment setIsReply={setIsReply} />
-                <Comment setIsReply={setIsReply} />
-                <Comment setIsReply={setIsReply} />
-                <Comment setIsReply={setIsReply} />
-                <Comment setIsReply={setIsReply} />
-                <Comment setIsReply={setIsReply} />
-                <Comment setIsReply={setIsReply} />
-                <Comment setIsReply={setIsReply} />
-                <Comment setIsReply={setIsReply} />
-                <Comment setIsReply={setIsReply} />
-                <Comment setIsReply={setIsReply} />
-                <Comment setIsReply={setIsReply} />
-                <Comment setIsReply={setIsReply} />
-                <Comment setIsReply={setIsReply} />
-              </>
+              <p className="no-comments">
+                Essa postagem ainda não tem comentários.
+              </p>
             )}
           </div>
 
@@ -116,9 +142,10 @@ export default function PostModal() {
 
 const ModalContent = styled.div`
   max-width: 80vw;
-  max-height: 90vh;
+  max-height: 95vh;
+  min-height: 95vh;
   display: flex;
-  background-color: pink;
+  background-color: white;
 
   animation: scaleIn 0.3s;
 
@@ -163,6 +190,13 @@ const DetailsContainer = styled.div`
     /* max-height: calc(
       100% - 8.3rem - 5rem
     ); */
+
+    p.no-comments {
+      text-align: center;
+      font-size: 1.4rem;
+      margin-top: 2rem;
+      color: gray;
+    }
   }
 `;
 

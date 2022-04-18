@@ -11,7 +11,7 @@ type PostProps = {
 };
 
 export default function Post({
-  post: { id, comments, description, image, user, likes, createdAt }
+  post: { id, comments, description, image, user, likes, createdAt, updatedAt }
 }: PostProps) {
   const { showPostModal, setShowPostModal } = useModal();
   const [showMore, setShowMore] = useState(false);
@@ -37,7 +37,20 @@ export default function Post({
 
   return (
     <Container>
-      {showPostModal && showPostModal === id && <PostModal />}
+      {showPostModal && showPostModal === id && (
+        <PostModal
+          post={{
+            id,
+            comments,
+            description,
+            image,
+            user,
+            likes,
+            createdAt,
+            updatedAt
+          }}
+        />
+      )}
       <PostInfo>
         <UserContainer>
           <div className="user-info-wrapper">

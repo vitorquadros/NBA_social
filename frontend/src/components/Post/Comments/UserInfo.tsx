@@ -1,35 +1,60 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 
-export default function UserInfo() {
-  const [showMore, setShowMore] = useState(false);
+type UserInfo = {
+  description: string;
+  userAvatar: string;
+  userDisplayName: string;
+  userUsername: string;
+  userNbaTeam: string;
+};
 
-  // DEBUG:
-  const text =
-    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta quamalias eveniet ipsum, nobis reprehenderit distinctio, orem ipsum dolor sit amet consectetur adipisicing elit. Dicta quamalias eveniet ipsum, nobis reprehenderit distinctio,orem ipsum dolor sit amet consectetur adipisicing elit. Dicta quamalias eveniet ipsum, nobis reprehenderit distinctio, ssssssssssssssssssssssssssssssssssssssssssssss numquam, perspiciatis dolorem et fuga facilis perferendis ea id?';
+type UserInfoProps = {
+  userInfo: UserInfo;
+};
+
+export default function UserInfo({
+  userInfo: {
+    description,
+    userAvatar,
+    userDisplayName,
+    userNbaTeam,
+    userUsername
+  }
+}: UserInfoProps) {
+  const [showMore, setShowMore] = useState(false);
 
   return (
     <Container>
       <div className="info">
         <img
-          src="https://www.morganstanley.com/content/dam/msdotcom/people/tiles/isaiah-dwuma.jpg.img.380.medium.jpg/1594668408164.jpg"
-          alt=""
+          src={`http://localhost:3333/files/${userAvatar}`}
+          alt={`Foto de perfil de ${userDisplayName}`}
         />
-        <p className="name">Roberto Dias</p>
+        <p className="name">{userDisplayName}</p>
+        {/* TODO add username */}
         <img
           className="team"
-          src="https://loodibee.com/wp-content/uploads/nba-atlanta-hawks-logo.png"
-          alt=""
-          title="Jogador do Atlanta Hawks"
+          src={`http://localhost:3333/files/teams/${userNbaTeam}.png`}
+          alt={`Logo do ${userNbaTeam}`}
+          title={`Torcedor do ${userNbaTeam}`}
         />
         {/* <span>&#8226;</span>
     <p className="is-following">Você segue</p> */}
       </div>
 
       <div className="description">
-        {showMore ? <p>{text}</p> : <p>{`${text.substring(0, 200)}`}</p>}
+        {showMore ? (
+          <p>{description}</p>
+        ) : (
+          <p>{`${description.substring(0, 200)}`}</p>
+        )}
         <span onClick={() => setShowMore(!showMore)}>
-          {showMore ? 'Mostrar menos' : 'Mostrar mais'}
+          {description.length > 200 && (
+            <span onClick={() => setShowMore(!showMore)}>
+              {showMore ? 'Mostrar menos' : 'Mostrar mais'}
+            </span>
+          )}
         </span>
       </div>
     </Container>
@@ -59,8 +84,12 @@ const Container = styled.div`
     } */
 
     img {
-      width: 5rem;
+      min-width: 5rem;
+      max-width: 5rem;
+      min-height: 5rem;
+      max-height: 5rem;
       border-radius: 50%;
+      object-fit: cover;
     }
 
     img.team {
