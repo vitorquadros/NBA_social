@@ -1,27 +1,25 @@
 import { User } from './User';
 
-type Comment = {
+export type Like = {
+  id: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type Comment = {
   id: string;
   text: string;
-  parentComment?: Comment;
-  replys?: Comment[];
   createdAt: string;
   updatedAt: string;
 };
 
-type Like = {
-  id: string;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export interface Post {
+export type Post = {
   id: string;
   description: string;
   image: string;
-  likes?: Like[];
-  comments?: Comment[];
   user: User;
+  likes: Like[];
+  comments: Comment[];
   createdAt: string;
   updatedAt: string;
-}
+};

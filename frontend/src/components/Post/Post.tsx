@@ -4,33 +4,10 @@ import PostModal from './PostModal';
 import moment from 'moment';
 import 'moment/locale/br';
 import useModal from '../../contexts/ModalContext/useModal';
-
-type Like = {
-  id: string;
-  createdAt: string;
-  updatedAt: string;
-};
-
-type Comment = {
-  id: string;
-  text: string;
-  createdAt: string;
-  updatedAt: string;
-};
-
-type Post = {
-  id: string;
-  description: string;
-  image: string;
-  user: any; // TODO
-  likes: Like[];
-  comments: Comment[];
-  createdAt: string;
-  updatedAt: string;
-};
+import { Post as IPost } from '../../types/Post';
 
 type PostProps = {
-  post: Post;
+  post: IPost;
 };
 
 export default function Post({
