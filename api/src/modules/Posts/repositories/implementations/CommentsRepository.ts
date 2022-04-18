@@ -37,6 +37,9 @@ export class CommentsRepository implements ICommentsRepository {
     }
 
     await this.repository.save(comment);
+
+    delete comment.post;
+
     return comment;
   }
 

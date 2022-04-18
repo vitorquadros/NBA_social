@@ -1,15 +1,67 @@
+import { useState } from 'react';
 import styled from 'styled-components';
+import useAuth from '../../../contexts/AuthContext/useAuth';
+import useApi from '../../../hooks/useApi';
 
-export default function ReplyInput() {
+export default function ReplyInput({
+  setComments,
+  postId,
+  replys,
+  setReplys
+}: any) {
+  const { displayName, token } = useAuth();
+  const { callForm } = useApi();
+  const [commentText, setCommentText] = useState<string>('');
+
+  async function onSubmit(e: any) {
+    e.preventDefault();
+    try {
+      const comment = await callForm({
+        url: `/posts/${postId}/comments`,
+        method: 'post',
+        data: {
+          text: commentText,
+          parentCommentId:
+            replys && replys.length > 0 ? replys[0].parentComment.id : null
+        },
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      setComments((prev: any) => [...prev, comment.data]);
+
+      if (replys && replys.length > 0) {
+        setReplys((prev: any) => [...prev, comment.data]);
+      }
+
+      setCommentText('');
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
-    <Container>
-      <input type="text" placeholder="Adicione um comentário" />
-      <span className="material-icons">send</span>
-    </Container>
+    <Form onSubmit={(e) => onSubmit(e)}>
+      <input
+        type="text"
+        name="comment"
+        value={commentText}
+        onChange={(e) => setCommentText(e.target.value)}
+        placeholder={
+          replys && replys.length > 0
+            ? `Respondendo à ${replys[0].parentComment.owner.displayName}`
+            : 'Adicionar um comentário'
+        }
+      />
+      <button type="submit">
+        <span className="material-icons">send</span>
+      </button>
+    </Form>
   );
 }
 
-const Container = styled.div`
+const Form = styled.form`
   width: 100%;
   height: 5rem;
 
@@ -19,9 +71,15 @@ const Container = styled.div`
 
   border-top: 1px solid rgba(var(--b6a, 219, 219, 219), 1);
 
-  span {
-    padding: 1rem 2rem;
-    cursor: pointer;
+  button {
+    border: 0;
+    background: #fafafa;
+    padding: 0;
+
+    span {
+      padding: 1rem 1rem;
+      cursor: pointer;
+    }
   }
 
   input {

@@ -34,7 +34,7 @@ export default function Comment({
           </div>
         </div>
       </div>
-      {replys.length > 0 && (
+      {replys && replys.length > 0 && (
         <div className="comment-replys" onClick={() => setReplys(replys)}>
           <p>Ver respostas ({replys.length})</p>
         </div>

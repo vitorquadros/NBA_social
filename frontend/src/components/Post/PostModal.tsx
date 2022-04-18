@@ -20,7 +20,12 @@ type PostModalProps = {
 export default function PostModal({
   post: { createdAt, description, id, image, likes, updatedAt, user }
 }: PostModalProps) {
-  const { call, data: comments, isLoading } = useApi<IComment[]>();
+  const {
+    call,
+    data: comments,
+    setData: setComments,
+    isLoading
+  } = useApi<IComment[]>();
 
   const { setShowPostModal } = useModal();
   const [replys, setReplys] = useState<IReply[] | null>([]);
@@ -40,6 +45,8 @@ export default function PostModal({
       method: 'get'
     });
   }, []);
+
+  function onSubmit() {}
 
   return (
     <Modal
@@ -92,7 +99,12 @@ export default function PostModal({
             )}
           </div>
 
-          <ReplyInput />
+          <ReplyInput
+            setComments={setComments}
+            postId={id}
+            replys={replys}
+            setReplys={setReplys}
+          />
         </DetailsContainer>
       </ModalContent>
     </Modal>
@@ -145,7 +157,7 @@ const ModalContent = styled.div`
   max-height: 95vh;
   min-height: 95vh;
   display: flex;
-  background-color: white;
+  background-color: #fafafa;
 
   animation: scaleIn 0.3s;
 
