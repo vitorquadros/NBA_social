@@ -33,6 +33,7 @@ export default function Reply({ setReply, replys }: ReplyProps) {
       {replys.map((reply) => {
         return (
           <ReplyComment
+            key={reply.id}
             replyInfo={{
               replyOwnerInfo: {
                 ownerAvatar: reply.owner.avatar,
