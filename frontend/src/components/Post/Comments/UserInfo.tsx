@@ -33,12 +33,14 @@ export default function UserInfo({
         />
         <p className="name">{userDisplayName}</p>
         {/* TODO add username */}
-        <img
-          className="team"
-          src={`http://localhost:3333/files/teams/${userNbaTeam}.png`}
-          alt={`Logo do ${userNbaTeam}`}
-          title={`Torcedor do ${userNbaTeam}`}
-        />
+        {userNbaTeam && (
+          <img
+            className="team"
+            src={`http://localhost:3333/files/teams/${userNbaTeam}.png`}
+            alt={`Logo do ${userNbaTeam}`}
+            title={`Torcedor do ${userNbaTeam}`}
+          />
+        )}
         {/* <span>&#8226;</span>
     <p className="is-following">Você segue</p> */}
       </div>
