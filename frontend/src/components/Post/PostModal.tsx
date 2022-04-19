@@ -94,7 +94,7 @@ const ModalContent = styled.div`
   max-width: 80vw;
   max-height: 95vh;
   min-height: 95vh;
-  display: flex;
+  display: inline-flex;
   background-color: #fafafa;
 
   animation: scaleIn 0.3s;
@@ -112,6 +112,7 @@ const ModalContent = styled.div`
 const ImageContainer = styled.div`
   background-color: black;
   display: flex;
+  width: 60%;
   max-width: 60%;
   min-height: 100%;
   max-height: 100%;
@@ -119,14 +120,14 @@ const ImageContainer = styled.div`
   justify-content: center;
 
   img {
+    width: 100%;
     max-width: 100%;
-    height: auto;
     max-height: 90vh;
   }
 `;
 
 const DetailsContainer = styled.div`
-  height: auto;
+  width: 40%;
   max-width: 40%;
   max-height: 100%;
   display: flex;
