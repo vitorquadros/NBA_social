@@ -67,6 +67,11 @@ const Container = styled.div`
 
     div.table-image {
       cursor: pointer;
+      transition: all 0.3s;
+
+      &:hover {
+        scale: 120%;
+      }
 
       img {
         aspect-ratio: 1 / 1;
