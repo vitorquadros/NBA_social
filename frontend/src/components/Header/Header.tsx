@@ -13,13 +13,13 @@ export default function Header() {
     <Container>
       <Content>
         <HeaderLink to="/">Home</HeaderLink>
-        <Search />
+        {/* <Search /> */}
 
         {email ? (
-          <>
+          <div className="header-menus">
             <CreatePostMenu />
             <UserMenu />
-          </>
+          </div>
         ) : (
           <AuthMenu />
         )}
@@ -50,6 +50,12 @@ const Content = styled.div`
   margin: 0 1rem;
 
   justify-content: space-between;
+
+  div.header-menus {
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+  }
 
   @media screen and (max-width: 800px) {
     width: 100%;
