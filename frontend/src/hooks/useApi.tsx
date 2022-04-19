@@ -15,6 +15,7 @@ export default function useApi<T = unknown>() {
     })
       .then((response) => {
         setData(response.data.data);
+        return response.data.data;
       })
       .catch((error) => {
         setError(error);

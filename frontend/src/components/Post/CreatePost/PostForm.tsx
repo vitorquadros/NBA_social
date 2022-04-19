@@ -13,7 +13,7 @@ export default function PostForm({ image, setImage }: PostFormProps) {
   const [description, setDescription] = useState<string>('');
 
   const { token } = useAuth();
-  const { callForm, setData } = useApi();
+  const { callForm } = useApi();
   const { setShowCreatePostModal } = useModal();
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {

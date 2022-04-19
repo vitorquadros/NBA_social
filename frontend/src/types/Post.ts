@@ -4,6 +4,7 @@ export type Like = {
   id: string;
   createdAt: string;
   updatedAt: string;
+  user: User;
 };
 
 export type Comment = {

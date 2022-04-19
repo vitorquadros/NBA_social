@@ -4,7 +4,10 @@ import PostModal from './PostModal';
 import moment from 'moment';
 import 'moment/locale/br';
 import useModal from '../../contexts/ModalContext/useModal';
-import { Post as IPost } from '../../types/Post';
+import { Like, Post as IPost } from '../../types/Post';
+import useApi from '../../hooks/useApi';
+import useAuth from '../../contexts/AuthContext/useAuth';
+import axios from 'axios';
 
 type PostProps = {
   post: IPost;
@@ -15,6 +18,10 @@ export default function Post({
 }: PostProps) {
   const { showPostModal, setShowPostModal } = useModal();
   const [showMore, setShowMore] = useState(false);
+  const [likesState, setLikesState] = useState<Like[]>([]);
+  const [alreadyLiked, setAlreadyLiked] = useState<boolean>(false);
+  const { callForm } = useApi();
+  const { token, username } = useAuth();
   moment.locale('br');
 
   const localDate = moment
@@ -34,6 +41,47 @@ export default function Post({
       document.body.style.overflowY = 'unset';
     }
   }, [showPostModal]);
+
+  useEffect(() => {
+    setLikesState(likes);
+  }, []);
+
+  useEffect(() => {
+    if (token) {
+      axios
+        .get(`http://localhost:3333/posts/${id}/like`, {
+          method: 'get',
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        })
+        .then((response) => {
+          setAlreadyLiked(response.data.data.isLiked);
+        });
+    }
+  }, [likesState]);
+
+  async function handleLike() {
+    try {
+      const { data: like, action } = await callForm({
+        url: `/posts/${id}/like`,
+        method: 'post',
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      if (action === 'liked') setLikesState([...likes, like]);
+      else if (action === 'unliked') {
+        const likesFiltered = likes.filter(
+          (like) => like.user.username != username
+        );
+        setLikesState(likesFiltered);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
     <Container>
@@ -107,15 +155,28 @@ export default function Post({
       </ImageContainer>
       <ActionsContainer>
         <div className="actions">
-          <div className="like">
-            <span className="material-icons">favorite_border</span>
-            <p>Curtir</p>
-          </div>
+          {token ? (
+            <>
+              <div className="like" onClick={handleLike}>
+                {alreadyLiked ? (
+                  <span className="material-icons">favorite</span>
+                ) : (
+                  <span className="material-icons">favorite_border</span>
+                )}
 
-          <div className="comment">
-            <span className="material-icons">chat_bubble_outline</span>
-            <p>Comentar</p>
-          </div>
+                <p>{alreadyLiked ? 'Descurtir' : 'Curtir'}</p>
+              </div>
+              <div className="comment">
+                <span className="material-icons">chat_bubble_outline</span>
+                <p>Comentar</p>
+              </div>
+            </>
+          ) : (
+            <div className="comment">
+              <span className="material-icons">chat_bubble_outline</span>
+              <p>Ver comentários</p>
+            </div>
+          )}
         </div>
 
         <div className="date">
@@ -124,10 +185,10 @@ export default function Post({
       </ActionsContainer>
       <DataContainer>
         <div className="likes">
-          {likes.length > 1 || likes.length === 0 ? (
-            <p>Curtido por {likes.length} pessoas</p>
+          {likesState.length > 1 || likesState.length === 0 ? (
+            <p>Curtido por {likesState.length} pessoas</p>
           ) : (
-            <p>Curtido por {likes.length} pessoa</p>
+            <p>Curtido por {likesState.length} pessoa</p>
           )}
         </div>
 
