@@ -1,9 +1,7 @@
-import { SyntheticEvent, useContext, useEffect, useRef, useState } from 'react';
+import { SyntheticEvent, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import Comment from './Comments/Comment';
 import ReplyInput from './Comments/ReplyInput';
 import UserInfo from './Comments/UserInfo';
-import Reply from './Comments/Reply';
 import useModal from '../../contexts/ModalContext/useModal';
 import Modal from '../Modal/Modal';
 import {
@@ -12,6 +10,8 @@ import {
   Reply as IReply
 } from '../../types/Post';
 import useApi from '../../hooks/useApi';
+import CommentsHandler from './Comments/CommentsHandler';
+import useComments from '../../contexts/CommentsContext/useComments';
 
 type PostModalProps = {
   post: IPost;
@@ -28,7 +28,9 @@ export default function PostModal({
   } = useApi<IComment[]>();
 
   const { setShowPostModal } = useModal();
-  const [replys, setReplys] = useState<IReply[] | null>([]);
+
+  const { setIsReplying, setCurrentReplies, setParentCommentInfo } =
+    useComments();
 
   const closeModal = (
     e: SyntheticEvent,
@@ -44,9 +46,13 @@ export default function PostModal({
       url: `/posts/${id}/comments`,
       method: 'get'
     });
-  }, []);
 
-  function onSubmit() {}
+    return () => {
+      setIsReplying(false);
+      setCurrentReplies([]);
+      setParentCommentInfo({});
+    };
+  }, []);
 
   return (
     <Modal
@@ -74,81 +80,13 @@ export default function PostModal({
           />
           {/* // TODO: scroll top when open comments */}
           <div className="comments">
-            {replys && replys?.length > 0 ? (
-              <Reply setReply={setReplys} replys={replys} />
-            ) : comments && comments.length > 0 ? (
-              comments.map((comment) => {
-                if (comment.parentComment) return null;
-                else
-                  return (
-                    <Comment
-                      key={comment.id}
-                      setReplys={setReplys}
-                      comment={comment}
-                      user={{
-                        displayName: comment.owner.displayName,
-                        avatar: comment.owner.avatar
-                      }}
-                    />
-                  );
-              })
-            ) : (
-              <p className="no-comments">
-                Essa postagem ainda não tem comentários.
-              </p>
-            )}
+            <CommentsHandler comments={comments} />
           </div>
 
-          <ReplyInput
-            setComments={setComments}
-            postId={id}
-            replys={replys}
-            setReplys={setReplys}
-          />
+          <ReplyInput setComments={setComments} postId={id} />
         </DetailsContainer>
       </ModalContent>
     </Modal>
-
-    // <Background onClick={closeModal} ref={modalRef}>
-    //   <ModalWrapper>
-    // <ModalContent>
-    //   <ImageContainer>
-    //     <img
-    //       src="https://cdn.vox-cdn.com/thumbor/MEjeG_iclwwPEiY7NlqMaGGa75g=/0x0:1080x1350/1200x0/filters:focal(0x0:1080x1350):no_upscale()/cdn.vox-cdn.com/uploads/chorus_asset/file/22541812/_National_3_52621.jpg"
-    //       alt=""
-    //     />
-    //   </ImageContainer>
-
-    //   <DetailsContainer>
-    //     <UserInfo />
-    //     {/* // TODO: scroll top when open comments */}
-    //     <div className="comments">
-    //       {isReply ? (
-    //         <Reply />
-    //       ) : (
-    //         <>
-    //           <Comment />
-    //           <Comment />
-    //           <Comment />
-    //           <Comment />
-    //           <Comment />
-    //           <Comment />
-    //           <Comment />
-    //           <Comment />
-    //           <Comment />
-    //           <Comment />
-    //           <Comment />
-    //           <Comment />
-    //           <Comment />
-    //         </>
-    //       )}
-    //     </div>
-
-    //     <ReplyInput />
-    //   </DetailsContainer>
-    // </ModalContent>
-    //   </ModalWrapper>
-    // </Background>
   );
 }
 
@@ -208,43 +146,6 @@ const DetailsContainer = styled.div`
       font-size: 1.4rem;
       margin-top: 2rem;
       color: gray;
-    }
-  }
-`;
-
-const Background = styled.div`
-  width: 100%;
-  z-index: 100;
-  left: 0;
-  top: 0;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.4);
-  position: fixed;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const ModalWrapper = styled.div`
-  min-width: 50%;
-  max-width: 75%;
-  max-height: 90vh;
-  background-color: #fafafa;
-  background-color: red;
-
-  display: flex;
-
-  color: #000;
-  border-radius: 10px;
-
-  animation: openModal 0.3s;
-
-  @keyframes openModal {
-    from {
-      scale: 0%;
-    }
-    to {
-      scale: 100%;
     }
   }
 `;

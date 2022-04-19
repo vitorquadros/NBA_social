@@ -1,28 +1,38 @@
 import styled from 'styled-components';
-import { Reply as IReply } from '../../../types/Post';
+import useComments from '../../../contexts/CommentsContext/useComments';
 
-type ReplyProps = {
-  setReply: React.Dispatch<React.SetStateAction<IReply[] | null>>;
-  replys: IReply[];
-};
+export default function Reply() {
+  const {
+    setCurrentReplies,
+    currentReplies,
+    parentCommentInfo,
+    setIsReplying,
+    setParentCommentInfo
+  } = useComments();
 
-export default function Reply({ setReply, replys }: ReplyProps) {
   return (
     <Container>
-      <div className="back" onClick={() => setReply([])}>
+      <div
+        className="back"
+        onClick={() => {
+          setCurrentReplies([]);
+          setIsReplying(false);
+          setParentCommentInfo({});
+        }}
+      >
         <span className="material-icons back">arrow_back</span>
         <p>Voltar aos comentários</p>
       </div>
       <div className="reply-parent">
         <img
-          src={`http://localhost:3333/files/${replys[0].parentComment.owner.avatar}`}
+          src={`http://localhost:3333/files/${parentCommentInfo.owner.avatar}`}
           alt=""
         />
         <div className="parent-comment-details">
           <p className="parent-comment-owner">
-            {replys[0].parentComment.owner.displayName}
+            {parentCommentInfo.owner.displayName}
           </p>
-          <p className="parent-comment-text">{replys[0].parentComment.text}</p>
+          <p className="parent-comment-text">{parentCommentInfo.text}</p>
 
           <div className="parent-comment-actions">
             <span>19h</span>
@@ -30,21 +40,25 @@ export default function Reply({ setReply, replys }: ReplyProps) {
           </div>
         </div>
       </div>
-      {replys.map((reply) => {
-        return (
-          <ReplyComment
-            key={reply.id}
-            replyInfo={{
-              replyOwnerInfo: {
-                ownerAvatar: reply.owner.avatar,
-                ownerName: reply.owner.displayName
-              },
-              replyText: reply.text,
-              replyTimeAgo: reply.createdAt
-            }}
-          />
-        );
-      })}
+      {currentReplies && currentReplies.length > 0 ? (
+        currentReplies.map((reply) => {
+          return (
+            <ReplyComment
+              key={reply.id}
+              replyInfo={{
+                replyOwnerInfo: {
+                  ownerAvatar: reply.owner.avatar,
+                  ownerName: reply.owner.displayName
+                },
+                replyText: reply.text,
+                replyTimeAgo: reply.createdAt
+              }}
+            />
+          );
+        })
+      ) : (
+        <p className="no-replies">O comentário ainda não tem respostas.</p>
+      )}
     </Container>
   );
 }
@@ -130,6 +144,13 @@ const Container = styled.div`
   margin: 0 1rem 2rem 1.2rem;
   display: flex;
   flex-direction: column;
+
+  p.no-replies {
+    color: gray;
+    font-size: 1.3rem;
+    text-align: center;
+    margin-top: 2rem;
+  }
 
   div.back {
     margin: 1rem 0;

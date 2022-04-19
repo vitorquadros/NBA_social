@@ -1,17 +1,21 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import useAuth from '../../../contexts/AuthContext/useAuth';
+import useComments from '../../../contexts/CommentsContext/useComments';
 import useApi from '../../../hooks/useApi';
+import { Comment as IComment, Reply as IReply } from '../../../types/Post';
 
-export default function ReplyInput({
-  setComments,
-  postId,
-  replys,
-  setReplys
-}: any) {
-  const { displayName, token } = useAuth();
+type ReplyInputProps = {
+  setComments: React.Dispatch<React.SetStateAction<IComment[] | null>>;
+  postId: string;
+};
+
+export default function ReplyInput({ setComments, postId }: ReplyInputProps) {
+  const { token } = useAuth();
   const { callForm } = useApi();
   const [commentText, setCommentText] = useState<string>('');
+  const { currentReplies, setCurrentReplies, isReplying, parentCommentInfo } =
+    useComments();
 
   async function onSubmit(e: any) {
     e.preventDefault();
@@ -21,8 +25,7 @@ export default function ReplyInput({
         method: 'post',
         data: {
           text: commentText,
-          parentCommentId:
-            replys && replys.length > 0 ? replys[0].parentComment.id : null
+          parentCommentId: isReplying ? parentCommentInfo.id : null
         },
         headers: {
           Authorization: `Bearer ${token}`
@@ -31,13 +34,13 @@ export default function ReplyInput({
 
       setComments((prev: any) => [...prev, comment.data]);
 
-      if (replys && replys.length > 0) {
-        setReplys((prev: any) => [...prev, comment.data]);
+      if (isReplying) {
+        setCurrentReplies((prev) => [...(prev || []), comment.data]);
       }
 
       setCommentText('');
     } catch (error) {
-      console.log(error);
+      console.log(error); // DEBUG
     }
   }
 
@@ -49,8 +52,8 @@ export default function ReplyInput({
         value={commentText}
         onChange={(e) => setCommentText(e.target.value)}
         placeholder={
-          replys && replys.length > 0
-            ? `Respondendo à ${replys[0].parentComment.owner.displayName}`
+          isReplying
+            ? `Respondendo à ${parentCommentInfo.owner.displayName}`
             : 'Adicionar um comentário'
         }
       />

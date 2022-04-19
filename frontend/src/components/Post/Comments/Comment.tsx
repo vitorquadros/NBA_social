@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import useComments from '../../../contexts/CommentsContext/useComments';
 import { Comment as IComment, Reply as IReply } from '../../../types/Post';
 
 type CommentUser = {
@@ -7,16 +8,17 @@ type CommentUser = {
 };
 
 type CommentProps = {
-  setReplys: React.Dispatch<React.SetStateAction<IReply[] | null>>;
   comment: IComment;
   user: CommentUser;
 };
 
 export default function Comment({
-  setReplys,
   comment: { id, text, createdAt, replys },
   user: { avatar, displayName }
 }: CommentProps) {
+  const { setCurrentReplies, setParentCommentInfo, setIsReplying } =
+    useComments();
+
   return (
     <Container>
       <div className="comment">
@@ -30,12 +32,38 @@ export default function Comment({
 
           <div className="comment-actions">
             <span>19h</span>
-            <span className="reply">Responder</span>
+            <span
+              className="reply"
+              onClick={() => {
+                setCurrentReplies(replys);
+                setParentCommentInfo({
+                  id,
+                  text,
+                  createdAt,
+                  owner: { avatar, displayName }
+                });
+                setIsReplying(true);
+              }}
+            >
+              Responder
+            </span>
           </div>
         </div>
       </div>
       {replys && replys.length > 0 && (
-        <div className="comment-replys" onClick={() => setReplys(replys)}>
+        <div
+          className="comment-replys"
+          onClick={() => {
+            setCurrentReplies(replys);
+            setParentCommentInfo({
+              id,
+              text,
+              createdAt,
+              owner: { avatar, displayName }
+            });
+            setIsReplying(true);
+          }}
+        >
           <p>Ver respostas ({replys.length})</p>
         </div>
       )}
