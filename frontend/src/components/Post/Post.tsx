@@ -97,18 +97,12 @@ export default function Post({
       <ActionsContainer>
         <div className="actions">
           <div className="like">
-            <img
-              src="https://cdn.iconscout.com/icon/free/png-256/basketball-2062459-1740039.png"
-              alt=""
-            />
+            <span className="material-icons">favorite_border</span>
             <p>Curtir</p>
           </div>
 
           <div className="comment">
-            <img
-              src="https://cdn-icons-png.flaticon.com/512/134/134808.png"
-              alt=""
-            />
+            <span className="material-icons">chat_bubble_outline</span>
             <p>Comentar</p>
           </div>
         </div>
@@ -189,11 +183,17 @@ const ActionsContainer = styled.div`
 
     div.like {
       display: flex;
+      gap: 0.5rem;
       align-items: center;
       cursor: pointer;
+
+      span {
+        font-size: 2.6rem;
+      }
     }
 
     div.comment {
+      gap: 0.5rem;
       display: flex;
       align-items: center;
       cursor: pointer;
