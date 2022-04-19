@@ -1,6 +1,8 @@
-import { useContext } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
-import { ModalContext } from '../../../contexts/ModalContext-old';
+import useAuth from '../../../contexts/AuthContext/useAuth';
+import useModal from '../../../contexts/ModalContext/useModal';
+import useApi from '../../../hooks/useApi';
 
 type PostFormProps = {
   image: string | FileList;
@@ -8,14 +10,57 @@ type PostFormProps = {
 };
 
 export default function PostForm({ image, setImage }: PostFormProps) {
+  const [description, setDescription] = useState<string>('');
+
+  const { token } = useAuth();
+  const { callForm, setData } = useApi();
+  const { setShowCreatePostModal } = useModal();
+
+  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+
+    try {
+      const formData = new FormData();
+      formData.append('image', image as string | Blob);
+
+      const { filename } = await callForm({
+        url: '/upload',
+        method: 'post',
+        data: formData
+      });
+
+      const { data } = await callForm({
+        url: '/posts',
+        method: 'post',
+        data: {
+          description,
+          image: filename
+        },
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      // console.log(data); DEBUG
+
+      setShowCreatePostModal(false);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
-    <Form>
+    <Form onSubmit={(e) => onSubmit(e)}>
       {!image ? (
         <h3>Para começar, você precisa selecionar uma imagem</h3>
       ) : (
         <>
           <h3>Agora, escreva uma descrição para sua publicação</h3>
-          <textarea />
+          <textarea
+            name="description"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          />
           <span className="warning">
             <span className="material-icons">help_outline</span>
             <p>A descrição é opcional</p>
