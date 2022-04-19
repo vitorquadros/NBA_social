@@ -66,24 +66,22 @@ export default function RegisterForm({
         <button onClick={() => setIsRegister(!isRegister)}>Fazer login</button>
       </div>
 
-      {isLoading ? (
-        <Loading />
-      ) : (
-        <Form method="POST" onSubmit={onSubmit}>
-          <p>Para começar, digite seu email</p>
-          <div className="input-fields">
-            <Input
-              type="text"
-              name="email"
-              errors={errors.email ? errors.email : null}
-              register={register}
-              placeholder="Seu email"
-            />
-          </div>
+      <Form method="POST" onSubmit={onSubmit}>
+        <p>Para começar, digite seu email</p>
+        <div className="input-fields">
+          <Input
+            type="text"
+            name="email"
+            errors={errors.email ? errors.email : null}
+            register={register}
+            placeholder="Seu email"
+          />
+        </div>
 
-          <button>Enviar</button>
-        </Form>
-      )}
+        <button disabled={isLoading}>
+          {isLoading ? 'Enviando...' : 'Enviar'}
+        </button>
+      </Form>
     </Container>
   );
 }
@@ -171,6 +169,12 @@ const Form = styled.form`
     transition: 0.3s;
 
     &:hover {
+      filter: brightness(80%);
+    }
+
+    &:disabled {
+      color: black;
+      cursor: not-allowed;
       filter: brightness(80%);
     }
   }

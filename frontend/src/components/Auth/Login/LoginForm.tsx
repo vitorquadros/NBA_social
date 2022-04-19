@@ -66,32 +66,30 @@ export default function LoginForm({
         </button>
       </div>
 
-      {loading ? (
-        <Loading />
-      ) : (
-        <Form method="POST" onSubmit={onSubmit}>
-          <div className="input-fields">
-            <Input
-              type="text"
-              name="email"
-              errors={errors.email ? errors.email : null}
-              register={register}
-              placeholder="Seu email"
-            />
+      <Form method="POST" onSubmit={onSubmit}>
+        <div className="input-fields">
+          <Input
+            type="text"
+            name="email"
+            errors={errors.email ? errors.email : null}
+            register={register}
+            placeholder="Seu email"
+          />
 
-            <Fields.Password
-              register={register}
-              name="password"
-              errors={errors.password ? errors.password : null}
-              isPasswordVisible={isPasswordVisible}
-              setIsPasswordVisible={setIsPasswordVisible}
-              placeholder="Sua senha"
-            />
-          </div>
+          <Fields.Password
+            register={register}
+            name="password"
+            errors={errors.password ? errors.password : null}
+            isPasswordVisible={isPasswordVisible}
+            setIsPasswordVisible={setIsPasswordVisible}
+            placeholder="Sua senha"
+          />
+        </div>
 
-          <button>Fazer login</button>
-        </Form>
-      )}
+        <button disabled={loading}>
+          {loading ? 'Fazendo login...' : 'Fazer login'}
+        </button>
+      </Form>
     </Container>
   );
 }
@@ -184,6 +182,12 @@ const Form = styled.form`
     font-weight: 500;
     cursor: pointer;
     transition: 0.3s;
+
+    &:disabled {
+      color: black;
+      cursor: not-allowed;
+      filter: brightness(80%);
+    }
 
     &:hover {
       filter: brightness(80%);

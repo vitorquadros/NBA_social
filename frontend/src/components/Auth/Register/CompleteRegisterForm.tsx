@@ -35,7 +35,8 @@ export default function CompleteRegisterForm({
 }: CompleteRegisterProps) {
   const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
 
-  const { callForm, isLoading } = useApi();
+  const { callForm } = useApi();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const { authenticate } = useAuth();
 
@@ -49,6 +50,7 @@ export default function CompleteRegisterForm({
   } = useForm<Inputs>({ resolver: yupResolver(schema) });
 
   const onSubmit = handleSubmit(async (data) => {
+    setIsLoading(true);
     const user = Object.assign(
       {},
       {
@@ -92,6 +94,8 @@ export default function CompleteRegisterForm({
           alertName: 'registerSuccess'
         }
       }); // DEBUG
+
+      setIsLoading(false);
     } catch (error: any) {
       console.log(error.response);
 
