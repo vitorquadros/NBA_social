@@ -1,47 +1,53 @@
 import { useContext, useState } from 'react';
 import styled from 'styled-components';
 import Header from '../components/Header/Header';
-import CreatePostModal from '../components/Post/CreatePost/CreatePostModal';
 import PostsTable from '../components/Profile/PostsTable';
 import Options from '../components/Profile/Options';
 import ProfileImages from '../components/Profile/ProfileImages';
 import ProfileInfo from '../components/Profile/ProfileInfo';
 import EditProfileForm from '../components/Profile/EditProfile/EditProfileForm';
-import useModal from '../contexts/ModalContext/useModal';
+import LoadingFull from '../components/Utils/Loading';
+import useAuth from '../contexts/AuthContext/useAuth';
 
 export default function Profile() {
-  const { showCreatePostModal } = useModal();
   const [editProfile, toggleEditProfile] = useState<boolean>(false);
   const [avatarImage, setAvatarImage] = useState<string | FileList>('');
   const [coverImage, setCoverImage] = useState<string | FileList>('');
+  const { loading } = useAuth();
 
   return (
     <Wrapper>
       <Header />
-      <Content>
-        {showCreatePostModal && <CreatePostModal />}
-        <ProfileImages previewAvatar={avatarImage} previewCover={coverImage} />
-        <Options
-          editProfile={editProfile}
-          toggleEditProfile={toggleEditProfile}
-          setAvatarImage={setAvatarImage}
-          setCoverImage={setCoverImage}
-        />
-        {editProfile ? (
-          <EditProfileForm
+      {loading ? (
+        <LoadingFull />
+      ) : (
+        <Content>
+          <ProfileImages
+            previewAvatar={avatarImage}
+            previewCover={coverImage}
+          />
+          <Options
+            editProfile={editProfile}
             toggleEditProfile={toggleEditProfile}
-            avatarImage={avatarImage}
             setAvatarImage={setAvatarImage}
-            coverImage={coverImage}
             setCoverImage={setCoverImage}
           />
-        ) : (
-          <>
-            <ProfileInfo />
-            <PostsTable />
-          </>
-        )}
-      </Content>
+          {editProfile ? (
+            <EditProfileForm
+              toggleEditProfile={toggleEditProfile}
+              avatarImage={avatarImage}
+              setAvatarImage={setAvatarImage}
+              coverImage={coverImage}
+              setCoverImage={setCoverImage}
+            />
+          ) : (
+            <>
+              <ProfileInfo />
+              <PostsTable />
+            </>
+          )}
+        </Content>
+      )}
     </Wrapper>
   );
 }
