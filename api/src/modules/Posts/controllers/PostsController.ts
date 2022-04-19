@@ -24,13 +24,13 @@ export class PostsController {
     const postsUsecase = container.resolve(PostsUsecase);
 
     try {
-      await postsUsecase.createPost({
+      const post = await postsUsecase.createPost({
         description,
         image,
         ownerId: userId
       });
 
-      return res.status(201).send();
+      return res.status(201).json({ status: 'ok', data: post });
     } catch (error) {
       return res.status(400).json({ status: 'error', error: error.message });
     }
