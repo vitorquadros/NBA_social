@@ -35,6 +35,7 @@ export class PostsRepository implements IPostsRepository {
     const posts = await this.repository.find({
       relations: [
         'likes',
+        'likes.user',
         'comments',
         'comments.replys',
         'comments.parentComment',

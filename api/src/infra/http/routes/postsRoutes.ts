@@ -13,6 +13,7 @@ const commentsController = new CommentsController();
 postsRoutes.post('/', authMiddleware, postsController.store);
 postsRoutes.get('/', postsController.index);
 postsRoutes.post('/:postId/like', authMiddleware, likesController.store);
+postsRoutes.get('/:postId/like', authMiddleware, likesController.verify);
 
 // Comments
 postsRoutes.post('/:postId/comments', authMiddleware, commentsController.store);
