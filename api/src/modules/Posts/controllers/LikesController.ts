@@ -10,12 +10,12 @@ export class LikesController {
     const likesUsecase = container.resolve(LikesUsecase);
 
     try {
-      await likesUsecase.createLike({
+      const like = await likesUsecase.createLike({
         postId,
         userId
       });
 
-      return res.status(201).send();
+      return res.status(201).json({ status: 'ok', data: like });
     } catch (error) {
       return res.status(400).json({ status: 'error', error: error.message });
     }
