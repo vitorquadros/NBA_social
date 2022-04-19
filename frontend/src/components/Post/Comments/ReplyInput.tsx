@@ -11,7 +11,7 @@ type ReplyInputProps = {
 };
 
 export default function ReplyInput({ setComments, postId }: ReplyInputProps) {
-  const { token } = useAuth();
+  const { token, email } = useAuth();
   const { callForm } = useApi();
   const [commentText, setCommentText] = useState<string>('');
   const { currentReplies, setCurrentReplies, isReplying, parentCommentInfo } =
@@ -46,20 +46,26 @@ export default function ReplyInput({ setComments, postId }: ReplyInputProps) {
 
   return (
     <Form onSubmit={(e) => onSubmit(e)}>
-      <input
-        type="text"
-        name="comment"
-        value={commentText}
-        onChange={(e) => setCommentText(e.target.value)}
-        placeholder={
-          isReplying
-            ? `Respondendo à ${parentCommentInfo.owner.displayName}`
-            : 'Adicionar um comentário'
-        }
-      />
-      <button type="submit">
-        <span className="material-icons">send</span>
-      </button>
+      {email ? (
+        <>
+          <input
+            type="text"
+            name="comment"
+            value={commentText}
+            onChange={(e) => setCommentText(e.target.value)}
+            placeholder={
+              isReplying
+                ? `Respondendo à ${parentCommentInfo.owner.displayName}`
+                : 'Adicionar um comentário'
+            }
+          />
+          <button type="submit">
+            <span className="material-icons">send</span>
+          </button>
+        </>
+      ) : (
+        <p className="not-logged">Faça login para comentar</p>
+      )}
     </Form>
   );
 }
@@ -73,6 +79,13 @@ const Form = styled.form`
   margin-top: auto;
 
   border-top: 1px solid rgba(var(--b6a, 219, 219, 219), 1);
+
+  p.not-logged {
+    text-align: center;
+    margin: auto;
+    font-size: 1.4rem;
+    color: gray;
+  }
 
   button {
     border: 0;
