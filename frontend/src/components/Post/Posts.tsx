@@ -5,13 +5,17 @@ import { Loading } from '../Utils/Loading';
 import Post from './Post';
 
 export default function Posts() {
-  const { call, data: posts, isLoading } = useApi<any>();
+  const { call, data: posts, setData, isLoading } = useApi<any>();
 
   useEffect(() => {
     call({
       url: '/posts',
       method: 'get'
     });
+
+    return () => {
+      setData(null);
+    };
   }, []);
 
   return (
