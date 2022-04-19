@@ -59,7 +59,18 @@ export default function Post({
               alt={`Foto de perfil de ${user.displayName}`}
             />
             <div className="user-info">
-              <p className="displayname">{user.displayName}</p>
+              <div className="display-name-container">
+                <p className="displayname">{user.displayName}</p>
+                {user.role === 'verified' && (
+                  <span
+                    className="material-icons verified"
+                    title="Perfil verificado"
+                  >
+                    verified
+                  </span>
+                )}
+              </div>
+
               <p className="username">@{user.username}</p>
             </div>
           </div>
@@ -221,6 +232,17 @@ const UserContainer = styled.div`
     display: flex;
     cursor: pointer;
     margin-bottom: 1rem;
+
+    div.display-name-container {
+      display: flex;
+      align-items: center;
+      text-align: center;
+
+      span.verified {
+        font-size: 1.8rem;
+        margin-left: 0.5rem;
+      }
+    }
 
     &:hover {
       p.username {
