@@ -65,6 +65,7 @@ export default function Comment({
           }}
         >
           <p>Ver respostas ({replys.length})</p>
+          <span className="material-icons show-replies">expand_more</span>
         </div>
       )}
     </Container>
@@ -115,17 +116,30 @@ const Container = styled.div`
   div.comment-replys {
     display: flex;
     margin: 0 auto;
+    align-items: center;
     // TODO: change margintop when mobile
+
+    &:hover {
+      cursor: pointer;
+    }
 
     p {
       font-size: 1.3rem;
       margin: auto;
       color: gray;
       cursor: pointer;
+      font-weight: 500;
 
       &:hover {
         text-decoration: underline;
       }
+    }
+
+    span.show-replies {
+      color: gray;
+      font-size: 1.7rem;
+      text-align: center;
+      margin-left: 0.6rem;
     }
   }
 
