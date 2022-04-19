@@ -5,9 +5,13 @@ import Snackbar from '../components/Utils/Snackbar';
 import { useLocation } from 'react-router-dom';
 import Posts from '../components/Post/Posts';
 import useModal from '../contexts/ModalContext/useModal';
+import useAuth from '../contexts/AuthContext/useAuth';
+import LoadingFull from '../components/Utils/Loading';
 
 export default function Home() {
   const snackbarRef = useRef<any>(null);
+
+  const { loading } = useAuth();
 
   const location = useLocation();
 
@@ -29,13 +33,16 @@ export default function Home() {
         type="success"
         ref={snackbarRef}
       />
-      <Header />
-      <Content>
-        <Posts />
-        {/* <CommentsContextProvider>
-     
-        </CommentsContextProvider> */}
-      </Content>
+      {loading ? (
+        <LoadingFull />
+      ) : (
+        <>
+          <Header />
+          <Content>
+            <Posts />
+          </Content>
+        </>
+      )}
     </Wrapper>
   );
 }

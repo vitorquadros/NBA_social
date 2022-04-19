@@ -19,6 +19,7 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
 
     if (userLocal) {
       (async () => {
+        setLoading(true);
         try {
           const { data } = await VerifyToken(userLocal.token);
 
@@ -29,6 +30,8 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
           }
         } catch (error) {
           console.log('token inválido ou expirado'); // DEBUG //
+        } finally {
+          setLoading(false);
         }
       })();
     }
