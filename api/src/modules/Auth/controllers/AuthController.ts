@@ -15,6 +15,7 @@ export class AuthController {
         select: [
           'password',
           'id',
+          'bio',
           'username',
           'birthday',
           'avatar',
