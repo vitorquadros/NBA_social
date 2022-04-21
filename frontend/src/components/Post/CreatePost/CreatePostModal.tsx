@@ -2,7 +2,7 @@ import { SyntheticEvent, useContext, useRef, useState } from 'react';
 import styled from 'styled-components';
 import useModal from '../../../contexts/ModalContext/useModal';
 import Modal from '../../Modal/Modal';
-import ClosePopup from '../Popup/ClosePopup';
+import ClosePopup from '../../Utils/ClosePopup';
 import PostForm from './PostForm';
 
 export default function CreatePostModal() {

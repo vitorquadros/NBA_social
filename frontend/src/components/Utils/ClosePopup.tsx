@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import useModal from '../../../contexts/ModalContext/useModal';
+import useModal from '../../contexts/ModalContext/useModal';
 
 type ClosePopup = {
   setPopup: React.Dispatch<React.SetStateAction<boolean>>;
