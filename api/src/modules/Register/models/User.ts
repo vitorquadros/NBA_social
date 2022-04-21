@@ -38,6 +38,9 @@ export class User {
   @Column()
   birthday: Date;
 
+  @Column()
+  bio: string;
+
   @Column({ type: 'enum', enum: UserRole, default: UserRole.USER })
   role: UserRole;
 
@@ -68,7 +71,7 @@ export class User {
 
   @BeforeUpdate()
   hashPassword() {
-    this.password = bcrypt.hashSync(this.password, 8);
+    if (this.password) this.password = bcrypt.hashSync(this.password, 8);
   }
 
   @OneToMany(() => Post, (post) => post.user)

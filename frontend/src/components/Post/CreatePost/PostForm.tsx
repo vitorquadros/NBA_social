@@ -1,21 +1,69 @@
-import { useContext } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
-import { ModalContext } from '../../../contexts/ModalContext';
+import useAuth from '../../../contexts/AuthContext/useAuth';
+import useModal from '../../../contexts/ModalContext/useModal';
+import useApi from '../../../hooks/useApi';
 
-export default function PostForm() {
-  const { image, setImage } = useContext(ModalContext);
+type PostFormProps = {
+  image: string | FileList;
+  setImage: React.Dispatch<React.SetStateAction<string | FileList>>;
+};
+
+export default function PostForm({ image, setImage }: PostFormProps) {
+  const [description, setDescription] = useState<string>('');
+
+  const { token } = useAuth();
+  const { callForm } = useApi();
+  const { setShowCreatePostModal } = useModal();
+
+  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+
+    try {
+      const formData = new FormData();
+      formData.append('image', image as string | Blob);
+
+      const { filename } = await callForm({
+        url: '/upload',
+        method: 'post',
+        data: formData
+      });
+
+      const { data } = await callForm({
+        url: '/posts',
+        method: 'post',
+        data: {
+          description,
+          image: filename
+        },
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      // console.log(data); DEBUG
+
+      setShowCreatePostModal(false);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
-    <Form>
+    <Form onSubmit={(e) => onSubmit(e)}>
       {!image ? (
         <h3>Para começar, você precisa selecionar uma imagem</h3>
       ) : (
         <>
           <h3>Agora, escreva uma descrição para sua publicação</h3>
-          <textarea />
+          <textarea
+            name="description"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          />
           <span className="warning">
-            <span className="material-icons">question_mark</span>A descrição é
-            opcional
+            <span className="material-icons">help_outline</span>
+            <p>A descrição é opcional</p>
           </span>
         </>
       )}
@@ -83,14 +131,15 @@ const Form = styled.form`
     width: 100%;
     max-width: 80%;
 
-    border: 1px solid rgba(229, 101, 3, 1);
+    border: 1px solid black;
     border-radius: 5px;
     padding: 0.5rem 0 0 0.5rem;
     margin-bottom: 1rem;
-  }
 
-  textarea:focus {
-    outline: none;
+    &:focus {
+      outline: none !important;
+      border-color: rgba(229, 101, 3, 1);
+    }
   }
 
   span.warning {
@@ -98,14 +147,17 @@ const Form = styled.form`
     justify-content: center;
     align-items: center;
     margin-bottom: 2rem;
-    font-size: 1.4rem;
+
+    p {
+      font-size: 1.4rem;
+    }
 
     span {
-      font-size: 2rem;
-      background-color: rgb(251, 189, 4);
+      font-size: 2.4rem;
+
       border-radius: 50%;
       padding: 2px 3px;
-      margin-right: 3px;
+      margin-right: 1px;
     }
   }
 

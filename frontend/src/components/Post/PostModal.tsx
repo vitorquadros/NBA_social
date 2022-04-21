@@ -1,78 +1,118 @@
-import { SyntheticEvent, useContext, useRef } from 'react';
+import { SyntheticEvent, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { ModalContext } from '../../contexts/ModalContext';
-import Comment from './Comments/Comment';
 import ReplyInput from './Comments/ReplyInput';
 import UserInfo from './Comments/UserInfo';
-import Reply from './Comments/Reply';
-import { CommentsContext } from '../../contexts/CommentsContext';
+import useModal from '../../contexts/ModalContext/useModal';
+import Modal from '../Modal/Modal';
+import {
+  Comment as IComment,
+  Post as IPost,
+  Reply as IReply
+} from '../../types/Post';
+import useApi from '../../hooks/useApi';
+import CommentsHandler from './Comments/CommentsHandler';
+import useComments from '../../contexts/CommentsContext/useComments';
 
-export default function PostModal() {
-  const { setShowPostModal } = useContext(ModalContext);
-  const { isReply } = useContext(CommentsContext);
+type PostModalProps = {
+  post: IPost;
+};
 
-  const modalRef = useRef<HTMLDivElement>(null);
+export default function PostModal({
+  post: { createdAt, description, id, image, likes, updatedAt, user }
+}: PostModalProps) {
+  const {
+    call,
+    data: comments,
+    setData: setComments,
+    isLoading
+  } = useApi<IComment[]>();
 
-  const closeModal = (e: SyntheticEvent) => {
+  const { setShowPostModal } = useModal();
+
+  const { setIsReplying, setCurrentReplies, setParentCommentInfo } =
+    useComments();
+
+  const closeModal = (
+    e: SyntheticEvent,
+    modalRef: React.RefObject<HTMLDivElement>
+  ) => {
     if (modalRef.current === e.target) {
-      setShowPostModal(false);
+      setShowPostModal('');
     }
   };
 
+  useEffect(() => {
+    call({
+      url: `/posts/${id}/comments`,
+      method: 'get'
+    });
+
+    return () => {
+      setIsReplying(false);
+      setCurrentReplies([]);
+      setParentCommentInfo({});
+    };
+  }, []);
+
   return (
-    <Background onClick={closeModal} ref={modalRef}>
-      <ModalWrapper>
-        <ModalContent>
-          <ImageContainer>
-            <img
-              src="https://cdn.vox-cdn.com/thumbor/MEjeG_iclwwPEiY7NlqMaGGa75g=/0x0:1080x1350/1200x0/filters:focal(0x0:1080x1350):no_upscale()/cdn.vox-cdn.com/uploads/chorus_asset/file/22541812/_National_3_52621.jpg"
-              alt=""
-            />
-          </ImageContainer>
+    <Modal
+      closeModal={closeModal}
+      closeButton={true}
+      handleClose={() => setShowPostModal('')}
+    >
+      <ModalContent>
+        <ImageContainer>
+          <img
+            src={`http://localhost:3333/files/${image}`}
+            alt="Imagem do post"
+          />
+        </ImageContainer>
 
-          <DetailsContainer>
-            <UserInfo />
-            {/* // TODO: scroll top when open comments */}
-            <div className="comments">
-              {isReply ? (
-                <Reply />
-              ) : (
-                <>
-                  <Comment />
-                  <Comment />
-                  <Comment />
-                  <Comment />
-                  <Comment />
-                  <Comment />
-                  <Comment />
-                  <Comment />
-                  <Comment />
-                  <Comment />
-                  <Comment />
-                  <Comment />
-                  <Comment />
-                </>
-              )}
-            </div>
+        <DetailsContainer>
+          <UserInfo
+            userInfo={{
+              description,
+              userAvatar: user.avatar,
+              userDisplayName: user.displayName,
+              userUsername: user.displayName,
+              userNbaTeam: user.nbaTeam
+            }}
+          />
+          {/* // TODO: scroll top when open comments */}
+          <div className="comments">
+            <CommentsHandler comments={comments} />
+          </div>
 
-            <ReplyInput />
-          </DetailsContainer>
-        </ModalContent>
-      </ModalWrapper>
-    </Background>
+          <ReplyInput setComments={setComments} postId={id} />
+        </DetailsContainer>
+      </ModalContent>
+    </Modal>
   );
 }
 
 const ModalContent = styled.div`
-  max-width: 100%;
-  display: flex;
-  max-height: 100%;
-  background-color: pink;
+  max-width: 80vw;
+  max-height: 95vh;
+  min-height: 95vh;
+  display: inline-flex;
+  background-color: #fafafa;
+
+  animation: scaleIn 0.3s;
+
+  @keyframes scaleIn {
+    from {
+      scale: 0%;
+    }
+    to {
+      scale: 100%;
+    }
+  }
 `;
 
 const ImageContainer = styled.div`
   background-color: black;
   display: flex;
+  width: 60%;
   max-width: 60%;
   min-height: 100%;
   max-height: 100%;
@@ -80,14 +120,14 @@ const ImageContainer = styled.div`
   justify-content: center;
 
   img {
+    width: 100%;
     max-width: 100%;
-    height: auto;
     max-height: 90vh;
   }
 `;
 
 const DetailsContainer = styled.div`
-  height: auto;
+  width: 40%;
   max-width: 40%;
   max-height: 100%;
   display: flex;
@@ -101,42 +141,12 @@ const DetailsContainer = styled.div`
     /* max-height: calc(
       100% - 8.3rem - 5rem
     ); */
-  }
-`;
 
-const Background = styled.div`
-  width: 100%;
-  z-index: 100;
-  left: 0;
-  top: 0;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.4);
-  position: fixed;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const ModalWrapper = styled.div`
-  min-width: 50%;
-  max-width: 75%;
-  max-height: 90vh;
-  background-color: #fafafa;
-  background-color: red;
-
-  display: flex;
-
-  color: #000;
-  border-radius: 10px;
-
-  animation: openModal 0.3s;
-
-  @keyframes openModal {
-    from {
-      scale: 0%;
-    }
-    to {
-      scale: 100%;
+    p.no-comments {
+      text-align: center;
+      font-size: 1.4rem;
+      margin-top: 2rem;
+      color: gray;
     }
   }
 `;

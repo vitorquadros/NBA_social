@@ -1,50 +1,43 @@
+import { useEffect } from 'react';
 import styled from 'styled-components';
+import useAuth from '../../contexts/AuthContext/useAuth';
+import useApi from '../../hooks/useApi';
+import { Post } from '../../types/Post';
+import { Loading } from '../Utils/Loading';
 
 export default function PostsTable() {
+  const { displayName, id } = useAuth();
+
+  const { call, data: posts, isLoading } = useApi<Post[]>();
+
+  useEffect(() => {
+    call({
+      url: `/posts/${id}`,
+      method: 'get'
+    });
+  }, []);
+
   return (
     <Container>
-      <h3>Publicações de Bam Adebayo</h3>
-      <div className="table-images">
-        <div className="table-image">
-          <img src="https://wallpaper.dog/large/635907.jpg" alt="" />
+      <h3>{`Publicações de ${displayName}`}</h3>
+      {isLoading ? (
+        <div className="loading">
+          <Loading />
         </div>
-        <div className="table-image">
-          <img src="https://wallpaper.dog/large/635907.jpg" alt="" />
+      ) : posts && posts.length > 0 ? (
+        <div className="table-images">
+          {posts?.map((post) => (
+            <div className="table-image" key={post.id}>
+              <img
+                src={`http://localhost:3333/files/${post.image}`}
+                alt={`Preview do post de ${displayName}`}
+              />
+            </div>
+          ))}
         </div>
-        <div className="table-image">
-          <img src="https://wallpaper.dog/large/635907.jpg" alt="" />
-        </div>
-        <div className="table-image">
-          <img src="https://wallpaper.dog/large/635907.jpg" alt="" />
-        </div>
-        <div className="table-image">
-          <img src="https://wallpaper.dog/large/635907.jpg" alt="" />
-        </div>
-        <div className="table-image">
-          <img src="https://wallpaper.dog/large/635907.jpg" alt="" />
-        </div>
-        <div className="table-image">
-          <img src="https://wallpaper.dog/large/635907.jpg" alt="" />
-        </div>
-        <div className="table-image">
-          <img src="https://wallpaper.dog/large/635907.jpg" alt="" />
-        </div>
-        <div className="table-image">
-          <img src="https://wallpaper.dog/large/635907.jpg" alt="" />
-        </div>
-        <div className="table-image">
-          <img src="https://wallpaper.dog/large/635907.jpg" alt="" />
-        </div>
-        <div className="table-image">
-          <img src="https://wallpaper.dog/large/635907.jpg" alt="" />
-        </div>
-        <div className="table-image">
-          <img src="https://wallpaper.dog/large/635907.jpg" alt="" />
-        </div>
-        <div className="table-image">
-          <img src="https://wallpaper.dog/large/635907.jpg" alt="" />
-        </div>
-      </div>
+      ) : (
+        <p className="no-posts">O usuário ainda não tem publicações.</p>
+      )}
     </Container>
   );
 }
@@ -52,8 +45,20 @@ export default function PostsTable() {
 const Container = styled.div`
   margin-top: 5rem;
 
+  div.loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 3rem 0 3rem 0;
+  }
+
   h3 {
     text-align: center;
+  }
+
+  p.no-posts {
+    text-align: center;
+    margin: 2rem 0;
   }
 
   div.table-images {
@@ -64,12 +69,18 @@ const Container = styled.div`
 
     div.table-image {
       cursor: pointer;
+      transition: all 0.3s;
+
+      &:hover {
+        scale: 120%;
+      }
 
       img {
         aspect-ratio: 1 / 1;
         width: 20rem;
         max-width: 20rem;
         border-radius: 5px;
+        object-fit: cover;
       }
     }
   }

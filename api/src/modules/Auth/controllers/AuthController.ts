@@ -12,7 +12,18 @@ export class AuthController {
     try {
       const user = await repository.findOne({
         where: { email },
-        select: ['password', 'id']
+        select: [
+          'password',
+          'id',
+          'bio',
+          'username',
+          'birthday',
+          'avatar',
+          'cover',
+          'nbaTeam',
+          'role',
+          'displayName'
+        ]
       });
 
       if (!user) {
@@ -30,7 +41,7 @@ export class AuthController {
       }
 
       const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
-        expiresIn: '30d'
+        expiresIn: process.env.JWT_EXPIRES_IN
       });
 
       delete user.password;
@@ -38,6 +49,36 @@ export class AuthController {
       return res.json({ status: 'ok', data: { user, token } });
     } catch (error) {
       return res.status(400).json({ status: 'error', error: error.message });
+    }
+  }
+
+  async verify(req: Request, res: Response) {
+    const { token } = req.body;
+
+    const secret = process.env.JWT_SECRET;
+
+    if (!secret)
+      return res
+        .status(500)
+        .json({ status: 'error', error: 'Missing enviroment secret' });
+
+    try {
+      if (token) {
+        const repository = getRepository(User);
+
+        const decoded = jwt.verify(token, secret) as { id: string };
+        const user = await repository.findOne(decoded.id);
+
+        decoded
+          ? res.status(200).json({ status: 'ok', valid: true, user })
+          : res.status(400).json({ status: 'error', valid: false });
+      } else {
+        return res
+          .status(401)
+          .json({ status: 'error', error: 'Missing token' });
+      }
+    } catch (error) {
+      return res.status(500).json(error);
     }
   }
 }

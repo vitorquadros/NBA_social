@@ -1,15 +1,76 @@
+import { useState } from 'react';
 import styled from 'styled-components';
+import useAuth from '../../../contexts/AuthContext/useAuth';
+import useComments from '../../../contexts/CommentsContext/useComments';
+import useApi from '../../../hooks/useApi';
+import { Comment as IComment, Reply as IReply } from '../../../types/Post';
 
-export default function ReplyInput() {
+type ReplyInputProps = {
+  setComments: React.Dispatch<React.SetStateAction<IComment[] | null>>;
+  postId: string;
+};
+
+export default function ReplyInput({ setComments, postId }: ReplyInputProps) {
+  const { token, email } = useAuth();
+  const { callForm } = useApi();
+  const [commentText, setCommentText] = useState<string>('');
+  const { currentReplies, setCurrentReplies, isReplying, parentCommentInfo } =
+    useComments();
+
+  async function onSubmit(e: any) {
+    e.preventDefault();
+    try {
+      const comment = await callForm({
+        url: `/posts/${postId}/comments`,
+        method: 'post',
+        data: {
+          text: commentText,
+          parentCommentId: isReplying ? parentCommentInfo.id : null
+        },
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      setComments((prev: any) => [...prev, comment.data]);
+
+      if (isReplying) {
+        setCurrentReplies((prev) => [...(prev || []), comment.data]);
+      }
+
+      setCommentText('');
+    } catch (error) {
+      console.log(error); // DEBUG
+    }
+  }
+
   return (
-    <Container>
-      <input type="text" placeholder="Adicione um comentário" />
-      <span className="material-icons">send</span>
-    </Container>
+    <Form onSubmit={(e) => onSubmit(e)}>
+      {email ? (
+        <>
+          <input
+            type="text"
+            name="comment"
+            value={commentText}
+            onChange={(e) => setCommentText(e.target.value)}
+            placeholder={
+              isReplying
+                ? `Respondendo à ${parentCommentInfo.owner.displayName}`
+                : 'Adicionar um comentário'
+            }
+          />
+          <button type="submit">
+            <span className="material-icons">send</span>
+          </button>
+        </>
+      ) : (
+        <p className="not-logged">Faça login para comentar</p>
+      )}
+    </Form>
   );
 }
 
-const Container = styled.div`
+const Form = styled.form`
   width: 100%;
   height: 5rem;
 
@@ -19,9 +80,22 @@ const Container = styled.div`
 
   border-top: 1px solid rgba(var(--b6a, 219, 219, 219), 1);
 
-  span {
-    padding: 1rem 2rem;
-    cursor: pointer;
+  p.not-logged {
+    text-align: center;
+    margin: auto;
+    font-size: 1.4rem;
+    color: gray;
+  }
+
+  button {
+    border: 0;
+    background: #fafafa;
+    padding: 0;
+
+    span {
+      padding: 1rem 1rem;
+      cursor: pointer;
+    }
   }
 
   input {

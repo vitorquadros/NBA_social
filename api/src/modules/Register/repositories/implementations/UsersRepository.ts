@@ -2,6 +2,7 @@ import { EntityRepository, getRepository, Repository } from 'typeorm';
 import { Address } from '../../models/Address';
 
 import { User } from '../../models/User';
+import { UpdateOwnUserDTO } from '../DTOs/UpdateOwnUserDTO';
 
 import { IUsersRepository } from '../IUsersRepository';
 
@@ -53,5 +54,50 @@ export class UsersRepository implements IUsersRepository {
     const result = await this.repository.remove(user);
 
     return result;
+  }
+
+  async updateMe({
+    id,
+    birthday,
+    nbaTeam,
+    bio,
+    avatar,
+    city,
+    country,
+    cover,
+    displayName,
+    password,
+    state,
+    username
+  }: UpdateOwnUserDTO): Promise<User> {
+    const user = await this.repository.findOne(id);
+
+    if (!user) throw new Error('User not found');
+
+    const updatePayload = {
+      birthday,
+      nbaTeam,
+      bio,
+      avatar,
+      city,
+      country,
+      cover,
+      displayName,
+      password,
+      state,
+      username
+    };
+
+    const payloadClean = Object.fromEntries(
+      Object.entries(updatePayload)
+        .filter(([_, v]) => v != null)
+        .filter(([_, v]) => v != '')
+    );
+
+    this.repository.merge(user, { ...payloadClean, nbaTeam });
+
+    await this.repository.save(user);
+
+    return user;
   }
 }

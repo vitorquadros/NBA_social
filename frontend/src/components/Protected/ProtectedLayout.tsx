@@ -1,16 +1,21 @@
-import { Children } from 'react';
+import { Children, useContext, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import useAuth from '../../contexts/AuthContext/useAuth';
+import { ModalContext } from '../../contexts/ModalContext-old';
+import Home from '../../pages/Home';
+import Loading from '../Utils/Loading';
 
 export default function ProtectedLayout({
   children
 }: {
   children: JSX.Element;
 }) {
-  const auth = useAuth();
+  // const { setShowAuthModal } = useContext(ModalContext);
 
-  if (!auth.email) {
-    return <h1>Você não tem acesso</h1>;
-  } else {
-    return children;
-  }
+  // const navigate = useNavigate(); // TODO: redirect to homepage and open login modal
+
+  const { email } = useAuth();
+
+  if (!email) return <Home />;
+  else return children;
 }

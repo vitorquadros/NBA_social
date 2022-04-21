@@ -9,9 +9,17 @@ type CreateLikeRequest = {
   postId: string;
 };
 
+type LikeResponse = {
+  like: Like;
+  action: 'liked' | 'unliked';
+};
+
 @injectable()
 export class LikesUsecase {
-  async createLike({ userId, postId }: CreateLikeRequest): Promise<Like> {
+  async createLike({
+    userId,
+    postId
+  }: CreateLikeRequest): Promise<LikeResponse> {
     const repository = getRepository(Like);
 
     const usersRepository = getRepository(User);
@@ -28,12 +36,30 @@ export class LikesUsecase {
 
     const alreadyLiked = await repository.findOne({ user, post });
 
-    if (alreadyLiked) throw new Error('Post already liked');
+    if (alreadyLiked) {
+      await repository.remove(alreadyLiked);
+
+      return { like: alreadyLiked, action: 'unliked' };
+    }
 
     const like = repository.create({ user, post });
 
     await repository.save(like);
 
-    return like;
+    return { like, action: 'liked' };
+  }
+
+  async verifyLike({ userId, postId }: CreateLikeRequest): Promise<boolean> {
+    const repository = getRepository(Like);
+
+    const usersRepository = getRepository(User);
+    const postsRepository = getRepository(Post);
+
+    const user = await usersRepository.findOne(userId);
+    const post = await postsRepository.findOne(postId);
+
+    const isLiked = await repository.findOne({ user, post });
+
+    return isLiked ? true : false;
   }
 }

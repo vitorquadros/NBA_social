@@ -3,12 +3,15 @@ import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { schema } from '../../../utils/form-validation/CompleteRegisterValidation';
-import TeamSelect from './Fields/TeamSelect';
-import Input from './Fields/Input';
-import { Fields } from './Fields/PasswordFields';
-import FileInput from './Fields/FileInput';
+import TeamSelect from '../Fields/TeamSelect';
+import Input from '../Fields/Input';
+import { Fields } from '../Fields/PasswordFields';
+import FileInput from '../Fields/FileInput';
 import { useNavigate } from 'react-router-dom';
 import useApi from '../../../hooks/useApi';
+import useAuth from '../../../contexts/AuthContext/useAuth';
+import { Loading } from '../../Utils/Loading';
+import { SubmitButton } from '../Fields/SubmitButton';
 
 export type Inputs = {
   displayname: string;
@@ -18,7 +21,7 @@ export type Inputs = {
   confirmPassword: string;
   birthday: string;
   team?: string;
-  avatar?: FileList;
+  image?: FileList;
 };
 
 type CompleteRegisterProps = {
@@ -33,18 +36,21 @@ export default function CompleteRegisterForm({
   const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
 
   const { callForm } = useApi();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const { authenticate } = useAuth();
 
   const navigate = useNavigate();
 
   const {
     register,
-    setValue,
     setError,
     handleSubmit,
     formState: { errors }
   } = useForm<Inputs>({ resolver: yupResolver(schema) });
 
   const onSubmit = handleSubmit(async (data) => {
+    setIsLoading(true);
     const user = Object.assign(
       {},
       {
@@ -54,16 +60,33 @@ export default function CompleteRegisterForm({
         password: data.password,
         nbaTeam: data.team ? data.team : '',
         birthday: data.birthday,
-        avatar: data.avatar![0] ? data.avatar![0].name : 'default_profile.jpg'
+        avatar: 'profile_default.jpg'
       }
     );
-    console.log(user);
+
     try {
+      if (data.image && data.image.length > 0) {
+        const formData = new FormData();
+        formData.append('image', data.image[0]);
+
+        const response = await callForm({
+          url: '/upload',
+          method: 'post',
+          data: formData
+        });
+
+        user['avatar'] = response.filename;
+      }
+
       await callForm({
         url: '/users/register',
         method: 'put',
         data: user
       });
+
+      console.log(user);
+
+      await authenticate(data.email, data.password);
 
       navigate('/', {
         state: {
@@ -71,12 +94,14 @@ export default function CompleteRegisterForm({
           alertName: 'registerSuccess'
         }
       }); // DEBUG
+
+      setIsLoading(false);
     } catch (error: any) {
       console.log(error.response);
 
       setError(
         'username',
-        { type: 'manual', message: error.response.data.error },
+        { type: 'manual', message: 'Nome de usuário ja existente' },
         { shouldFocus: true }
       );
     }
@@ -89,21 +114,13 @@ export default function CompleteRegisterForm({
 
   return (
     <>
-      {/* <button
-        onClick={() => {
-          snackbarRef.current.show();
-        }}
-      >
-        Botao
-      </button> */}
-
       <Form method="POST" onSubmit={onSubmit}>
         <Input
           label="Email"
           type="email"
           name="email"
           register={register}
-          disabled
+          readOnly
           value={email}
         />
 
@@ -130,12 +147,15 @@ export default function CompleteRegisterForm({
           errors={errors.password ? errors.password : null}
           isPasswordVisible={isPasswordVisible}
           setIsPasswordVisible={setIsPasswordVisible}
+          label="Senha"
+          name="password"
         />
 
         <Fields.ConfirmPassword
           register={register}
           errors={errors.confirmPassword ? errors.confirmPassword : null}
           isPasswordVisible={isPasswordVisible}
+          label="Confirmar senha"
         />
 
         <Input
@@ -148,9 +168,15 @@ export default function CompleteRegisterForm({
 
         <TeamSelect register={register} />
 
-        <FileInput register={register} />
+        <FileInput register={register} name="image" label="Imagem de perfil" />
 
-        <SubmitButton type="submit">Finalizar</SubmitButton>
+        <div className="finish-container">
+          {isLoading ? (
+            <Loading />
+          ) : (
+            <SubmitButton type="submit">Finalizar</SubmitButton>
+          )}
+        </div>
       </Form>
     </>
   );
@@ -166,21 +192,10 @@ const Form = styled.form`
   @media screen and (max-width: 600px) {
     width: 90%;
   }
-`;
 
-const SubmitButton = styled.button`
-  width: 100%;
-  margin: 1rem 0;
-  border: 0;
-  border-radius: 10px;
-  padding: 1rem;
-  font-size: 1.4rem;
-  background-color: #e56503;
-  font-weight: 500;
-  cursor: pointer;
-  transition: 0.3s;
-
-  &:hover {
-    filter: brightness(80%);
+  div.finish-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 `;

@@ -1,9 +1,8 @@
-import React, { useContext } from 'react';
 import styled from 'styled-components';
-import { ModalContext } from '../../../contexts/ModalContext';
+import useModal from '../../../contexts/ModalContext/useModal';
 
 export default function EmailSent({ email }: { email: string }) {
-  const { setShowAuthModal, showAuthModal } = useContext(ModalContext);
+  const { setShowAuthModal } = useModal();
 
   return (
     <Container>
@@ -12,7 +11,7 @@ export default function EmailSent({ email }: { email: string }) {
         Um email foi enviado para <span>{email}</span> com um link para a
         finalização do cadastro
       </p>
-      <button onClick={() => setShowAuthModal(!showAuthModal)}>OK</button>
+      <button onClick={() => setShowAuthModal(false)}>OK</button>
     </Container>
   );
 }

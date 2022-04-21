@@ -29,6 +29,12 @@ export class PostsUsecase {
     return posts;
   }
 
+  async getAllPostsByUser(userId: string): Promise<Post[]> {
+    const posts = await this.postsRepository.getAllPostsByUser(userId);
+
+    return posts;
+  }
+
   async createPost({
     description,
     image,

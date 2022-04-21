@@ -6,6 +6,7 @@
   "password": "8642",
   "database": "database_name",
   "migrations": ["./src/infra/database/migrations/*.ts"],
+  "entities": ["./src/modules/*/models/*.ts"],
   "cli": {
     "migrationsDir": "./src/infra/database/migrations"
   }

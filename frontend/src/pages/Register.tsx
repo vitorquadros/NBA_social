@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import CompleteRegisterForm from '../components/Auth/Register/CompleteRegisterForm';
+import LoadingFull from '../components/Utils/Loading';
 import useApi from '../hooks/useApi';
 import Error404Page from './Error404Page';
 
@@ -31,7 +32,7 @@ export default function Register() {
     });
   }, []);
 
-  if (isLoading) return <h1>Carregando...</h1>;
+  if (isLoading) return <LoadingFull />;
 
   if (error) return <Error404Page />;
 

@@ -1,33 +1,38 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { ModalContext } from '../../contexts/ModalContext';
 import PostModal from './PostModal';
+import moment from 'moment';
+import 'moment/locale/br';
+import useModal from '../../contexts/ModalContext/useModal';
+import { Like, Post as IPost } from '../../types/Post';
+import useApi from '../../hooks/useApi';
+import useAuth from '../../contexts/AuthContext/useAuth';
+import axios from 'axios';
 
 type PostProps = {
-  image: string;
-  userImage: string;
-  userDisplayName: string;
-  userName: string;
-  postDescription: string;
-  team?: string;
-  teamName?: string;
+  post: IPost;
 };
 
 export default function Post({
-  image,
-  userImage,
-  userDisplayName,
-  userName,
-  postDescription,
-  team,
-  teamName
+  post: { id, comments, description, image, user, likes, createdAt, updatedAt }
 }: PostProps) {
-  const { showPostModal, openPostModal } = useContext(ModalContext);
+  const { showPostModal, setShowPostModal } = useModal();
   const [showMore, setShowMore] = useState(false);
+  const [likesState, setLikesState] = useState<Like[]>([]);
+  const [alreadyLiked, setAlreadyLiked] = useState<boolean>(false);
+  const { callForm } = useApi();
+  const { token, username } = useAuth();
+  moment.locale('br');
 
-  // DEBUG
-  const text =
-    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique laboriosam iusto facere numquam aut et. Laudantium totam aperiam, voluptates nihil molestiae dicta cum pariatur ullam porro eum, tempore omnis, molestias ipsam? Aut ratione, vero quaerat saepe ipsam veniam aliquam ullam laudantium quisquam quos suscipit unde, obcaecati ex sed qui repellendus natus, optio quibusdam magnam sapiente ad rem quas accusantium! Quam earum iure enim vero repellat hic a fuga, ab aut aspernatur nam temporibus voluptas iusto praesentium nobis velit, obcaecati ducimus assumenda, quia alias. Placeat ducimus sapiente, magnam aut officia accusantium provident distinctio veniam possimus ea ad repudiandae, fugiat cum libero.';
+  const localDate = moment
+    .utc(createdAt)
+    .subtract(3, 'hours')
+    .local()
+    .format('YYYY-MM-DD HH:mm:ss');
+
+  const fromNow = moment(localDate).fromNow();
+
+  // console.log(moment.locales());
 
   useEffect(() => {
     if (showPostModal) {
@@ -37,74 +42,162 @@ export default function Post({
     }
   }, [showPostModal]);
 
+  useEffect(() => {
+    setLikesState(likes);
+  }, []);
+
+  useEffect(() => {
+    if (token) {
+      axios
+        .get(`http://localhost:3333/posts/${id}/like`, {
+          method: 'get',
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        })
+        .then((response) => {
+          setAlreadyLiked(response.data.data.isLiked);
+        });
+    }
+  }, [likesState]);
+
+  async function handleLike() {
+    try {
+      const { data: like, action } = await callForm({
+        url: `/posts/${id}/like`,
+        method: 'post',
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      if (action === 'liked') setLikesState([...likes, like]);
+      else if (action === 'unliked') {
+        const likesFiltered = likes.filter(
+          (like) => like.user.username != username
+        );
+        setLikesState(likesFiltered);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <Container>
-      {showPostModal && <PostModal />}
+      {showPostModal && showPostModal === id && (
+        <PostModal
+          post={{
+            id,
+            comments,
+            description,
+            image,
+            user,
+            likes,
+            createdAt,
+            updatedAt
+          }}
+        />
+      )}
       <PostInfo>
         <UserContainer>
           <div className="user-info-wrapper">
-            <img src={userImage} alt="" />
+            <img
+              src={`http://localhost:3333/files/${user.avatar}`}
+              alt={`Foto de perfil de ${user.displayName}`}
+            />
             <div className="user-info">
-              <p className="displayname">{userDisplayName}</p>
-              <p className="username">@{userName}</p>
+              <div className="display-name-container">
+                <p className="displayname">{user.displayName}</p>
+                {user.role === 'verified' && (
+                  <span
+                    className="material-icons verified"
+                    title="Perfil verificado"
+                  >
+                    verified
+                  </span>
+                )}
+              </div>
+
+              <p className="username">@{user.username}</p>
             </div>
           </div>
 
-          {team && (
+          {user.nbaTeam && (
             <img
               className="team"
-              src={team}
-              alt={`Logo do ${teamName}`}
-              title={`Jogador do ${teamName}`}
+              src={`http://localhost:3333/files/teams/${user.nbaTeam}.png`}
+              alt={`Logo do ${user.nbaTeam}`}
+              title={`Torcedor do ${user.nbaTeam}`}
             />
           )}
         </UserContainer>
 
         <DescriptionContainer>
           {showMore ? (
-            <p>{postDescription}</p>
+            <p>{description}</p>
           ) : (
-            <p>{`${postDescription.substring(0, 200)}`}</p>
+            <p>{`${description.substring(0, 200)}`}</p>
           )}
-          <span onClick={() => setShowMore(!showMore)}>
-            {showMore ? 'Mostrar menos' : 'Mostrar mais'}
-          </span>
+          {description.length > 200 && (
+            <span onClick={() => setShowMore(!showMore)}>
+              {showMore ? 'Mostrar menos' : 'Mostrar mais'}
+            </span>
+          )}
         </DescriptionContainer>
       </PostInfo>
       {/* // FIX: border */}
-      <ImageContainer onClick={openPostModal}>
-        <img src={image} alt="" />
+      <ImageContainer onClick={() => setShowPostModal(id)}>
+        <img
+          src={`http://localhost:3333/files/${image}`}
+          alt={`Imagem do post de ${user.displayName}`}
+        />
       </ImageContainer>
       <ActionsContainer>
         <div className="actions">
-          <div className="like">
-            <img
-              src="https://cdn.iconscout.com/icon/free/png-256/basketball-2062459-1740039.png"
-              alt=""
-            />
-            <p>Curtir</p>
-          </div>
+          {token ? (
+            <>
+              <div className="like" onClick={handleLike}>
+                {alreadyLiked ? (
+                  <span className="material-icons">favorite</span>
+                ) : (
+                  <span className="material-icons">favorite_border</span>
+                )}
 
-          <div className="comment">
-            <img
-              src="https://cdn-icons-png.flaticon.com/512/134/134808.png"
-              alt=""
-            />
-            <p>Comentar</p>
-          </div>
+                <p>{alreadyLiked ? 'Descurtir' : 'Curtir'}</p>
+              </div>
+              <div className="comment">
+                <span className="material-icons">chat_bubble_outline</span>
+                <p>Comentar</p>
+              </div>
+            </>
+          ) : (
+            <div className="comment">
+              <span className="material-icons">chat_bubble_outline</span>
+              <p>Ver comentários</p>
+            </div>
+          )}
         </div>
 
         <div className="date">
-          <p>22 horas atrás</p>
+          <p>{fromNow}</p>
         </div>
       </ActionsContainer>
       <DataContainer>
         <div className="likes">
-          <p>Curtido por 1586 pessoas</p>
+          {likesState.length > 1 || likesState.length === 0 ? (
+            <p>Curtido por {likesState.length} pessoas</p>
+          ) : (
+            <p>Curtido por {likesState.length} pessoa</p>
+          )}
         </div>
 
         <div className="comments">
-          <p>16 comentários</p>
+          {comments.length > 1 || comments.length === 0 ? (
+            <p>{comments.length} comentários</p>
+          ) : (
+            <p>{comments.length} comentário</p>
+          )}
         </div>
       </DataContainer>
     </Container>
@@ -162,11 +255,17 @@ const ActionsContainer = styled.div`
 
     div.like {
       display: flex;
+      gap: 0.5rem;
       align-items: center;
       cursor: pointer;
+
+      span {
+        font-size: 2.6rem;
+      }
     }
 
     div.comment {
+      gap: 0.5rem;
       display: flex;
       align-items: center;
       cursor: pointer;
@@ -194,6 +293,17 @@ const UserContainer = styled.div`
     display: flex;
     cursor: pointer;
     margin-bottom: 1rem;
+
+    div.display-name-container {
+      display: flex;
+      align-items: center;
+      text-align: center;
+
+      span.verified {
+        font-size: 1.8rem;
+        margin-left: 0.5rem;
+      }
+    }
 
     &:hover {
       p.username {

@@ -1,12 +1,11 @@
-import { useContext } from 'react';
 import styled from 'styled-components';
-import { ModalContext } from '../../contexts/ModalContext';
+import useModal from '../../contexts/ModalContext/useModal';
 
 export default function AuthMenu() {
-  const { openAuthModal } = useContext(ModalContext);
+  const { setShowAuthModal } = useModal();
 
   return (
-    <Container onClick={openAuthModal}>
+    <Container onClick={() => setShowAuthModal(true)}>
       <button>
         <p>Login</p>
         <span className="material-icons">login</span>

@@ -3,7 +3,12 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=node
 
 TODO.txt
-uploads
+
+api/public/uploads/*
+!api/public/uploads/profile_default.jpg
+!api/public/uploads/cover_default.jpg
+!api/public/teams
+
 package-lock.json
 
 ### Node ###

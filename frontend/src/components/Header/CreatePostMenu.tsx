@@ -1,12 +1,11 @@
-import { useContext } from 'react';
 import styled from 'styled-components';
-import { ModalContext } from '../../contexts/ModalContext';
+import useModal from '../../contexts/ModalContext/useModal';
 
 export default function CreatePostMenu() {
-  const { openCreatePostModal } = useContext(ModalContext);
+  const { setShowCreatePostModal } = useModal();
 
   return (
-    <Container onClick={openCreatePostModal}>
+    <Container onClick={() => setShowCreatePostModal(true)}>
       <button>
         <span className="material-icons">add</span>
         <p>Novo Post</p>

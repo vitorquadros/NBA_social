@@ -20,6 +20,21 @@ interface UpdateRequest {
   city?: string;
 }
 
+interface UpdateOwnUserRequest {
+  id: string;
+  displayName?: string;
+  username?: string;
+  bio?: string;
+  nbaTeam: string;
+  birthday: string;
+  password?: string;
+  avatar?: string;
+  cover?: string;
+  country?: string;
+  state?: string;
+  city?: string;
+}
+
 @injectable()
 export class RegisterUsecase {
   constructor(
@@ -139,5 +154,39 @@ export class RegisterUsecase {
     } catch {
       throw new Error('User not found');
     }
+  }
+
+  async updateOwnUser({
+    id,
+    birthday,
+    nbaTeam,
+    avatar,
+    city,
+    country,
+    cover,
+    displayName,
+    bio,
+    password,
+    state,
+    username
+  }: UpdateOwnUserRequest) {
+    const user = await this.usersRepository.updateMe({
+      id,
+      birthday,
+      nbaTeam,
+      bio,
+      avatar,
+      city,
+      country,
+      cover,
+      displayName,
+      password,
+      state,
+      username
+    });
+
+    if (!user) throw new Error('Something went wrong');
+
+    return user;
   }
 }
