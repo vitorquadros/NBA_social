@@ -15,7 +15,6 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
 
   useEffect(() => {
     const userLocal = getUserLocalStorage();
-    console.log('auth useeffect');
 
     if (userLocal) {
       (async () => {

@@ -1,53 +1,38 @@
+import { useEffect } from 'react';
 import styled from 'styled-components';
 import useAuth from '../../contexts/AuthContext/useAuth';
+import useApi from '../../hooks/useApi';
+import { Post } from '../../types/Post';
 
 export default function PostsTable() {
-  const { displayName } = useAuth();
+  const { displayName, id } = useAuth();
+
+  const { call, data: posts } = useApi<Post[]>();
+
+  useEffect(() => {
+    call({
+      url: `/posts/${id}`,
+      method: 'get'
+    });
+  }, []);
 
   return (
     <Container>
       <h3>{`Publicações de ${displayName}`}</h3>
-      <div className="table-images">
-        <div className="table-image">
-          <img src="https://wallpaper.dog/large/635907.jpg" alt="" />
+      {posts && posts.length > 0 ? (
+        <div className="table-images">
+          {posts?.map((post) => (
+            <div className="table-image" key={post.id}>
+              <img
+                src={`http://localhost:3333/files/${post.image}`}
+                alt={`Preview do post de ${displayName}`}
+              />
+            </div>
+          ))}
         </div>
-        <div className="table-image">
-          <img src="https://wallpaper.dog/large/635907.jpg" alt="" />
-        </div>
-        <div className="table-image">
-          <img src="https://wallpaper.dog/large/635907.jpg" alt="" />
-        </div>
-        <div className="table-image">
-          <img src="https://wallpaper.dog/large/635907.jpg" alt="" />
-        </div>
-        <div className="table-image">
-          <img src="https://wallpaper.dog/large/635907.jpg" alt="" />
-        </div>
-        <div className="table-image">
-          <img src="https://wallpaper.dog/large/635907.jpg" alt="" />
-        </div>
-        <div className="table-image">
-          <img src="https://wallpaper.dog/large/635907.jpg" alt="" />
-        </div>
-        <div className="table-image">
-          <img src="https://wallpaper.dog/large/635907.jpg" alt="" />
-        </div>
-        <div className="table-image">
-          <img src="https://wallpaper.dog/large/635907.jpg" alt="" />
-        </div>
-        <div className="table-image">
-          <img src="https://wallpaper.dog/large/635907.jpg" alt="" />
-        </div>
-        <div className="table-image">
-          <img src="https://wallpaper.dog/large/635907.jpg" alt="" />
-        </div>
-        <div className="table-image">
-          <img src="https://wallpaper.dog/large/635907.jpg" alt="" />
-        </div>
-        <div className="table-image">
-          <img src="https://wallpaper.dog/large/635907.jpg" alt="" />
-        </div>
-      </div>
+      ) : (
+        <p className="no-posts">O usuário ainda não tem publicações.</p>
+      )}
     </Container>
   );
 }
@@ -57,6 +42,11 @@ const Container = styled.div`
 
   h3 {
     text-align: center;
+  }
+
+  p.no-posts {
+    text-align: center;
+    margin: 2rem 0;
   }
 
   div.table-images {
@@ -78,6 +68,7 @@ const Container = styled.div`
         width: 20rem;
         max-width: 20rem;
         border-radius: 5px;
+        object-fit: cover;
       }
     }
   }
