@@ -1,9 +1,9 @@
 <h1 align="center">Rede Social NBA</h1>
 
 <p align="center">
-  <img alt="Repository size" src="https://img.shields.io/github/repo-size/vitorquadros/daw_project?color=orange&style=plastic">
-  <img alt="Last commit" src="https://img.shields.io/github/last-commit/vitorquadros/daw_project?color=orange&style=plastic">
-  <img alt="License" src="https://img.shields.io/github/license/vitorquadros/daw_project?color=orange&style=plastic">
+  <img alt="Repository size" src="https://img.shields.io/github/repo-size/vitorquadros/NBA_social?color=orange&style=plastic">
+  <img alt="Last commit" src="https://img.shields.io/github/last-commit/vitorquadros/NBA_social?color=orange&style=plastic">
+  <img alt="License" src="https://img.shields.io/github/license/vitorquadros/NBA_social?color=orange&style=plastic">
 
 </p>
 
@@ -35,8 +35,10 @@
 
 ### Para implementar
 
-- Seguir e ser seguido por outros usuários
+- Acessar o perfil de outro usuário
 
+- Seguir e ser seguido por outros usuários
+-
 - Deletar post/comentário
 
 # :gear: Tecnologias
