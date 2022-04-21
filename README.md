@@ -1,4 +1,4 @@
-<h1 align="center">Project Name</h1>
+<h1 align="center">Rede Social NBA</h1>
 
 <p align="center">
   <img alt="Repository size" src="https://img.shields.io/github/repo-size/vitorquadros/daw_project?color=orange&style=plastic">
@@ -7,7 +7,7 @@
 
 </p>
 
-> <p align="center">Descrição do projeto</p>
+> <p align="center">Uma rede social de imagens com o tema basquete e a NBA (National Basketball Association) com intuito de aproximar os amantes do esporte e facilitar interações e compartilhamento de informações/momentos da liga.</p>
 
 <h2 align="center">Conteúdo</h2>
 
