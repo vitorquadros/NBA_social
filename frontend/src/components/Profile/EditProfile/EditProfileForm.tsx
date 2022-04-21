@@ -132,8 +132,6 @@ export default function EditProfileForm({
       ];
     }
 
-    console.log(data);
-
     try {
       await callForm({
         url: '/auth',
@@ -158,6 +156,11 @@ export default function EditProfileForm({
       toggleEditProfile(false);
     } catch (error) {
       console.log(error);
+      setError(
+        'currentPassword',
+        { type: 'manual', message: 'Senha incorreta' },
+        { shouldFocus: true }
+      );
     }
   });
 
