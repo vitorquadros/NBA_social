@@ -3,6 +3,7 @@ export interface IUser {
   email?: string;
   username?: string;
   displayName?: string;
+  bio?: string;
   birthday?: string;
   nbaTeam?: string;
   role?: string;

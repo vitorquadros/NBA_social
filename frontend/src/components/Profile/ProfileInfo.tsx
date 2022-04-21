@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import useAuth from '../../contexts/AuthContext/useAuth';
 
 export default function ProfileInfo() {
-  const { displayName, username, role, nbaTeam } = useAuth();
+  const { displayName, username, role, nbaTeam, bio } = useAuth();
 
   return (
     <Container className="profile-info">
@@ -18,11 +18,7 @@ export default function ProfileInfo() {
           )}
         </div>
 
-        <p className="bio">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab quo nobis
-          ipsam ex eveniet voluptatibus laboriosam. Architecto voluptatem nihil
-          accusamus corporis. Voluptatibus et, fugiat velit.
-        </p>
+        <p className="bio">{bio}</p>
       </div>
 
       <div className="extra-info">
@@ -43,7 +39,9 @@ export default function ProfileInfo() {
 
 const Container = styled.div`
   display: flex;
+  width: 100%;
   margin: 5rem 4rem 0 4rem;
+  justify-content: space-between;
 
   div.main-info {
     display: flex;
@@ -51,6 +49,11 @@ const Container = styled.div`
     align-self: flex-start;
     width: 65%;
     max-width: 65%;
+    margin-left: 6rem;
+
+    @media screen and (max-width: 500px) {
+      margin-left: 3rem;
+    }
 
     div.name-container {
       display: flex;
@@ -80,6 +83,7 @@ const Container = styled.div`
     max-width: 35%;
     display: flex;
     flex-direction: column;
+    margin-right: 5rem;
 
     div.align {
       display: flex;
@@ -96,6 +100,11 @@ const Container = styled.div`
       img {
         width: 8rem;
         height: 8rem;
+        transition: all 0.3s;
+
+        &:hover {
+          scale: 110%;
+        }
       }
     }
   }

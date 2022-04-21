@@ -15,6 +15,7 @@ import useApi from '../../../hooks/useApi';
 type Inputs = {
   displayname?: string;
   username?: string;
+  bio?: string;
   currentPassword: string;
   password?: string;
   confirmPassword?: string;
@@ -88,13 +89,12 @@ export default function EditProfileForm({
   const onSubmit = handleSubmit(async (data) => {
     if (!data.username) delete data.username;
     if (!data.displayname) delete data.displayname;
+    if (!data.bio) delete data.bio;
     if (!data.birthday) delete data.birthday;
     if (data.avatar && data.avatar.length < 1) delete data.avatar;
     if (data.cover && data.cover.length < 1) delete data.cover;
     if (!data.password) delete data.password;
     delete data.confirmPassword;
-
-    console.log(data);
 
     if (data.avatar && data.avatar.length > 0) {
       console.log('entoru avatar');
@@ -186,6 +186,11 @@ export default function EditProfileForm({
           register={register}
           maxLength={18}
         />
+      </div>
+
+      <div className="bio-field">
+        <label htmlFor="bio">Bio</label>
+        <textarea {...register('bio')}></textarea>
       </div>
 
       <TeamSelect register={register} />
@@ -322,6 +327,29 @@ const Form = styled.form`
     display: flex;
 
     gap: 1rem;
+  }
+
+  div.bio-field {
+    label {
+      margin-left: 0.5rem;
+      margin-bottom: 0.3rem;
+      font-size: 1.4rem;
+    }
+
+    textarea {
+      padding: 1rem;
+      font-size: 1.4rem;
+      resize: none;
+      width: 100%;
+      box-sizing: border-box;
+      background-color: #e6e6e6;
+      border: none;
+      border-radius: 5px;
+
+      &:focus {
+        outline: rgba(229, 101, 3, 1);
+      }
+    }
   }
 
   div.password-inputs {
