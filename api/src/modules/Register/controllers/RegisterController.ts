@@ -99,6 +99,7 @@ export class RegisterController {
     const {
       displayName,
       username,
+      bio,
       nbaTeam,
       birthday,
       password,
@@ -113,6 +114,7 @@ export class RegisterController {
       const user = await registerUsecase.updateOwnUser({
         displayName,
         username,
+        bio,
         nbaTeam,
         birthday,
         password,

@@ -11,6 +11,7 @@ export interface IUsersRepository {
     id,
     birthday,
     nbaTeam,
+    bio,
     avatar,
     city,
     country,

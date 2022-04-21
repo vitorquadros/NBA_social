@@ -60,6 +60,7 @@ export class UsersRepository implements IUsersRepository {
     id,
     birthday,
     nbaTeam,
+    bio,
     avatar,
     city,
     country,
@@ -76,6 +77,7 @@ export class UsersRepository implements IUsersRepository {
     const updatePayload = {
       birthday,
       nbaTeam,
+      bio,
       avatar,
       city,
       country,
@@ -86,21 +88,15 @@ export class UsersRepository implements IUsersRepository {
       username
     };
 
-    console.log(updatePayload);
-
     const payloadClean = Object.fromEntries(
       Object.entries(updatePayload)
         .filter(([_, v]) => v != null)
         .filter(([_, v]) => v != '')
     );
 
-    console.log(payloadClean);
-
     this.repository.merge(user, { ...payloadClean, nbaTeam });
 
     await this.repository.save(user);
-
-    console.log(user);
 
     return user;
   }

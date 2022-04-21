@@ -24,6 +24,7 @@ interface UpdateOwnUserRequest {
   id: string;
   displayName?: string;
   username?: string;
+  bio?: string;
   nbaTeam: string;
   birthday: string;
   password?: string;
@@ -164,6 +165,7 @@ export class RegisterUsecase {
     country,
     cover,
     displayName,
+    bio,
     password,
     state,
     username
@@ -172,6 +174,7 @@ export class RegisterUsecase {
       id,
       birthday,
       nbaTeam,
+      bio,
       avatar,
       city,
       country,

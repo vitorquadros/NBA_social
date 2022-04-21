@@ -2,6 +2,7 @@ export interface UpdateOwnUserDTO {
   id: string;
   displayName?: string;
   username?: string;
+  bio?: string;
   nbaTeam: string;
   birthday: string;
   password?: string;
