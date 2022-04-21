@@ -3,11 +3,12 @@ import styled from 'styled-components';
 import useAuth from '../../contexts/AuthContext/useAuth';
 import useApi from '../../hooks/useApi';
 import { Post } from '../../types/Post';
+import { Loading } from '../Utils/Loading';
 
 export default function PostsTable() {
   const { displayName, id } = useAuth();
 
-  const { call, data: posts } = useApi<Post[]>();
+  const { call, data: posts, isLoading } = useApi<Post[]>();
 
   useEffect(() => {
     call({
@@ -19,7 +20,11 @@ export default function PostsTable() {
   return (
     <Container>
       <h3>{`Publicações de ${displayName}`}</h3>
-      {posts && posts.length > 0 ? (
+      {isLoading ? (
+        <div className="loading">
+          <Loading />
+        </div>
+      ) : posts && posts.length > 0 ? (
         <div className="table-images">
           {posts?.map((post) => (
             <div className="table-image" key={post.id}>
@@ -39,6 +44,13 @@ export default function PostsTable() {
 
 const Container = styled.div`
   margin-top: 5rem;
+
+  div.loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 3rem 0 3rem 0;
+  }
 
   h3 {
     text-align: center;
