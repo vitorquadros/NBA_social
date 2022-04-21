@@ -36,7 +36,6 @@ export default function Reply() {
 
           <div className="parent-comment-actions">
             <span>19h</span>
-            <span className="reply">Responder</span>
           </div>
         </div>
       </div>
