@@ -48,4 +48,27 @@ export class PostsRepository implements IPostsRepository {
 
     return posts;
   }
+
+  async getAllPostsByUser(userId: string): Promise<Post[]> {
+    const posts = await this.repository.find({
+      where: {
+        user: {
+          id: userId
+        }
+      },
+      relations: [
+        'likes',
+        'likes.user',
+        'comments',
+        'comments.replys',
+        'comments.parentComment',
+        'user'
+      ],
+      order: {
+        createdAt: 'DESC'
+      }
+    });
+
+    return posts;
+  }
 }

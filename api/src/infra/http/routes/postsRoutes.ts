@@ -10,8 +10,12 @@ const postsController = new PostsController();
 const likesController = new LikesController();
 const commentsController = new CommentsController();
 
+// Posts
 postsRoutes.post('/', authMiddleware, postsController.store);
 postsRoutes.get('/', postsController.index);
+postsRoutes.get('/:userId', postsController.indexByUser);
+
+// Likes
 postsRoutes.post('/:postId/like', authMiddleware, likesController.store);
 postsRoutes.get('/:postId/like', authMiddleware, likesController.verify);
 
