@@ -30,7 +30,9 @@
 - Criação e edição de perfil de usuário com dados como nome, nome de usuário, imagem de perfil, imagem de capa, time da NBA preferido e outros
 
 - Página de perfil com todos os dados públicos do usuário e suas publicações
+
 - Criação de post com imagem e descrição
+
 - Interação com posts de outros usuários (curtir, comentar e responder à comentários)
 
 ### Para implementar
@@ -38,7 +40,7 @@
 - Acessar o perfil de outro usuário
 
 - Seguir e ser seguido por outros usuários
--
+
 - Deletar post/comentário
 
 # :gear: Tecnologias
