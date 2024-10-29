@@ -9,6 +9,8 @@
 
 > <p align="center">Uma rede social de imagens com o tema basquete e a NBA (National Basketball Association) com intuito de aproximar os amantes do esporte e facilitar interações e compartilhamento de informações/momentos da liga.</p>
 
+<p align="center">books: Esse projeto foi idealizado e desenvolvido como requisito de conclusão das disciplinas de Desenvolvimento de Aplicações Web e Desenvolvimento de Sites para Web do Curso Superior <strong>Tecnologia em Sistemas para Internet</strong>.</p>
+
 <h2 align="center">Conteúdo</h2>
 
 <p align="center">
